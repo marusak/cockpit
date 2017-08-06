@@ -565,6 +565,23 @@ $(function() {
         }
     }
 
+    function reload_units_action() {
+        var proc = cockpit.spawn(['systemctl', 'daemon-reload'], { superuser: 'true' });
+        proc.done(function() {
+            refresh_unit();
+        }).
+        fail(function (ex) {
+            var message;
+            if (ex.problem === 'access-denied') {
+                message = cockpit.format(_("Not authorized to reload units"));
+            } else {
+                message = cockpit.format(_("Reloading was unsucessful. Try running `systemctl daemon-reload`"));
+            }
+            $('<div class="alert alert-danger">')
+                .text(message).insertAfter(".breadcrumb");
+        });
+    }
+
     function show_unit(unit_id) {
         if (cur_unit) {
             $(cur_unit).off('changed');
@@ -626,6 +643,8 @@ $(function() {
                                                       def: file_actions[file_def],
                                                       actions: file_actions
                                                   });
+            var reload_units_btn = mustache.render('<button class="btn btn-default" id ="service-reload-units">'+cockpit.format(_("Reload units"))+'</button>');
+
             var template_description = null;
             if (cur_unit_template) {
                 var link = mustache.render('<a data-goto-unit="{{unit}}">{{unit}}</a>',
@@ -643,10 +662,13 @@ $(function() {
                                            TemplateDescription: template_description,
                                            UnitButton: unit_action_btn,
                                            FileButton: file_action_btn,
+                                           NeedDaemonReload: cur_unit.NeedDaemonReload,
+                                           ReloadUnitsButton: reload_units_btn,
                                        });
             $('#service-unit').html(text);
             $('#service-unit-action').on('click', "[data-action]", unit_action);
             $('#service-file-action').on('click', "[data-action]", unit_file_action);
+            $('#service-reload-units').on('click', reload_units_action);
         }
 
         function render_template() {

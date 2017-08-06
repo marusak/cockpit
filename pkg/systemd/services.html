@@ -122,6 +122,20 @@
             {{/TemplateDescription}}
           </table>
         </div>
+        {{#NeedDaemonReload}}
+        <div class="list-group-item reload-units">
+          <table>
+            <tr>
+              <td>
+                <span translate>Warning:</span> <span translate>This service changed on disk. Reload units.</span>
+              </td>
+              <td>
+                {{{ReloadUnitsButton}}}
+              </td>
+            </tr>
+          </table>
+        </div>
+        {{/NeedDaemonReload}}
       </div>
     </div>
   </script>

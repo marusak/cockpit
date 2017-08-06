@@ -483,5 +483,54 @@ WantedBy=default.target
         m.execute("timedatectl set-ntp on")
         self.allow_restart_journal_messages()
 
+    @skipImage("Not available with Cockpit 138", "rhel-7-4")
+    def testReloadingUnits(self):
+        m = self.machine
+        b = self.browser
+        m.write("/etc/systemd/system/test.service",
+"""
+[Unit]
+Description=Test Service
+
+[Service]
+ExecStart=/bin/sh -c "while true; do sleep 5; done"
+
+[Install]
+WantedBy=default.target
+""")
+
+        m.execute("systemctl daemon-reload")
+        self.machine.execute("systemctl start default.target")
+        self.machine.execute("systemctl start test")
+        self.machine.execute("sed -i 's/sleep 5/sleep 2/g' /etc/systemd/system/test.service")
+
+        self.login_and_go("/system/services")
+
+        def svc_sel(service):
+            return 'tr[data-goto-unit="%s"]' % service
+
+        unit_action_btn = '#service-valid .list-group-item:nth-child(1) .btn-group'
+
+        # Selects Services tab
+        b.click('#services-filter :nth-child(2)')
+        b.wait_present(svc_sel('test.service'))
+        b.click(svc_sel("test.service"))
+        b.wait_visible('#service-valid')
+        b.wait_in_text('#service-valid', "active")
+
+        # TODO it is not reloaded automatically here, and never will
+
+        b.wait_present("#service-unit div.reload-units")
+        b.wait_in_text("#service-unit div.reload-units", "This service changed on disk")
+
+        #Click the reload button
+        reload_btn = '#service-unit div.reload-units .btn-default'
+        b.wait_in_text(reload_btn, "Reload units")
+        b.click(reload_btn)
+        b.wait_visible('#service-valid')
+        b.wait_in_text('#service-valid', "inactive")
+        b.wait_not_present("#service-unit div.reload-units")
+
+
 if __name__ == '__main__':
     test_main()
