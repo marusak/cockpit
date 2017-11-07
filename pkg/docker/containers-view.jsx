@@ -178,14 +178,6 @@ var ContainerList = React.createClass({
     },
 
     getInitialState: function () {
-        // What is the best place to put this in?
-        $(service).on("Crash", function(event, problem_path) {
-            var entry = problems_client.proxy('org.freedesktop.Problems2.Entry', problem_path);
-            entry.wait(function() {
-                // Here 'this' is not having setState (as it is of abrt's class?)
-                this.setState({problems: []});
-            });
-        });
         return {
             containers: []
         };
@@ -230,6 +222,16 @@ var ContainerList = React.createClass({
         });
 
         this.setState({ containers: containers });
+    },
+
+    newProblemOccurred: function () {
+        $(service).on("Crash", function(event, problem_path) {
+            var entry = problems_client.proxy('org.freedesktop.Problems2.Entry', problem_path);
+            entry.wait(function() {
+                // Will this work?
+                this.setState({problems: []});
+            });
+        });
     },
 
     componentDidMount: function () {
