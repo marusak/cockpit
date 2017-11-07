@@ -37,7 +37,7 @@
     var service = problems_client.proxy('org.freedesktop.Problems2', '/org/freedesktop/Problems2');
     var problems = problems_client.proxies('org.freedesktop.Problems2.Entry', '/org/freedesktop/Problems2/Entry');
 
-    var session;
+    /*var session;
     problems.wait(function() {
         service.GetSession().done(function(session_path) {
             session = problems_client.proxy('org.freedesktop.Problems2.Session', session_path);
@@ -46,7 +46,7 @@
             });
         });
     });
-
+    */
 
     /* OVERVIEW PAGE
      */
@@ -142,6 +142,7 @@
             update_container_list(true, '');
         });
 
+        /*
         $(service).on("Crash", function(event, problem_path, uid) {
             var entry = problems_client.proxy('org.freedesktop.Problems2.Entry', problem_path);
             entry.wait(function() {
@@ -149,6 +150,7 @@
                 window.location.reload(); //TODO not ideal
             });
         });
+        */
 
         update_image_list('');
 

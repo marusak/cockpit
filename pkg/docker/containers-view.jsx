@@ -32,6 +32,20 @@ var Listing = require('cockpit-components-listing.jsx');
 var Select = require('cockpit-components-select.jsx');
 var moment = require('moment');
 
+var problems_client = cockpit.dbus('org.freedesktop.problems', { superuser: "try" });
+var service = problems_client.proxy('org.freedesktop.Problems2', '/org/freedesktop/Problems2');
+var problems = problems_client.proxies('org.freedesktop.Problems2.Entry', '/org/freedesktop/Problems2/Entry');
+
+var session;
+problems.wait(function() {
+    service.GetSession().done(function(session_path) {
+        session = problems_client.proxy('org.freedesktop.Problems2.Session', session_path);
+        session.wait(function() {
+            session.Authorize({}); //ignore return code
+        });
+    });
+});
+
 var Dropdown = React.createClass({
     getDefaultProps: function () {
         return {
@@ -142,7 +156,6 @@ var ContainerProblems = React.createClass({
             problem_cursors.push(<a data-url={problem[i][0]} className='list-group-item' onClick={this.onItemClick}>
             <span className="pficon pficon-warning-triangle-o fa-lg"></span>
             {problem[i][1]}
-            <i className="pull-right pficon fa fa-angle-right fa-lg"></i>
             </a>)
         }
 
@@ -165,6 +178,14 @@ var ContainerList = React.createClass({
     },
 
     getInitialState: function () {
+        // What is the best place to put this in?
+        $(service).on("Crash", function(event, problem_path) {
+            var entry = problems_client.proxy('org.freedesktop.Problems2.Entry', problem_path);
+            entry.wait(function() {
+                // Here 'this' is not having setState (as it is of abrt's class?)
+                this.setState({problems: []});
+            });
+        });
         return {
             containers: []
         };
@@ -324,6 +345,7 @@ var ContainerList = React.createClass({
             else
                 emptyCaption = _("No containers that match the current filter");
         }
+
 
         return (
             <Listing.Listing title={_("Containers")} columnTitles={columnTitles} emptyCaption={emptyCaption}>
