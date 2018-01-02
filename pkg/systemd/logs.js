@@ -207,7 +207,7 @@ $(function() {
                 services_list.push(service);
                 
                 //add service to the menu list and sort
-                $('#journal-service-lists').append('<li><a data-service="' + service + '">' + service + '</a></li>');
+                $('#journal-service-lists').append($('<li>').append($('<a>').text(service).attr('data-service',service)));
                 $('#journal-service-lists').children('li').sort(function(a, b) {
                     return $(a).text().localeCompare($(b).text());
                 }).appendTo($('#journal-service-lists'));
