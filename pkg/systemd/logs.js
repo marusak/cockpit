@@ -93,6 +93,8 @@ $(function() {
         }
     }
 
+    var services_list = [];
+
     /* Not public API */
     function journalbox(outer, start, match, day_box) {
         var box = $('<div class="panel panel-default cockpit-log-panel">');
@@ -114,16 +116,20 @@ $(function() {
         }
 
         function prepend_entries(entries) {
-            for (var i = 0; i < entries.length; i++)
+            for (var i = 0; i < entries.length; i++){
                 renderer.prepend(entries[i]);
+                append_service_menu(entries[i]['SYSLOG_IDENTIFIER']);    
+            }
             renderer.prepend_flush();
             /* empty cache for day offsets */
             renderitems_day_cache = null;
         }
 
         function append_entries(entries) {
-            for (var i = 0; i < entries.length; i++)
+            for (var i = 0; i < entries.length; i++){
                 renderer.append(entries[i]);
+                append_service_menu(entries[i]['SYSLOG_IDENTIFIER']);
+            }
             renderer.append_flush();
             /* empty cache for day offsets */
             renderitems_day_cache = null;
@@ -193,6 +199,22 @@ $(function() {
                 /* No visible day headers
                  */
                 day_box.text(_("Go to"));
+            }
+        }
+
+        function append_service_menu(service){
+            if(!services_list.includes(service)){
+                services_list.push(service);
+                
+                //add service to the menu list and sort
+                $('#journal-service-lists').append('<li><a data-service="' + service + '">' + service + '</a></li>');
+                $('#journal-service-lists').children('li').sort(function(a, b) {
+                    return $(a).text().localeCompare($(b).text());
+                }).appendTo($('#journal-service-lists'));
+                
+                $('#journal-service-menu a').off().click(function() {
+                    cockpit.location.go([], $.extend(cockpit.location.options, { tag: $(this).attr('data-service') }));
+                });
             }
         }
 
@@ -304,9 +326,10 @@ $(function() {
 
         var options = cockpit.location.options;
         if (options['service'])
-            match.push('_SYSTEMD_UNIT=' + options['service']);
+        match.push('_SYSTEMD_UNIT=' + options['service']);
         else if (options['tag'])
             match.push('SYSLOG_IDENTIFIER=' + options['tag']);
+        $('#journal-service').text(options['tag'] || _("All"));
 
         var query_start = cockpit.location.options['start'] || "recent";
         if (query_start == 'recent')
