@@ -116,7 +116,7 @@ $(function() {
         }
 
         function prepend_entries(entries) {
-            for (var i = 0; i < entries.length; i++){
+            for (var i = 0; i < entries.length; i++) {
                 renderer.prepend(entries[i]);
                 append_service_menu(entries[i]['SYSLOG_IDENTIFIER']);    
             }
@@ -126,7 +126,7 @@ $(function() {
         }
 
         function append_entries(entries) {
-            for (var i = 0; i < entries.length; i++){
+            for (var i = 0; i < entries.length; i++) {
                 renderer.append(entries[i]);
                 append_service_menu(entries[i]['SYSLOG_IDENTIFIER']);
             }
@@ -326,7 +326,7 @@ $(function() {
 
         var options = cockpit.location.options;
         if (options['service'])
-        match.push('_SYSTEMD_UNIT=' + options['service']);
+            match.push('_SYSTEMD_UNIT=' + options['service']);
         else if (options['tag'])
             match.push('SYSLOG_IDENTIFIER=' + options['tag']);
         $('#journal-service').text(options['tag'] || _("All"));
