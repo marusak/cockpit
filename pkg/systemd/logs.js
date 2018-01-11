@@ -207,12 +207,15 @@ $(function() {
                 services_list.push(service);
                 
                 //add service to the menu list and sort
-                $('#journal-service-lists').append(
+                $('#journal-services-list').append(
                     $('<li>').append(
                         $('<a>').text(service).attr('data-service', service)));
-                $('#journal-service-lists').children('li').sort(function(a, b) {
+                var all = $('#journal-services-list').children(':first-child');
+                $('#journal-services-list').children('li').sort(function(a, b) {
                     return $(a).text().localeCompare($(b).text());
-                }).appendTo($('#journal-service-lists'));
+                }).appendTo($('#journal-services-list'));
+                $('#journal-services-list').prepend(all);
+
                 
                 $('#journal-service-menu a').off().click(function() {
                     cockpit.location.go([], $.extend(cockpit.location.options, { tag: $(this).attr('data-service') }));
