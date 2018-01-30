@@ -17,12 +17,15 @@
  * along with Cockpit; If not, see <http://www.gnu.org/licenses/>.
  */
 
+//TODO show bad logins
+
 var $ = require("jquery");
 var cockpit = require("cockpit");
 
 var React = require("react");
 var Mustache = require("mustache");
 var authorized_keys = require("./authorized-keys");
+var listHistory = require("./history-listing.jsx");
 
 require("patterns");
 require("bootstrap-datepicker/dist/js/bootstrap-datepicker");
@@ -632,6 +635,13 @@ PageAccount.prototype = {
         $('#add-authorized-key-dialog').on('hidden.bs.modal', function () {
             $("#authorized-keys-text").val("");
         });
+        var login_history = $('#account-login-history');
+        $('#account-show-history').on('click', function () {
+            if (login_history.hasClass('hidden'))
+                login_history.removeClass('hidden');
+            else
+                login_history.addClass('hidden');
+        });
     },
 
     setup_keys: function (user_name, home_dir) {
@@ -812,6 +822,34 @@ PageAccount.prototype = {
            .fail(log_unexpected_error);
     },
 
+    get_history: function() {
+        var self = this;
+
+        function parse_history(data) {
+            var res = [];
+            var lines = data.split('\n');
+            for (var i = 0; i < lines.length - 3; i++){
+                var line = lines[i].match(/\S+/g);
+                var date1 = line[3][0] == '2' ? new Date(line[3]) : line[3]; // good for 982 years
+                var date2 = line[5][0] == '2' ? new Date(line[5]) : line[5];
+
+                res.push([line[1], line[2], date1.toLocaleString(), date2.toLocaleString()]);
+            }
+            return res;
+        }
+
+        cockpit.spawn(["/usr/bin/last", '--time-format=iso', '--ip', self.account_id],
+                      { "environ": ["LC_ALL=C"] })
+           .done(function (data) {
+               self.history = parse_history(data);
+               self.update();
+           })
+           .fail(function() {
+               self.history = [];
+               self.update();
+           });
+    },
+
     get_expire: function() {
         var self = this;
 
@@ -879,6 +917,7 @@ PageAccount.prototype = {
         this.get_locked();
         this.get_logged();
         this.get_expire();
+        this.get_history();
     },
 
     leave: function() {
@@ -926,6 +965,11 @@ PageAccount.prototype = {
                 $('#account-last-login').text(_("Never"));
             else
                 $('#account-last-login').text(this.lastLogin.toLocaleString());
+
+            if (this.history)
+                listHistory.listHistory(document.getElementById('account-login-history'), this.history);
+            else
+                listHistory.listHistory(document.getElementById('account-login-history'), []);
 
             if (typeof this.locked != 'undefined' && this.account["uid"] !== 0) {
                 $('#account-locked').prop('checked', this.locked);
