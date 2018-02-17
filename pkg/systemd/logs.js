@@ -64,6 +64,7 @@ $(function() {
                           'runlevel', 'tid', 'time', 'uid', 'uuid'];
 
     var displayable_problems = {};
+    var services_list = [];
 
     //Get list of all problems that can be displayed
     var find_problems = function () {
@@ -83,7 +84,7 @@ $(function() {
         });
         return r;
     };
-
+    
     function update_problems(problem_paths) {
         for (var i in problem_paths) {
             var p = problems[problem_paths[i]];
@@ -93,7 +94,6 @@ $(function() {
         }
     }
 
-    var services_list = [];
 
     /* Not public API */
     function journalbox(outer, start, match, day_box) {
@@ -109,6 +109,14 @@ $(function() {
         /* cache to store offsets for days */
         var renderitems_day_cache = null;
         var procs = [];
+
+        journal.list_units(function (err,units){
+            if(err){
+                console.warn(cockpit.message(err));
+            }else{
+                append_service_menu(units);
+            }
+        });
 
         function query_error(error) {
             /* TODO: blank slate */
@@ -203,23 +211,33 @@ $(function() {
         }
 
         function append_service_menu(service){
-            if(!services_list.includes(service)){
-                services_list.push(service);
-                
-                //add service to the menu list and sort
-                $('#journal-services-list').append(
-                    $('<li>').append(
-                        $('<a>').text(service).attr('data-service', service)));
-                var all = $('#journal-services-list').children(':first-child');
-                $('#journal-services-list').children('li').sort(function(a, b) {
-                    return $(a).text().localeCompare($(b).text());
-                }).appendTo($('#journal-services-list'));
-                $('#journal-services-list').prepend(all);
+            if (Array.isArray(service)){
+                for (var unit in service) {
+                    append(service[unit]);
+                }
+            }else{
+                append(service);
+            }
 
-                
-                $('#journal-service-menu a').off().click(function() {
-                    cockpit.location.go([], $.extend(cockpit.location.options, { tag: $(this).attr('data-service') }));
-                });
+            function append(unit){
+                if(unit && !services_list.includes(unit)){
+                    services_list.push(unit);
+                    
+                    //add service to the menu list and sort
+                    $('#journal-services-list').append(
+                        $('<li>').append(
+                            $('<a>').text(unit).attr('data-service', unit)));
+                    var all = $('#journal-services-list').children(':first-child');
+                    $('#journal-services-list').children('li').sort(function(a, b) {
+                        return $(a).text().localeCompare($(b).text());
+                    }).appendTo($('#journal-services-list'));
+                    $('#journal-services-list').prepend(all);
+
+                    
+                    $('#journal-service-menu a').off().click(function() {
+                        cockpit.location.go([], $.extend(cockpit.location.options, { tag: $(this).attr('data-service') }));
+                    });
+                }
             }
         }
 
