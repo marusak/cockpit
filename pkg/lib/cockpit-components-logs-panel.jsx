@@ -88,13 +88,16 @@ class JournalOutput {
         this.logs.unshift(item);
     }
 
+    append(item) {
+        this.logs.push(item);
+    }
+
     remove_first() {
         this.logs.shift();
     }
 
-    limit(max) {
-        if (this.logs.length > max)
-            this.logs = this.logs.slice(-max);
+    remove_last() {
+        this.logs.pop();
     }
 }
 
@@ -102,25 +105,51 @@ export class LogsPanel extends React.Component {
     constructor() {
         super();
         this.state = { logs: [ ] };
+        this.out = new JournalOutput();
+        this.renderer = journal.renderer(this.out);
+        this.last_cursor = null;
+        this.active = true;
     }
 
     componentDidMount() {
-        this.journalctl = journal.journalctl(this.props.match, { count: this.props.max });
+        var self = this;
+        var dfd = cockpit.defer();
+        var valid = false;
 
-        var out = new JournalOutput();
-        var render = journal.renderer(out);
+        if (this.journalctl) {
+            this.journalctl.stop();
+        }
+
+        var n = this.props.max - this.state.logs.length;
+
+        if (this.last_cursor)
+            this.journalctl = journal.journalctl(this.props.match, { count: n, after: this.last_cursor, reverse:true });
+        else
+            this.journalctl = journal.journalctl(this.props.match, { count: n });
 
         this.journalctl.stream((entries) => {
+            if (!this.last_cursor)
+                entries = entries.reverse();
+            if (entries.length > 0) {
+                this.last_cursor = entries[entries.length - 1]["__CURSOR"];
+                valid = true;
+            }
             for (var i = 0; i < entries.length; i++)
-                render.prepend(entries[i]);
-            render.prepend_flush();
-            out.limit(this.props.max);
-            this.setState({ logs: out.logs });
+                this.renderer.append(entries[i]);
+            this.renderer.append_flush();
+            this.setState({ logs: this.out.logs });
+            dfd.resolve();
+        });
+
+        dfd.promise().done(function() {
+            if (self.state.logs.length < self.props.max && valid && self.active)
+                self.componentDidMount();
         });
     }
 
     componentWillUnmount() {
         this.journalctl.stop();
+        this.active = false;
     }
 
     // TODO: refactor, the state object can't store neither functions nor React components
