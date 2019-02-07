@@ -20,7 +20,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
-import Term from "term";
+import { Terminal as Term } from "xterm";
 import "console.css";
 
 /*
@@ -56,7 +56,10 @@ export class Terminal extends React.Component {
         var term = new Term({
             cols: this.props.cols || 80,
             rows: this.props.rows || 25,
-            screenKeys: true
+            screenKeys: true,
+            cursorBlink: true,
+            fontSize: 12,
+            fontFamily: 'Menlo, Monaco, Consolas, monospace'
         });
 
         term.on('data', function(data) {
@@ -78,6 +81,7 @@ export class Terminal extends React.Component {
             window.addEventListener('resize', this.onWindowResize);
             this.onWindowResize();
         }
+        this.state.terminal.focus();
     }
 
     componentWillUpdate(nextProps, nextState) {
@@ -107,6 +111,7 @@ export class Terminal extends React.Component {
                 }
             });
         }
+        this.state.terminal.focus();
     }
 
     render() {
@@ -158,18 +163,12 @@ export class Terminal extends React.Component {
     onWindowResize() {
         var padding = 2 * 11;
         var node = ReactDOM.findDOMNode(this);
-        var terminal = this.refs.terminal.querySelector('.terminal');
 
-        var ch = document.createElement('span');
-        ch.textContent = 'M';
-        ch.style.position = 'absolute';
-        terminal.appendChild(ch);
-        var rect = ch.getBoundingClientRect();
-        terminal.removeChild(ch);
-
+        var realHeight = this.state.terminal._core.renderer.dimensions.actualCellHeight;
+        var realWidth = this.state.terminal._core.renderer.dimensions.actualCellWidth;
         this.setState({
-            rows: Math.floor((node.parentElement.clientHeight - padding) / rect.height),
-            cols: Math.floor((node.parentElement.clientWidth - padding) / rect.width)
+            rows: Math.floor((node.parentElement.clientHeight - padding) / realHeight),
+            cols: Math.floor((node.parentElement.clientWidth - padding) / realWidth)
         });
     }
 
