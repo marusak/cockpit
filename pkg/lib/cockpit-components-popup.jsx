@@ -86,8 +86,8 @@ export class ContextMenu extends React.Component {
 
         return (visible || null) &&
             <div ref={ ref => { this.root = ref } } className="contextMenu">
-                <div className="contextMenuOption">Copy</div>
-                <div className="contextMenuOption">Paste</div>
+                <div className="contextMenuOption" onClick={this.props.getText} >Copy</div>
+                <div className="contextMenuOption" onClick={this.props.setText} >Paste</div>
             </div>;
     }
 }

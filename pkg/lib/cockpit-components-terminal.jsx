@@ -51,6 +51,8 @@ export class Terminal extends React.Component {
         this.onWindowResize = this.onWindowResize.bind(this);
         this.onFocusIn = this.onFocusIn.bind(this);
         this.onFocusOut = this.onFocusOut.bind(this);
+        this.setText = this.setText.bind(this);
+        this.getText = this.getText.bind(this);
     }
 
     componentWillMount() {
@@ -125,7 +127,7 @@ export class Terminal extends React.Component {
                         onFocus={this.onFocusIn}
                         onContextMenu={this.contextMenu}
                         onBlur={this.onFocusOut} />
-                <ContextMenu />
+                <ContextMenu setText={this.setText} getText={this.getText} />
             </React.Fragment>
         );
     }
@@ -134,6 +136,27 @@ export class Terminal extends React.Component {
         this.disconnectChannel();
         this.state.terminal.destroy();
         window.removeEventListener('resize', this.onWindowResize);
+    }
+
+    setText() {
+        /* NEEDS PERMISSION
+        const element = document.createElement('textarea');
+        document.body.appendChild(element);
+        element.focus();
+        document.execCommand('paste');
+        window.alert(element.textContent);
+        document.body.removeChild(element);
+        */
+    }
+
+    getText() {
+        const element = document.createElement('textarea');
+        element.value = this.state.terminal.getSelection();
+        document.body.appendChild(element);
+        element.focus();
+        element.setSelectionRange(0, element.value.length);
+        document.execCommand('copy');
+        document.body.removeChild(element);
     }
 
     onChannelMessage(event, data) {
