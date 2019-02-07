@@ -21,6 +21,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import { Terminal as Term } from "xterm";
+import { ContextMenu } from "cockpit-components-popup.jsx";
 import "console.css";
 
 /*
@@ -59,7 +60,8 @@ export class Terminal extends React.Component {
             screenKeys: true,
             cursorBlink: true,
             fontSize: 12,
-            fontFamily: 'Menlo, Monaco, Consolas, monospace'
+            fontFamily: 'Menlo, Monaco, Consolas, monospace',
+            screenReaderMode: true
         });
 
         term.on('data', function(data) {
@@ -115,12 +117,17 @@ export class Terminal extends React.Component {
     }
 
     render() {
-        // ensure react never reuses this div by keying it with the terminal widget
-        return <div ref="terminal"
-                    key={this.state.terminal}
-                    className="console-ct"
-                    onFocus={this.onFocusIn}
-                    onBlur={this.onFocusOut} />;
+        return (
+            <React.Fragment>
+                <ContextMenu />
+                <div ref="terminal"
+                        key={this.state.terminal}
+                        className="console-ct"
+                        onFocus={this.onFocusIn}
+                        onContextMenu={this.contextMenu}
+                        onBlur={this.onFocusOut} />
+            </React.Fragment>
+        );
     }
 
     componentWillUnmount() {
