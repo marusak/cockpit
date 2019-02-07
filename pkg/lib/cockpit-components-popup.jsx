@@ -26,19 +26,16 @@ export class ContextMenu extends React.Component {
         this.state = { visible: false };
         this._handleContextMenu = this._handleContextMenu.bind(this);
         this._handleClick = this._handleClick.bind(this);
-        this._handleScroll = this._handleScroll.bind(this);
     }
 
     componentDidMount() {
         document.addEventListener('contextmenu', this._handleContextMenu);
         document.addEventListener('click', this._handleClick);
-        document.addEventListener('scroll', this._handleScroll);
     }
 
     componentWillUnmount() {
         document.removeEventListener('contextmenu', this._handleContextMenu);
         document.removeEventListener('click', this._handleClick);
-        document.removeEventListener('scroll', this._handleScroll);
     }
 
     _handleContextMenu(event) {
@@ -76,16 +73,12 @@ export class ContextMenu extends React.Component {
     }
 
     _handleClick(event) {
+        if (event.button !== 0)
+            return;
         const { visible } = this.state;
         const wasOutside = !(event.target.contains === this.root);
 
         if (wasOutside && visible) this.setState({ visible: false, });
-    }
-
-    _handleScroll() {
-        const { visible } = this.state;
-
-        if (visible) this.setState({ visible: false, });
     }
 
     render() {
@@ -93,13 +86,8 @@ export class ContextMenu extends React.Component {
 
         return (visible || null) &&
             <div ref={ ref => { this.root = ref } } className="contextMenu">
-                <div className="contextMenu--option">Share this</div>
-                <div className="contextMenu--option">New window</div>
-                <div className="contextMenu--option">Visit official site</div>
-                <div className="contextMenu--option contextMenu--option__disabled">View full version</div>
-                <div className="contextMenu--option">Settings</div>
-                <div className="contextMenu--separator" />
-                <div className="contextMenu--option">About this app</div>
+                <div className="contextMenuOption">Copy</div>
+                <div className="contextMenuOption">Paste</div>
             </div>;
     }
 }
