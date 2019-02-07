@@ -119,13 +119,13 @@ export class Terminal extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <ContextMenu />
                 <div ref="terminal"
                         key={this.state.terminal}
                         className="console-ct"
                         onFocus={this.onFocusIn}
                         onContextMenu={this.contextMenu}
                         onBlur={this.onFocusOut} />
+                <ContextMenu />
             </React.Fragment>
         );
     }
