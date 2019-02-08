@@ -139,24 +139,30 @@ export class Terminal extends React.Component {
     }
 
     setText() {
-        /* NEEDS PERMISSION
-        const element = document.createElement('textarea');
-        document.body.appendChild(element);
-        element.focus();
-        document.execCommand('paste');
-        window.alert(element.textContent);
-        document.body.removeChild(element);
-        */
+        navigator.clipboard.readText()
+                .then((text) => {
+                    this.props.channel.send(text);
+                })
+                .catch(err => {
+                    console.error('Failed to read clipboard contents: ', err);
+                })
+                .finally(() => {
+                    this.state.terminal.focus();
+                });
     }
 
     getText() {
-        const element = document.createElement('textarea');
-        element.value = this.state.terminal.getSelection();
-        document.body.appendChild(element);
-        element.focus();
-        element.setSelectionRange(0, element.value.length);
-        document.execCommand('copy');
-        document.body.removeChild(element);
+        navigator.clipboard.writeText(this.state.terminal.getSelection())
+                .then(() => {
+                    console.log('Text copied to clipboard');
+                })
+                .catch(err => {
+                    // This can happen if the user denies clipboard permissions:
+                    console.error('Could not copy text: ', err);
+                })
+                .finally(() => {
+                    this.state.terminal.focus();
+                });
     }
 
     onChannelMessage(event, data) {
