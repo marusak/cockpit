@@ -73,18 +73,16 @@ export class ContextMenu extends React.Component {
     }
 
     _handleClick(event) {
-        if (event.button !== 0)
-            return;
-        const { visible } = this.state;
-        const wasOutside = !(event.target.contains === this.root);
+        if (event && event.button === 0) {
+            const wasOutside = !(event.target.contains === this.root);
 
-        if (wasOutside && visible) this.setState({ visible: false, });
+            if (wasOutside && this.state.visible)
+                this.setState({ visible: false });
+        }
     }
 
     render() {
-        const { visible } = this.state;
-
-        return (visible || null) &&
+        return this.state.visible &&
             <div ref={ ref => { this.root = ref } } className="contextMenu">
                 <div className="contextMenuOption" onClick={this.props.getText} >Copy</div>
                 <div className="contextMenuOption" onClick={this.props.setText} >Paste</div>
