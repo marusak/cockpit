@@ -21,6 +21,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import { Terminal as Term } from "xterm";
+import { ContextMenu } from "cockpit-components-popup.jsx";
 import "console.css";
 
 /*
@@ -50,6 +51,8 @@ export class Terminal extends React.Component {
         this.onWindowResize = this.onWindowResize.bind(this);
         this.onFocusIn = this.onFocusIn.bind(this);
         this.onFocusOut = this.onFocusOut.bind(this);
+        this.setText = this.setText.bind(this);
+        this.getText = this.getText.bind(this);
     }
 
     componentWillMount() {
@@ -116,18 +119,50 @@ export class Terminal extends React.Component {
     }
 
     render() {
-        // ensure react never reuses this div by keying it with the terminal widget
-        return <div ref="terminal"
-                    key={this.state.terminal}
-                    className="console-ct"
-                    onFocus={this.onFocusIn}
-                    onBlur={this.onFocusOut} />;
+        return (
+            <React.Fragment>
+                <div ref="terminal"
+                        key={this.state.terminal}
+                        className="console-ct"
+                        onFocus={this.onFocusIn}
+                        onContextMenu={this.contextMenu}
+                        onBlur={this.onFocusOut} />
+                <ContextMenu setText={this.setText} getText={this.getText} />
+            </React.Fragment>
+        );
     }
 
     componentWillUnmount() {
         this.disconnectChannel();
         this.state.terminal.destroy();
         window.removeEventListener('resize', this.onWindowResize);
+    }
+
+    setText() {
+        navigator.clipboard.readText()
+                .then((text) => {
+                    this.props.channel.send(text);
+                })
+                .catch(err => {
+                    console.error('Failed to read clipboard contents: ', err);
+                })
+                .finally(() => {
+                    this.state.terminal.focus();
+                });
+    }
+
+    getText() {
+        navigator.clipboard.writeText(this.state.terminal.getSelection())
+                .then(() => {
+                    console.log('Text copied to clipboard');
+                })
+                .catch(err => {
+                    // This can happen if the user denies clipboard permissions:
+                    console.error('Could not copy text: ', err);
+                })
+                .finally(() => {
+                    this.state.terminal.focus();
+                });
     }
 
     onChannelMessage(event, data) {
