@@ -13,9 +13,27 @@ html, body {
     bottom: 0px;
     left: 0px;
     right: 0px;
-    background-color: black;
 }
+
+.dark {
+    background-color: #002b36;
+}
+
+.light {
+    background-color: #fdf6e3;
+}
+
 
 #terminal {
     height: 100%;
+}
+
+.terminal-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+#theme-select {
+    margin-right: 5px;
+    width: 70px;
 }
