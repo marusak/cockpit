@@ -23,6 +23,18 @@ html, body {
     background-color: #fdf6e3;
 }
 
+.theme-btn {
+    margin: 5px;
+    border-radius: 50%;
+    border: 1px solid grey;
+    width: 30px;
+    height: 30px;
+}
+
+.theme-btn:hover,
+.theme-btn.active {
+    border-color: #7dc3e8;
+}
 
 #terminal {
     height: 100%;
@@ -35,5 +47,16 @@ html, body {
 
 #theme-select {
     margin-right: 5px;
-    width: 70px;
+    width: auto;
 }
+
+.dropdown-menu { /* make these apply only in temrinal menu */
+    left: auto;
+    right: 0;
+}
+
+.dropdown-toggle {
+    width: auto !important;
+    padding-right: 6px !important;
+}
+

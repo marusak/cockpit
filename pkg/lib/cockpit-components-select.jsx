@@ -26,7 +26,7 @@ import "page.css";
 
 const _ = cockpit.gettext;
 
-const textForUndefined = _("undefined");
+const textForUndefined = _("");
 
 /* React pattern component for a dropdown/select control
  * Entries should be child components of type SelectEntry (html <a>)
@@ -118,11 +118,15 @@ export class StatelessSelect extends React.Component {
         if (this.props.enabled === false)
             buttonClasses += " disabled";
 
+        let icon = "caret";
+        if (this.props.icon)
+            icon = this.props.icon;
+
         return (
             <div className={classes} onClick={this.clickHandler} id={this.props.id}>
                 <button className={buttonClasses} type="button">
                     <span className="pull-left">{currentValue}</span>
-                    <span className="caret" />
+                    <span className={icon} />
                 </button>
                 <ul className="dropdown-menu">
                     {this.props.children}

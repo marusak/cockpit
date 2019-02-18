@@ -4,7 +4,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import { Terminal } from "cockpit-components-terminal.jsx";
-import { Select, SelectEntry } from "cockpit-components-select.jsx";
+import { StatelessSelect } from "cockpit-components-select.jsx";
 
 const _ = cockpit.gettext;
 
@@ -48,6 +48,7 @@ const _ = cockpit.gettext;
             cockpit.user().done(function (user) {
                 this.setState({ user: user, channel: this.createChannel(user) });
             }.bind(this));
+            this.onThemeChanged(this.state.theme);
         }
 
         onTitleChanged(title) {
@@ -55,7 +56,13 @@ const _ = cockpit.gettext;
         }
 
         onThemeChanged(value) {
-            this.setState({ theme: value });
+            this.setState({ theme: value }); // TODO v jednom setState
+            this.setState({ lightTheme: "" });
+            this.setState({ darkTheme: "" });
+            if (value === 'dark')
+                this.setState({ darkTheme: " active" });
+            else
+                this.setState({ lightTheme: " active" });
             cockpit.localStorage.setItem('terminal-theme', value);
         }
 
@@ -89,12 +96,12 @@ const _ = cockpit.gettext;
                     <div className="panel-heading terminal-group">
                         <tt className="terminal-title">{this.state.title}</tt>
                         <div>
-                            <Select onChange={this.onThemeChanged}
-                                    id="theme-select"
-                                    initial={this.state.theme}>
-                                <SelectEntry data='dark'>{_("Dark")}</SelectEntry>
-                                <SelectEntry data='light'>{_("Light")}</SelectEntry>
-                            </Select>
+                            <StatelessSelect id="theme-select" icon="fa fa-cog">
+                                <span className="terminal-group">
+                                    <button className={ 'theme-btn dark' + this.state.darkTheme } onClick={() => this.onThemeChanged('dark') } />
+                                    <button className={ 'theme-btn light' + this.state.lightTheme } onClick={() => this.onThemeChanged('light') } />
+                                </span>
+                            </StatelessSelect>
                             <button ref="resetButton"
                                  className="btn btn-default"
                                  onClick={this.onResetClick}>{_("Reset")}</button>
