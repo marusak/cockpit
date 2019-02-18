@@ -23,6 +23,19 @@ html, body {
     background-color: #fdf6e3;
 }
 
+.theme-btn {
+    margin: 5px;
+    border-radius: 50%;
+    border: 1px solid grey;
+    width: 30px;
+    height: 30px;
+}
+
+.theme-btn:hover,
+.theme-btn.active {
+    border: 2px solid #7dc3e8;
+}
+
 #terminal {
     height: 100%;
 }
@@ -34,5 +47,20 @@ html, body {
 
 #theme-select {
     margin-right: 5px;
-    width: 70px;
+    width: auto;
 }
+
+#terminal .dropdown-menu {
+    left: auto;
+    right: 0;
+}
+
+#terminal .dropdown-toggle {
+    width: auto;
+    padding-right: 6px;
+}
+
+#theme-select > button span:first-child {
+    display: none; /* hide text in select */
+}
+
