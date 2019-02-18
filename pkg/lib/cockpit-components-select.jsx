@@ -39,6 +39,7 @@ const textForUndefined = _("undefined");
  *  - id (optional) html id of the top level node
  *  - enabled (optional) whether the component is enabled or not; defaults to true
  *  - extraClass (optional) CSS class name(s) to be added to the main <div> of the component
+ *  - iconClass (optional) CSS class name(s) that is used in the main button (default is caret)
  */
 export class StatelessSelect extends React.Component {
     constructor() {
@@ -118,11 +119,15 @@ export class StatelessSelect extends React.Component {
         if (this.props.enabled === false)
             buttonClasses += " disabled";
 
+        let iconClass = "caret";
+        if (this.props.iconClass)
+            iconClass = this.props.iconClass;
+
         return (
             <div className={classes} onClick={this.clickHandler} id={this.props.id}>
                 <button className={buttonClasses} type="button">
                     <span className="pull-left">{currentValue}</span>
-                    <span className="caret" />
+                    <span className={iconClass} />
                 </button>
                 <ul className="dropdown-menu">
                     {this.props.children}
@@ -138,6 +143,7 @@ StatelessSelect.propTypes = {
     id: PropTypes.string,
     enabled: PropTypes.bool,
     extraClass: PropTypes.string,
+    iconClass: PropTypes.iconClass
 };
 
 export class Select extends React.Component {
