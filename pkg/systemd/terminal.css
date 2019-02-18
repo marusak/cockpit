@@ -72,3 +72,6 @@ html, body {
     display: none; /* hide text in select */
 }
 
+.font-size {
+    font-size: 14px;
+}

@@ -115,7 +115,7 @@ export class Terminal extends React.Component {
             rows: this.props.rows || 25,
             screenKeys: true,
             cursorBlink: true,
-            fontSize: 12,
+            fontSize: this.props.fontSize || 12,
             fontFamily: 'Menlo, Monaco, Consolas, monospace',
             screenReaderMode: true
         });
@@ -161,6 +161,12 @@ export class Terminal extends React.Component {
 
         if (nextProps.theme !== this.props.theme)
             this.setTerminalTheme(nextProps.theme);
+
+        if (nextProps.fontSize !== this.props.fontSize) {
+            this.state.terminal.setOption("fontSize", nextProps.fontSize);
+            this.onWindowResize();
+            this.state.terminal.scrollToBottom();
+        }
     }
 
     componentDidUpdate(prevProps) {

@@ -44,15 +44,18 @@ const buttonToState = {
         constructor(props) {
             super(props);
             var theme = document.cookie.replace(/(?:(?:^|.*;\s*)CockpitTerminalTheme\s*=\s*([^;]*).*$)|^.*$/, "$1");
+            var fontSize = document.cookie.replace(/(?:(?:^|.*;\s*)CockpitTerminalFontSize\s*=\s*([^;]*).*$)|^.*$/, "$1");
             if (!theme)
                 theme = "black-theme";
             this.state = {
                 title: 'Terminal',
-                theme: theme
+                theme: theme,
+                fontSize: parseInt(fontSize) || 12
             };
             this.onTitleChanged = this.onTitleChanged.bind(this);
             this.onResetClick = this.onResetClick.bind(this);
             this.onThemeChanged = this.onThemeChanged.bind(this);
+            this.onFontSizeChanged = this.onFontSizeChanged.bind(this);
         }
 
         componentWillMount() {
@@ -79,6 +82,14 @@ const buttonToState = {
             this.setState({ [buttonToState[value]]: " active" });
         }
 
+        onFontSizeChanged(diff) {
+            var value = this.state.fontSize + diff;
+            var cookie = "CockpitTerminalFontSize=" + encodeURIComponent(value) +
+                         "; path=/; expires=Sun, 16 Jul 3567 06:23:41 GMT";
+            document.cookie = cookie;
+            this.setState({ fontSize: value });
+        }
+
         onResetClick(event) {
             if (event.button !== 0)
                 return;
@@ -100,10 +111,11 @@ const buttonToState = {
                 terminal = (<Terminal ref="terminal"
                      channel={this.state.channel}
                      theme={this.state.theme}
+                     fontSize={this.state.fontSize}
                      onTitleChanged={this.onTitleChanged} />);
             else
                 terminal = <span>Loading...</span>;
-
+            //TODO nech sa to nezatvara po kazom pluse-minuse
             return (
                 <div className="console-ct-container">
                     <div className="panel-heading terminal-group">
@@ -115,6 +127,11 @@ const buttonToState = {
                                     <button className={ 'theme-btn dark-theme ' + this.state.darkTheme } onClick={() => this.onThemeChanged('dark-theme') } />
                                     <button className={ 'theme-btn light-theme ' + this.state.lightTheme } onClick={() => this.onThemeChanged('light-theme') } />
                                     <button className={ 'theme-btn white-theme ' + this.state.whiteTheme } onClick={() => this.onThemeChanged('white-theme') } />
+                                </span>
+                                <span className="terminal-group">
+                                    <button className='theme-btn fa fa-minus' onClick={() => this.onFontSizeChanged(-1) } />
+                                    <span className="font-size"> { this.state.fontSize } </span>
+                                    <button className='theme-btn fa fa-plus' onClick={() => this.onFontSizeChanged(1) } />
                                 </span>
                             </StatelessSelect>
                             <button ref="resetButton"
