@@ -171,10 +171,14 @@ PROMPT_COMMAND='printf "\\033]0;%s@%s:%s\\007" "${USER}" "${HOSTNAME%%.*}" "${PW
             b.wait_attr(".xterm-viewport", "style", expected_style)
 
         # Check that color theme changes
+        black_style = "background-color: rgb(0, 0, 0);"
         dark_style = "background-color: rgb(0, 43, 54);"
         light_style = "background-color: rgb(253, 246, 227);"
+        white_style = "background-color: rgb(255, 255, 255);"
 
+        verify_theme("black-theme", black_style)
         verify_theme("dark-theme", dark_style)
+        verify_theme("white-theme", white_style)
         verify_theme("light-theme", light_style)
 
         # Relogin and white-style should be remembered

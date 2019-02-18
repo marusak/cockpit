@@ -10,8 +10,10 @@ const _ = cockpit.gettext;
 
 // Map between buttons/themes and states which set values of these buttons/themes
 const buttonToState = {
+    "black-theme": "blackTheme",
     "dark-theme": "darkTheme",
     "light-theme": "lightTheme",
+    "white-theme": "whiteTheme",
 };
 
 (function() {
@@ -43,7 +45,7 @@ const buttonToState = {
             super(props);
             var theme = document.cookie.replace(/(?:(?:^|.*;\s*)CockpitTerminalTheme\s*=\s*([^;]*).*$)|^.*$/, "$1");
             if (!theme)
-                theme = "dark-theme";
+                theme = "black-theme";
             this.state = {
                 title: 'Terminal',
                 theme: theme
@@ -69,8 +71,10 @@ const buttonToState = {
                          "; path=/; expires=Sun, 16 Jul 3567 06:23:41 GMT";
             document.cookie = cookie;
             this.setState({ theme: value,
+                            whiteTheme: "",
                             lightTheme: "",
-                            darkTheme: ""
+                            darkTheme: "",
+                            blackTheme: ""
             });
             this.setState({ [buttonToState[value]]: " active" });
         }
@@ -107,8 +111,10 @@ const buttonToState = {
                         <div>
                             <StatelessSelect id="theme-select" iconClass="fa fa-cog">
                                 <span className="terminal-group">
+                                    <button className={ 'theme-btn black-theme ' + this.state.blackTheme } onClick={() => this.onThemeChanged('black-theme') } />
                                     <button className={ 'theme-btn dark-theme ' + this.state.darkTheme } onClick={() => this.onThemeChanged('dark-theme') } />
                                     <button className={ 'theme-btn light-theme ' + this.state.lightTheme } onClick={() => this.onThemeChanged('light-theme') } />
+                                    <button className={ 'theme-btn white-theme ' + this.state.whiteTheme } onClick={() => this.onThemeChanged('white-theme') } />
                                 </span>
                             </StatelessSelect>
                             <button ref="resetButton"

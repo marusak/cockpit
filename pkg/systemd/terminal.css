@@ -15,12 +15,20 @@ html, body {
     right: 0px;
 }
 
+.black-theme {
+    background-color: #000000;
+}
+
 .dark-theme {
     background-color: #002b36;
 }
 
 .light-theme {
     background-color: #fdf6e3;
+}
+
+.white-theme {
+    background-color: #ffffff;
 }
 
 .theme-btn {

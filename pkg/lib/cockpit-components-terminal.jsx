@@ -36,6 +36,10 @@ const theme_core = {
 };
 
 const themes = {
+    "black-theme": {
+        background: "#000000",
+        foreground: "#ffffff"
+    },
     "dark-theme": Object.assign({
         background: "#002b36",
         foreground: "#fdf6e3",
@@ -63,7 +67,12 @@ const themes = {
         brightGreen: "#93a1a1",
         black: "#eee8d5",
         brightBlack: "#fdf6e3"
-    }, theme_core)
+    }, theme_core),
+    "white-theme": {
+        background: "#ffffff",
+        foreground: "#000000",
+        selection: "#00000044",
+    },
 };
 
 /*
@@ -130,7 +139,7 @@ export class Terminal extends React.Component {
             window.addEventListener('resize', this.onWindowResize);
             this.onWindowResize();
         }
-        this.setTerminalTheme(this.props.theme || 'dark-theme');
+        this.setTerminalTheme(this.props.theme || 'black-theme');
         this.state.terminal.focus();
     }
 
