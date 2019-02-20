@@ -354,6 +354,7 @@ PageServer.prototype = {
         var pmlogger_promise;
         var pmlogger_exists = false;
         var packagekit_exists = false;
+        var activating_logger = $('#system-pmlogger-activating');
 
         function update_pmlogger_row() {
             var logger_switch = $("#server-pmlogger-switch");
@@ -361,13 +362,19 @@ PageServer.prototype = {
             if (!pmlogger_exists) {
                 enable_pcp.toggle(packagekit_exists);
                 logger_switch.hide();
-                logger_switch.prev().hide();
+                logger_switch.parent().prev()
+                        .hide();
             } else if (!pmlogger_promise) {
                 enable_pcp.hide();
-                logger_switch.onoff('value', pmlogger_service.enabled);
+                logger_switch.onoff('value', pmlogger_service.state === "running");
                 logger_switch.show();
-                logger_switch.prev().show();
+                logger_switch.parent().prev()
+                        .show();
             }
+            if (pmlogger_service.state === "starting")
+                activating_logger.show();
+            else
+                activating_logger.hide();
         }
 
         function pmlogger_service_changed() {
@@ -401,6 +408,7 @@ PageServer.prototype = {
                 return;
 
             if ($(this).onoff('value')) {
+                activating_logger.show();
                 pmlogger_promise = Promise.all([
                     pmcd_service.enable(),
                     pmcd_service.start(),
