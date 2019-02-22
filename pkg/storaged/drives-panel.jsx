@@ -108,6 +108,7 @@ export class DrivesPanel extends React.Component {
                                       highlight={dev == props.highlight}
                                       go={() => cockpit.location.go([ dev ])}
                                       job_path={path}
+                                      visible={false}
                                       key={path} />
             );
         }

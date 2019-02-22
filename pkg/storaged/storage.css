@@ -719,3 +719,8 @@ td.storage-action {
     flex-grow: 1;
     margin-left: 10px;
 }
+
+.storage-row {
+    /* 36px height of icon + 2*8 margin */
+    min-height: 46px;
+}

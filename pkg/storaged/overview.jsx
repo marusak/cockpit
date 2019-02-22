@@ -17,7 +17,7 @@
  * along with Cockpit; If not, see <http://www.gnu.org/licenses/>.
  */
 
-import React from "react";
+import React, { Suspense } from "react";
 
 import { fmt_rate } from "./utils.js";
 
@@ -63,11 +63,15 @@ export class OverviewSidePanelRow extends React.Component {
     constructor(props) {
         super(props);
         this.selector = React.createRef();
+        this.state = { visible: props.visible || true };
     }
 
     shouldComponentUpdate() {
         const rect = this.selector.current.getBoundingClientRect();
-        return ((rect.top < window.innerHeight) && (rect.bottom >= 0));
+        const visible = (rect.top < window.innerHeight) && (rect.bottom >= 0);
+        if (!this.state.visible && visible)
+            this.setState({ visible: visible });
+        return visible;
     }
 
     render() {
@@ -76,40 +80,46 @@ export class OverviewSidePanelRow extends React.Component {
                 return;
             return this.props.go();
         };
+        const visible = this.state.visible;
 
         return (
             <tr data-testkey={this.props.testkey} ref={this.selector}
                 onClick={this.props.go ? go : null} className={this.props.highlight ? "highlight-ct" : ""}>
-                <td className="storage-icon">
-                    { this.props.kind !== false
-                        ? <div><img src={"images/storage-" + (this.props.kind || "disk") + ".png"} /></div>
-                        : null
-                    }
-                </td>
-                <td className="row">
-                    <span className="col-md-12 storage-disk-name">{this.props.name}</span>
-                    <br />
-                    <span className="col-md-12 col-lg-5 storage-disk-size">{this.props.detail}</span>
-                    { this.props.stats
-                        ? <span className="col-md-12 col-lg-7">
-                            <span>R: {fmt_rate(this.props.stats[0])}</span>
-                            { "\n" }
-                            <span className="rate-gap" />
-                            { "\n" }
-                            <span>W: {fmt_rate(this.props.stats[1])}</span>
-                        </span>
-                        : null
-                    }
-                </td>
-                { this.props.actions ? (
-                    <td className="storage-icon">
-                        { this.props.actions }
-                    </td>
-                ) : this.props.client.path_jobs[this.props.job_path] ? (
-                    <td className="storage-icon">
-                        <div className="spinner spinner-sm" />
-                    </td>
-                ) : null
+                { visible ? (
+                    <React.Fragment>
+                        <td className="storage-icon">
+                            { this.props.kind !== false
+                                ? <div><img src={"images/storage-" + (this.props.kind || "disk") + ".png"} /></div>
+                                : null
+                            }
+                        </td>
+                        <td className="row">
+                            <span className="col-md-12 storage-disk-name">{this.props.name}</span>
+                            <br />
+                            <span className="col-md-12 col-lg-5 storage-disk-size">{this.props.detail}</span>
+                            { this.props.stats
+                                ? <span className="col-md-12 col-lg-7">
+                                    <span>R: {fmt_rate(this.props.stats[0])}</span>
+                                    { "\n" }
+                                    <span className="rate-gap" />
+                                    { "\n" }
+                                    <span>W: {fmt_rate(this.props.stats[1])}</span>
+                                </span>
+                                : null
+                            }
+                        </td>
+                        { this.props.actions ? (
+                            <td className="storage-icon">
+                                { this.props.actions }
+                            </td>
+                        ) : this.props.client.path_jobs[this.props.job_path] ? (
+                            <td className="storage-icon">
+                                <div className="spinner spinner-sm" />
+                            </td>
+                        ) : null
+                        }
+                    </React.Fragment>) : (<div className="storage-row">"Loading..."</div>
+                )
                 }
             </tr>
         );
@@ -140,7 +150,9 @@ export class Overview extends React.Component {
                     <VGroupsPanel client={client} />
                     <VDOsPanel client={client} />
                     <IscsiPanel client={client} />
-                    <DrivesPanel client={client} highlight={this.state.highlight} />
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <DrivesPanel client={client} highlight={this.state.highlight} />
+                    </Suspense>
                     <OthersPanel client={client} />
                 </div>
             </div>
