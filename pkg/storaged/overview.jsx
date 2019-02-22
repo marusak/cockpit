@@ -60,6 +60,16 @@ export class OverviewSidePanel extends React.Component {
 }
 
 export class OverviewSidePanelRow extends React.Component {
+    constructor(props) {
+        super(props);
+        this.selector = React.createRef();
+    }
+
+    shouldComponentUpdate() {
+        const rect = this.selector.current.getBoundingClientRect();
+        return ((rect.top < window.innerHeight) && (rect.bottom >= 0));
+    }
+
     render() {
         const go = (event) => {
             if (!event || event.button !== 0)
@@ -68,7 +78,7 @@ export class OverviewSidePanelRow extends React.Component {
         };
 
         return (
-            <tr data-testkey={this.props.testkey}
+            <tr data-testkey={this.props.testkey} ref={this.selector}
                 onClick={this.props.go ? go : null} className={this.props.highlight ? "highlight-ct" : ""}>
                 <td className="storage-icon">
                     { this.props.kind !== false

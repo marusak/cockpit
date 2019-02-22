@@ -75,6 +75,7 @@ export class DrivesPanel extends React.Component {
                 return null;
 
             var dev = decode_filename(block.Device).replace(/^\/dev\//, "");
+            dev = "nvme0n1";
             var io = client.blockdev_io.data[dev];
 
             var name = drive_name(drive);
