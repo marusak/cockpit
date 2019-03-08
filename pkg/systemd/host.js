@@ -195,6 +195,23 @@ function ServerTime() {
                 });
     };
 
+    self.wait_ntp = function wait_ntp(expected, promise, count) {
+        client.call(timedate.path,
+                    "org.freedesktop.DBus.Properties", "Get", [ "org.freedesktop.timedate1", "NTP" ])
+                .done(function(result) {
+                    if (result[0].v === expected)
+                        promise.resolve();
+                    else if (count > 0)
+                        window.setTimeout(function() {
+                            self.wait_ntp(expected, promise, count - 1);
+                        }, 1000);
+                    else {
+                        var error_type = expected ? "enable" : "disable";
+                        promise.reject("Could not " + error_type + " NTP");
+                    }
+                });
+    };
+
     self.close = function close() {
         client.close();
     };
@@ -1338,7 +1355,10 @@ PageSystemInformationChangeSystime.prototype = {
         }
 
         function set_ntp(val) {
-            return self.server_time.timedate.call('SetNTP', [val, true]);
+            var dfd = cockpit.defer();
+            self.server_time.timedate.call('SetNTP', [val, true])
+                    .then(self.server_time.wait_ntp(val, dfd, 30));
+            return dfd.promise;
         }
 
         if (manual_time) {
