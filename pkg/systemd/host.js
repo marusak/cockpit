@@ -82,7 +82,12 @@ function ServerTime() {
     var time_offset = null;
     var remote_offset = null;
 
+    this.client = client;
+
     self.timedate = timedate;
+
+    this.ntp_waiting_value = null;
+    this.ntp_waiting_promise = null;
 
     self.timedate1_service = service.proxy("dbus-org.freedesktop.timedate1.service");
     self.timesyncd_service = service.proxy("systemd-timesyncd.service");
@@ -195,21 +200,13 @@ function ServerTime() {
                 });
     };
 
-    self.wait_ntp = function wait_ntp(expected, promise, count) {
-        client.call(timedate.path,
-                    "org.freedesktop.DBus.Properties", "Get", [ "org.freedesktop.timedate1", "NTP" ])
-                .done(function(result) {
-                    if (result[0].v === expected)
-                        promise.resolve();
-                    else if (count > 0)
-                        window.setTimeout(function() {
-                            self.wait_ntp(expected, promise, count - 1);
-                        }, 1000);
-                    else {
-                        var error_type = expected ? "enable" : "disable";
-                        promise.reject("Could not " + error_type + " NTP");
-                    }
-                });
+    self.ntp_updated = function ntp_updated(path, iface, member, args) {
+        if (!self.ntp_waiting_promise)
+            return;
+        if (self.ntp_waiting_value === args[1].NTP.v) {
+            self.ntp_waiting_promise.resolve();
+            self.ntp_waiting_promise = null;
+        }
     };
 
     self.close = function close() {
@@ -286,6 +283,11 @@ PageServer.prototype = {
         $(self.server_time).on("changed", function() {
             $('#system_information_systime_button').text(self.server_time.format(true));
         });
+
+        self.server_time.client.subscribe({
+            'interface': "org.freedesktop.DBus.Properties",
+            'member': "PropertiesChanged"
+        }, self.server_time.ntp_updated);
 
         self.ntp_status_tmpl = $("#ntp-status-tmpl").html();
         mustache.parse(this.ntp_status_tmpl);
@@ -1356,8 +1358,9 @@ PageSystemInformationChangeSystime.prototype = {
 
         function set_ntp(val) {
             var dfd = cockpit.defer();
-            self.server_time.timedate.call('SetNTP', [val, true])
-                    .then(self.server_time.wait_ntp(val, dfd, 30));
+            self.server_time.ntp_waiting_promise = dfd;
+            self.server_time.ntp_waiting_value = val;
+            self.server_time.timedate.call('SetNTP', [val, true]);
             return dfd.promise;
         }
 
