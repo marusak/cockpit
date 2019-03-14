@@ -580,5 +580,24 @@
         return promise.promise(box);
     };
 
+    /**
+     * Request to journal a list of all units
+     * @param {requestCallback} callback - A callback called when the list is 
+     * returned from journal
+     */
+    journal.list_units = function units_list(callback){
+        var cmd = ["journalctl"];
+        cmd.push("-q");
+        cmd.push("--field=SYSLOG_IDENTIFIER");
+
+        cockpit.spawn(cmd,{superuser: "try"}).
+        done(function(output) {
+            callback(null,output.split("\n"));
+        }).
+        fail(function(err){
+            callback(new Error(err));
+        });
+    };
+
     module.exports = journal;
 }());

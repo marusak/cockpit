@@ -64,6 +64,7 @@ $(function() {
                           'runlevel', 'tid', 'time', 'uid', 'uuid'];
 
     var displayable_problems = {};
+    var services_list = [];
 
     //Get list of all problems that can be displayed
     var find_problems = function () {
@@ -83,7 +84,7 @@ $(function() {
         });
         return r;
     };
-
+    
     function update_problems(problem_paths) {
         for (var i in problem_paths) {
             var p = problems[problem_paths[i]];
@@ -92,6 +93,7 @@ $(function() {
             displayable_problems[p.Duphash] = {'count': p.Count, 'problem_path': p.path};
         }
     }
+
 
     /* Not public API */
     function journalbox(outer, start, match, day_box) {
@@ -108,22 +110,34 @@ $(function() {
         var renderitems_day_cache = null;
         var procs = [];
 
+        journal.list_units(function (err,units){
+            if(err){
+                console.warn(cockpit.message(err));
+            }else{
+                append_service_menu(units);
+            }
+        });
+
         function query_error(error) {
             /* TODO: blank slate */
             console.warn(cockpit.message(error));
         }
 
         function prepend_entries(entries) {
-            for (var i = 0; i < entries.length; i++)
+            for (var i = 0; i < entries.length; i++) {
                 renderer.prepend(entries[i]);
+                append_service_menu(entries[i]['SYSLOG_IDENTIFIER']);    
+            }
             renderer.prepend_flush();
             /* empty cache for day offsets */
             renderitems_day_cache = null;
         }
 
         function append_entries(entries) {
-            for (var i = 0; i < entries.length; i++)
+            for (var i = 0; i < entries.length; i++) {
                 renderer.append(entries[i]);
+                append_service_menu(entries[i]['SYSLOG_IDENTIFIER']);
+            }
             renderer.append_flush();
             /* empty cache for day offsets */
             renderitems_day_cache = null;
@@ -193,6 +207,37 @@ $(function() {
                 /* No visible day headers
                  */
                 day_box.text(_("Go to"));
+            }
+        }
+
+        function append_service_menu(service){
+            if (Array.isArray(service)){
+                for (var unit in service) {
+                    append(service[unit]);
+                }
+            }else{
+                append(service);
+            }
+
+            function append(unit){
+                if(unit && !services_list.includes(unit)){
+                    services_list.push(unit);
+                    
+                    //add service to the menu list and sort
+                    $('#journal-services-list').append(
+                        $('<li>').append(
+                            $('<a>').text(unit).attr('data-service', unit)));
+                    var all = $('#journal-services-list').children(':first-child');
+                    $('#journal-services-list').children('li').sort(function(a, b) {
+                        return $(a).text().localeCompare($(b).text());
+                    }).appendTo($('#journal-services-list'));
+                    $('#journal-services-list').prepend(all);
+
+                    
+                    $('#journal-service-menu a').off().click(function() {
+                        cockpit.location.go([], $.extend(cockpit.location.options, { tag: $(this).attr('data-service') }));
+                    });
+                }
             }
         }
 
@@ -307,6 +352,7 @@ $(function() {
             match.push('_SYSTEMD_UNIT=' + options['service']);
         else if (options['tag'])
             match.push('SYSLOG_IDENTIFIER=' + options['tag']);
+        $('#journal-service').text(options['tag'] || _("All"));
 
         var query_start = cockpit.location.options['start'] || "recent";
         if (query_start == 'recent')
