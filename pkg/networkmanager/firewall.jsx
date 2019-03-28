@@ -373,43 +373,38 @@ class AddServicesModal extends React.Component {
                 </Modal.Header>
                 <div id="cockpit_modal_dialog">
                     <Modal.Body id="add-services-dialog">
-                        <form action="" className="toggle-body">
-                            <input type="radio" name="type" value="services" onClick={this.onToggleType} checked={!this.state.custom} />
-                            {_("Services")}
+                        <form action="" className="toggle-body ct-form-layout">
+                            <label className="radio ct-form-layout-full">
+                                <input type="radio" name="type" value="services" onClick={this.onToggleType} checked={!this.state.custom} />
+                                {_("Services")}
+                            </label>
                             { this.state.custom ||
                                 <React.Fragment>
                                     { services ? (
                                         <React.Fragment>
-                                            <table className="form-table-ct">
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <label htmlFor="filter-services-input" className="control-label">
-                                                                {_("Filter Services")}
-                                                            </label>
-                                                        </td>
-                                                        <td>
-                                                            <SearchInput id="filter-services-input"
-                                                                         value={this.state.filter}
-                                                                         className="form-control"
-                                                                         onChange={this.onFilterChanged} />
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            <ListView className="dialog-list-ct">
-                                                {
-                                                    services.map(s => (
-                                                        <ListView.Item key={s.id}
-                                                                       checkboxInput={ <input data-id={s.id}
-                                                                                              type="checkbox"
-                                                                                              checked={this.state.selected.has(s.id)}
-                                                                                              onChange={this.onToggleService} /> }
-                                                                       heading={ <React.Fragment><span>{s.name}</span>{ renderPorts(s.ports) }</React.Fragment> }>
-                                                        </ListView.Item>
-                                                    ))
-                                                }
-                                            </ListView>
+                                            <fieldset className="ct-form-layout">
+                                                <label htmlFor="filter-services-input" className="control-label">
+                                                    {_("Filter Services")}
+                                                </label>
+                                                <SearchInput id="filter-services-input"
+                                                    value={this.state.filter}
+                                                    className="form-control"
+                                                    onChange={this.onFilterChanged} />
+                                                <ListView className="list-group dialog-list-ct ct-form-layout-full">
+                                                    {
+                                                        services.map(s => (
+                                                            <ListView.Item key={s.id}
+                                                                           className="list-group-item"
+                                                                           checkboxInput={ <input data-id={s.id}
+                                                                                                  type="checkbox"
+                                                                                                  checked={this.state.selected.has(s.id)}
+                                                                                                  onChange={this.onToggleService} /> }
+                                                                           heading={ <React.Fragment><span>{s.name}</span>{ renderPorts(s.ports) }</React.Fragment> }>
+                                                            </ListView.Item>
+                                                        ))
+                                                    }
+                                                </ListView>
+                                            </fieldset>
                                         </React.Fragment>
                                     ) : (
                                         <div className="spinner spinner-lg" />
@@ -417,8 +412,10 @@ class AddServicesModal extends React.Component {
                                 </React.Fragment>
                             }
                             <div />
-                            <input type="radio" name="type" value="ports" onClick={this.onToggleType} checked={this.state.custom} disabled={this.state.avail_services == null} />
-                            {_("Custom Ports")}
+                            <label className="radio ct-form-layout-full">
+                                <input type="radio" name="type" value="ports" onClick={this.onToggleType} checked={this.state.custom} disabled={this.state.avail_services == null} />
+                                {_("Custom Ports")}
+                            </label>
                             { !this.state.custom ||
                                 <form className="ct-form-layout">
                                     <label className="control-label" htmlFor="hint" hidden>Hint</label>
