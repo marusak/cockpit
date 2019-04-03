@@ -19,6 +19,7 @@
 # along with Cockpit; If not, see <http://www.gnu.org/licenses/>.
 
 import os
+import json
 import subprocess
 import sys
 
@@ -56,10 +57,73 @@ def run(context, verbose=False, **kwargs):
     work = os.path.abspath(line.strip())
 
     # Do the various updates
-    cmd = [ "make", "upload-pot", "download-po" ]
+    cmd = [ "make", "upload-pot", "clean-po", "download-po" ]
     if verbose:
         sys.stderr.write("+ " + " ".join(cmd) + "\n")
     subprocess.check_call(cmd, cwd=work)
+
+    branch = None
+    user = None
+    current_manifest = None
+    current_linguas = []
+    language_map = {}
+
+    def write_linguas():
+        with open("po/LINGUAS", "w", encoding='utf-8') as lngs:
+            print("\n".join(current_linguas), file=lngs)
+
+    # Build language map
+    with open("po/language_map.txt", "r") as lm:
+        for line in lm:
+            items = line.strip().split(":")
+            language_map[items[0]] = items
+            language_map[items[2]] = items
+
+    with open("pkg/shell/manifest.json.in", "r", encoding='utf-8') as mnfst:
+        current_manifest = json.load(mnfst)
+
+    with open("po/LINGUAS", "r", encoding='utf-8') as lngs:
+        for line in lngs:
+            current_linguas.append(line.strip())
+
+    # Remove languages that fall under 50% translated
+    files = output("git", "ls-files", "--deleted", "po/")
+    for name in files.split("\n"):
+        if name.endswith(".po"):
+            language = name.split("/")[1][:-3]
+            locale = language_map[language][2]
+            current_manifest["locales"].pop(locale, None)
+            execute("git", "rm", "--", name)
+            current_linguas.remove(language)
+            write_linguas()
+            execute("git", "add", "--", "po/LINGUAS")
+            with open("pkg/shell/manifest.json.in", "w", encoding='utf-8') as mnfst:
+                text = json.dumps(current_manifest, ensure_ascii=False, indent=4)
+                print(text, file=mnfst)
+            execute("git", "add", "--", "pkg/shell/manifest.json.in")
+            bu = task.branch(context, "po: Drop '{0}' language".format(language),
+                             pathspec=None, branch=branch, push=False, **kwargs)
+            (user, branch) = bu.split(":")
+
+    # Add languages that got over 50% translated
+    files = output("git", "ls-files", "--others", "--exclude-standard", "po/")
+    for name in files.split("\n"):
+        if name.endswith(".po"):
+            language = name.split("/")[1][:-3]
+            locale = language_map[language]
+            current_manifest["locales"][locale[2]] = locale[1]
+            execute("git", "add", "--", name)
+            current_linguas.append(language)
+            current_linguas.sort()
+            write_linguas()
+            execute("git", "add", "--", "po/LINGUAS")
+            with open("pkg/shell/manifest.json.in", "w", encoding='utf-8') as mnfst:
+                text = json.dumps(current_manifest, ensure_ascii=False, indent=4)
+                print(text, file=mnfst)
+            execute("git", "add", "--", "pkg/shell/manifest.json.in")
+            bu = task.branch(context, "po: Add '{0}' language".format(language),
+                             pathspec=None, branch=branch, push=False, **kwargs)
+            (user, branch) = bu.split(":")
 
     # Here we have logic to only include files that actually
     # changed translations, and reset all the remaining ones
@@ -72,9 +136,15 @@ def run(context, verbose=False, **kwargs):
                 execute("git", "checkout", "--", name)
 
     # Create a pull request from these changes
-    branch = task.branch(context, "po: Update from Fedora Zanata", pathspec="po/", **kwargs)
-    if branch:
-        task.pull(branch, **kwargs)
+    bu = task.branch(context, "po: Update from Fedora Zanata", pathspec="po/",
+                     branch=branch, **kwargs)
+
+    if bu:
+        task.pull(bu, **kwargs)
+    elif branch:
+        task.push_branch(user, branch)
+        task.pull("{0}:{1}".format(user, branch), **kwargs)
+
 
 if __name__ == '__main__':
     task.main(function=run, title="Update translations from Fedora Zanata")
