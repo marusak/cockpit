@@ -112,6 +112,7 @@ class GitHubError(RuntimeError):
                 '  Response: {3}'.format(self.url, self.status, self.reason, self.data))
 
 def get_origin_repo():
+    return "git@github.com:marusak/cockpit.git"
     res = subprocess.check_output([ "git", "remote", "get-url", "origin" ])
     url = res.decode('utf-8').strip()
     m = re.fullmatch("(git@github.com:|https://github.com/)(.*?)(\\.git)?", url)
@@ -122,7 +123,7 @@ def get_origin_repo():
 class GitHub(object):
     def __init__(self, base=None, cacher=None, repo=None):
         if base is None:
-            self.repo = repo or os.environ.get("GITHUB_BASE", None) or get_origin_repo()
+            self.repo = get_origin_repo()
             netloc = os.environ.get("GITHUB_API", "https://api.github.com")
             base = "{0}/repos/{1}/".format(netloc, self.repo)
         self.url = urllib.parse.urlparse(base)
