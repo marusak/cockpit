@@ -344,11 +344,12 @@ def execute(*args):
         env["GIT_ASKPASS"] = "/bin/true"
     output = subprocess.check_output(args, cwd=BASE, stderr=subprocess.STDOUT, env=env, universal_newlines=True)
     sys.stderr.write(censored(output))
+    return output
 
 def find_our_fork(user):
     repos = api.get("/users/{0}/repos".format(user))
     for r in repos:
-        if r["full_name"] == api.repo:
+        if r["full_name"] == "marusak/cockpit":
             # We actually own the origin repo, so use that.
             return api.repo
         if r["fork"]:
@@ -357,11 +358,22 @@ def find_our_fork(user):
                 return full["full_name"]
     raise RuntimeError("%s doesn't have a fork of %s" % (user, api.repo))
 
-def branch(context, message, pathspec=".", issue=None, **kwargs):
-    current = time.strftime('%Y%m%d-%H%M%M')
+def push_branch(user, branch, force=False):
+    fork_repo = find_our_fork(user)
+
+    # url = "https://github.com/{0}".format(fork_repo)
+    url = "git@github.com:marusak/cockpit.git"
+    cmd = ["git", "push", url, "+HEAD:refs/heads/{0}".format(branch)]
+    if force:
+        cmd.insert(2, "-f")
+    execute(*cmd)
+
+def branch(context, message, pathspec=".", issue=None, branch=None, cont=False, **kwargs):
     name = named(kwargs)
-    branch = "{0} {1} {2}".format(name, context or "", current).strip()
-    branch = branch.replace(" ", "-").replace("--", "-")
+    if not branch:
+        current = time.strftime('%Y%m%d-%H%M%M')
+        branch = "{0} {1} {2}".format(name, context or "", current).strip()
+        branch = branch.replace(" ", "-").replace("--", "-")
 
     # Tell git about our github token as a user name
     try:
@@ -377,7 +389,9 @@ def branch(context, message, pathspec=".", issue=None, **kwargs):
 
     if pathspec is not None:
         execute("git", "add", "--", pathspec)
-    execute("git", "checkout", "--detach")
+
+    if not cont:
+        execute("git", "checkout", "--detach")
 
     # If there's nothing to add at that pathspec return None
     try:
@@ -385,7 +399,8 @@ def branch(context, message, pathspec=".", issue=None, **kwargs):
     except subprocess.CalledProcessError:
         return None
 
-    execute("git", "push", url, "+HEAD:refs/heads/{0}".format(branch))
+    if not cont:
+        push_branch(user, branch)
 
     # Comment on the issue if present
     if issue:
@@ -417,6 +432,10 @@ def pull(branch, body=None, issue=None, base="master", labels=['bot'], **kwargs)
         if body:
             data["body"] = body
 
+    last_commit_m = execute("git", "show", "-s", "--format=%B")
+    last_commit_m = "[no-test]" + last_commit_m
+    execute("git", "commit", "--amend", "-m", last_commit_m)
+
     pull = api.post("pulls", data, accept=[ 422 ])
 
     # If we were refused to grant maintainer_can_modify, then try without
@@ -435,6 +454,15 @@ def pull(branch, body=None, issue=None, base="master", labels=['bot'], **kwargs)
             issue["pull_request"] = { "url": pull["url"] }
         except TypeError:
             pass
+
+    if pull["number"]:
+        last_commit_m = execute("git", "show", "-s", "--format=%B")
+        if last_commit_m.startswith("[no-test]"):
+            last_commit_m = last_commit_m[9:]
+        last_commit_m += "Closes #" + str(pull["number"])
+        execute("git", "commit", "--amend", "-m", last_commit_m)
+        (user, branch) = branch.split(":")
+        push_branch(user, branch, True)
 
     return pull
 
