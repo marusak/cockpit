@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2019-03-26 01:14+0000\n"
+"PO-Revision-Date: 2019-04-01 06:16+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech\n"
 "Language: cs\n"
@@ -1237,7 +1237,7 @@ msgstr "Pořadí zavádění"
 
 #: pkg/machines/components/vm/bootOrderModal.jsx:210
 msgid "Boot order settings could not be saved"
-msgstr ""
+msgstr "Nastavení pořadí zavádění se nepodařilo uložit"
 
 #: pkg/systemd/init.js:731
 msgid "Bound By"
@@ -1301,11 +1301,11 @@ msgstr "Procesor"
 
 #: pkg/systemd/hwinfo.jsx:113
 msgid "CPU Security"
-msgstr ""
+msgstr "Zabezpečení procesoru"
 
 #: pkg/systemd/hwinfo.jsx:205
 msgid "CPU Security Toggles"
-msgstr ""
+msgstr "Přepínače zabezpečení procesoru"
 
 #: pkg/systemd/host.js:1544
 msgctxt "page-title"
@@ -2260,12 +2260,16 @@ msgstr "Vytvořit to"
 msgid "Create new Logical Volume"
 msgstr "Vytvořit nový logický svazek"
 
+#: pkg/storaged/format-dialog.jsx:332
+msgid "Create partition"
+msgstr "Vytvořit oddíl"
+
 #: pkg/storaged/format-dialog.jsx:183
-msgid "Create Partition on $0"
+msgid "Create partition on $0"
 msgstr "Vytvořit oddíl na $0"
 
 #: pkg/storaged/content-views.jsx:556
-msgid "Create Partition Table"
+msgid "Create partition table"
 msgstr "Vytvořit tabulku rozdělení úložiště"
 
 #: pkg/kubernetes/views/deploymentconfig-body.html:7
@@ -2339,7 +2343,7 @@ msgstr "Vytváření skupiny svazků $target"
 
 #: pkg/machines/components/create-vm-dialog/createVmDialog.jsx:460
 msgid "Creation of VM $0 failed"
-msgstr ""
+msgstr "Vytvoření virt. stroje $0 se nezdařilo"
 
 #: pkg/systemd/logs.html:57
 msgid "Critical and above"
@@ -2691,7 +2695,7 @@ msgstr "Vypnout"
 
 #: pkg/systemd/hwinfo.jsx:191
 msgid "Disable symmetric multithreading"
-msgstr ""
+msgstr "Vypnout symmetric multithreading"
 
 #: pkg/tuned/dialog.js:232
 msgid "Disable tuned"
@@ -2723,7 +2727,7 @@ msgstr "Disk"
 
 #: pkg/machines/components/diskRemove.jsx:31
 msgid "Disk $0 fail to get detached from VM $1"
-msgstr ""
+msgstr "Disk $0 se nepodařilo odpojit od virt. stroje $1"
 
 # auto translated by TM merge from project: virt-manager, version: master, DocId: virt-manager
 #: pkg/dashboard/index.html:73 pkg/systemd/host.js:545
@@ -3208,7 +3212,7 @@ msgstr "NEZDAŘILO SE"
 
 #: pkg/ovirt/provider.js:130
 msgid "FORCEOFF action failed: $0"
-msgstr ""
+msgstr "Akce VYNUTITVYPNUTI se nezdařila: $0"
 
 #: pkg/ovirt/components/InstallationDialog.jsx:47
 msgid "FQDN"
@@ -4544,7 +4548,7 @@ msgstr "Je třeba, aby MTU bylo kladné číslo"
 
 #: pkg/machines/components/vm/bootOrderModal.jsx:105
 msgid "Mac"
-msgstr ""
+msgstr "Mac"
 
 #: pkg/machines/components/nicEdit.jsx:161
 msgid "Mac Address"
@@ -4740,7 +4744,7 @@ msgstr "Minut"
 
 #: pkg/systemd/hwinfo.jsx:62 pkg/systemd/hwinfo.jsx:67
 msgid "Mitigations"
-msgstr ""
+msgstr "Zmírnění dopadu"
 
 #: pkg/networkmanager/index.html:292
 msgid "Mode"
@@ -4885,7 +4889,7 @@ msgstr "Podpora pro NFS není nainstalovaná"
 
 #: pkg/machines/components/vmnetworktab.jsx:67
 msgid "NIC $0 of VM $1 failed to change state"
-msgstr ""
+msgstr "Nepodařilo se změnit stav síť. rozhraní $0 virt. stroje $1 "
 
 #: pkg/networkmanager/interfaces.js:2005
 msgid "NSNA Ping"
@@ -5024,11 +5028,11 @@ msgstr "Síť"
 
 #: pkg/machines/components/networks/network.jsx:117
 msgid "Network $0 failed to get activated"
-msgstr ""
+msgstr "Síť $0 se nepodařilo aktivovat"
 
 #: pkg/machines/components/networks/network.jsx:129
 msgid "Network $0 failed to get deactivated"
-msgstr ""
+msgstr "Síť $0 se nepodařilo deaktivovat"
 
 #: pkg/machines/components/create-vm-dialog/createVmDialog.jsx:316
 msgid "Network Boot (PXE)"
@@ -6344,7 +6348,7 @@ msgstr "Proces"
 #: pkg/machines/components/vm/bootOrderModal.jsx:123
 #: pkg/machines/components/vm/bootOrderModal.jsx:129
 msgid "Product"
-msgstr ""
+msgstr "Produkt"
 
 # auto translated by TM merge from project: libosinfo, version: master, DocId: libosinfo
 #: pkg/subscriptions/subscriptions-view.jsx:34
@@ -6565,7 +6569,7 @@ msgstr "Akce RESTART se nezdařila"
 
 #: pkg/ovirt/provider.js:164
 msgid "REBOOT_VM action failed: %s0"
-msgstr ""
+msgstr "Akce RESTART_VIRTSTROJE se nezdařila: %s0"
 
 #: pkg/lib/machine-info.js:86
 msgid "Rack Mount Chassis"
@@ -6609,7 +6613,7 @@ msgstr "Čtení a zápis z vícero uzlů"
 
 #: pkg/systemd/hwinfo.jsx:193
 msgid "Read more..."
-msgstr ""
+msgstr "Zjistit více…"
 
 #: pkg/kubernetes/scripts/volumes.js:212
 msgid "Read only from multiple nodes"
@@ -7239,7 +7243,7 @@ msgstr "Akce START se nezdařila"
 
 #: pkg/ovirt/provider.js:203
 msgid "START_VM action failed: %s0"
-msgstr ""
+msgstr "Akce SPUSTENI_VIRTSTROJE se nezdařila: %s0"
 
 #: pkg/networkmanager/index.html:236
 msgid "STP Forward delay"
@@ -7280,7 +7284,7 @@ msgstr "Uložit"
 
 #: pkg/systemd/hwinfo.jsx:219
 msgid "Save and reboot"
-msgstr ""
+msgstr "Uložit a restartovat"
 
 #: pkg/storaged/vdos-panel.jsx:82
 msgid "Save space by compressing individual blocks with LZ4"
@@ -7720,6 +7724,9 @@ msgid ""
 "mitigations have the side effect of reducing performance. Change these "
 "settings at your own risk."
 msgstr ""
+"Softwarová ošetření problémů zabezpečení procesoru, snižující riziko jejich "
+"zneužití. Mají negativní dopad na výkonnost. Nastavení měníte na vlastní "
+"nebezpeční."
 
 #: pkg/docker/storage.jsx:165
 msgid "Solid-State Disk"
@@ -7954,11 +7961,11 @@ msgstr "Záznamy událostí úložiště"
 
 #: pkg/machines/components/storagePools/storagePool.jsx:137
 msgid "Storage Pool $0 failed to get activated"
-msgstr ""
+msgstr "Fond úložiště $0 se nepodařilo aktivovat"
 
 #: pkg/machines/components/storagePools/storagePool.jsx:149
 msgid "Storage Pool $0 failed to get deactivated"
-msgstr ""
+msgstr "Fond úložiště $0 se nepodařilo deaktivovat"
 
 #: pkg/machines/components/storagePools/createStoragePoolDialog.jsx:61
 msgid "Storage Pool Name"
@@ -8549,6 +8556,7 @@ msgstr "Služba „{{ target }}“ neexistuje."
 #: pkg/systemd/hwinfo.jsx:65
 msgid "The user $0 is not permitted to change cpu security mitigations"
 msgstr ""
+"Uživatel $0 není oprávněn měnit zmírňování dopadu chyb zabezpečení procesoru"
 
 #: pkg/kubernetes/views/user-page.html:29
 msgid "The user '{{ userName }}' does not exist."
@@ -9011,7 +9019,7 @@ msgstr "Typ"
 
 #: pkg/machines/components/vm/bootOrderModal.jsx:147
 msgid "Type ID"
-msgstr ""
+msgstr "Identifikátor typu"
 
 #: pkg/lib/machine-change-auth.html:42
 msgid "Type a password"
@@ -9458,43 +9466,43 @@ msgstr "Nastavení VLAN"
 
 #: pkg/machines/hostvmslist.jsx:114
 msgid "VM $0 failed to Reboot"
-msgstr ""
+msgstr "Virt. stroj $0 se nepodařilo restartovat"
 
 #: pkg/machines/hostvmslist.jsx:120
 msgid "VM $0 failed to force Reboot"
-msgstr ""
+msgstr "Nepodařilo se vynutit restart virt. stroje $0"
 
 #: pkg/machines/hostvmslist.jsx:144
 msgid "VM $0 failed to force shutdown"
-msgstr ""
+msgstr "Nepodařilo se vynutit vypnutí virt. stroje $0"
 
 #: pkg/machines/components/deleteDialog.jsx:136
 msgid "VM $0 failed to get deleted"
-msgstr ""
+msgstr "Virt. stroj $0 se nezdařilo smazat"
 
 #: pkg/machines/hostvmslist.jsx:108 pkg/machines/libvirt-common.js:1290
 msgid "VM $0 failed to get installed"
-msgstr ""
+msgstr "Virt. stroj $0 se nezdařilo nainstalovat"
 
 #: pkg/machines/hostvmslist.jsx:132
 msgid "VM $0 failed to pause"
-msgstr ""
+msgstr "Virt. stroj $0 se nezdařilo pozastavit"
 
 #: pkg/machines/hostvmslist.jsx:138
 msgid "VM $0 failed to resume"
-msgstr ""
+msgstr "Nezdařilo se navázat v chodu virt. stroje $0"
 
 #: pkg/machines/hostvmslist.jsx:150
 msgid "VM $0 failed to send NMI"
-msgstr ""
+msgstr "Nezdařilo se zaslat virt. stroji $0 nemaskovatelné přerušení"
 
 #: pkg/machines/hostvmslist.jsx:126
 msgid "VM $0 failed to shutdown"
-msgstr ""
+msgstr "Virt. stroj $0 se nepodařilo vypnout"
 
 #: pkg/machines/hostvmslist.jsx:102
 msgid "VM $0 failed to start"
-msgstr ""
+msgstr "Virt. stroj $0 se nepodařilo zapnout"
 
 #: pkg/ovirt/components/VmOverviewColumn.jsx:37
 msgid "VM icon"
@@ -9641,7 +9649,7 @@ msgstr "Svazky:"
 
 #: pkg/machines/components/vm/bootOrderModal.jsx:142
 msgid "WWPN"
-msgstr ""
+msgstr "Neopakující se číslo portu"
 
 #: pkg/networkmanager/interfaces.js:833
 msgid "Waiting"
@@ -9961,7 +9969,7 @@ msgstr "stroj"
 
 #: pkg/machines/helpers.js:203
 msgid "host device"
-msgstr ""
+msgstr "zařízení hostitele"
 
 #: pkg/machines/helpers.js:215
 msgid "hostdev"
@@ -9969,7 +9977,7 @@ msgstr "zařízení hostitele"
 
 #: pkg/machines/components/storagePools/createStoragePoolDialog.jsx:78
 msgid "iSCSI Target"
-msgstr ""
+msgstr "iSCSI cíl"
 
 #: pkg/storaged/iscsi-panel.jsx:261
 msgid "iSCSI Targets"
@@ -9977,7 +9985,7 @@ msgstr "iSCSI cíle"
 
 #: pkg/machines/components/storagePools/createStoragePoolDialog.jsx:190
 msgid "iSCSI target IQN"
-msgstr ""
+msgstr "IQN název iSCSI cíle"
 
 # auto translated by TM merge from project: libvirt, version: master, DocId: libvirt
 #: pkg/machines/helpers.js:189
@@ -10138,7 +10146,7 @@ msgstr "doporučeno"
 
 #: pkg/machines/helpers.js:202
 msgid "redirected device"
-msgstr ""
+msgstr "přesměrované zařízení"
 
 # auto translated by TM merge from project: Cockpit, version: rhel-7.4, DocId: cockpit
 #: pkg/machines/helpers.js:188
