@@ -12,7 +12,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2019-03-22 02:29+0000\n"
+"PO-Revision-Date: 2019-03-30 10:00+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -1223,7 +1223,7 @@ msgstr "Порядок завантаження"
 
 #: pkg/machines/components/vm/bootOrderModal.jsx:210
 msgid "Boot order settings could not be saved"
-msgstr ""
+msgstr "Не вдалося зберегти параметри порядку завантаження"
 
 #: pkg/systemd/init.js:731
 msgid "Bound By"
@@ -1285,11 +1285,11 @@ msgstr "Процесор"
 
 #: pkg/systemd/hwinfo.jsx:113
 msgid "CPU Security"
-msgstr ""
+msgstr "Захист процесора"
 
 #: pkg/systemd/hwinfo.jsx:205
 msgid "CPU Security Toggles"
-msgstr ""
+msgstr "Перемикачі захисту процесора"
 
 #: pkg/systemd/host.js:1544
 msgctxt "page-title"
@@ -2237,12 +2237,16 @@ msgstr "Створити"
 msgid "Create new Logical Volume"
 msgstr "Створити логічний том"
 
+#: pkg/storaged/format-dialog.jsx:332
+msgid "Create partition"
+msgstr "Створити розділ"
+
 #: pkg/storaged/format-dialog.jsx:183
-msgid "Create Partition on $0"
+msgid "Create partition on $0"
 msgstr "Створити розділ на $0"
 
 #: pkg/storaged/content-views.jsx:556
-msgid "Create Partition Table"
+msgid "Create partition table"
 msgstr "Створити таблицю розділів"
 
 #: pkg/kubernetes/views/deploymentconfig-body.html:7
@@ -2316,7 +2320,7 @@ msgstr "Створюємо групу томів $target"
 
 #: pkg/machines/components/create-vm-dialog/createVmDialog.jsx:460
 msgid "Creation of VM $0 failed"
-msgstr ""
+msgstr "Не вдалося створити ВМ $0"
 
 #: pkg/systemd/logs.html:57
 msgid "Critical and above"
@@ -2667,7 +2671,7 @@ msgstr "Вимкнути"
 
 #: pkg/systemd/hwinfo.jsx:191
 msgid "Disable symmetric multithreading"
-msgstr ""
+msgstr "Вимкнути симетричну багатопотоковість"
 
 #: pkg/tuned/dialog.js:232
 msgid "Disable tuned"
@@ -2699,7 +2703,7 @@ msgstr "Диск"
 
 #: pkg/machines/components/diskRemove.jsx:31
 msgid "Disk $0 fail to get detached from VM $1"
-msgstr ""
+msgstr "Не вдалося від'єднати диск $0 від віртуальної машини $1"
 
 #: pkg/dashboard/index.html:73 pkg/systemd/host.js:545
 msgid "Disk I/O"
@@ -3171,7 +3175,7 @@ msgstr "ПОМИЛКА"
 
 #: pkg/ovirt/provider.js:130
 msgid "FORCEOFF action failed: $0"
-msgstr ""
+msgstr "Помилка під час дії FORCEOFF: $0"
 
 #: pkg/ovirt/components/InstallationDialog.jsx:47
 msgid "FQDN"
@@ -4468,7 +4472,7 @@ msgstr "MTU має бути додатнім числом"
 
 #: pkg/machines/components/vm/bootOrderModal.jsx:105
 msgid "Mac"
-msgstr ""
+msgstr "Mac"
 
 #: pkg/machines/components/nicEdit.jsx:161
 msgid "Mac Address"
@@ -4656,7 +4660,7 @@ msgstr "Хвилини"
 
 #: pkg/systemd/hwinfo.jsx:62 pkg/systemd/hwinfo.jsx:67
 msgid "Mitigations"
-msgstr ""
+msgstr "Запобіжні заходи"
 
 #: pkg/networkmanager/index.html:292
 msgid "Mode"
@@ -4794,7 +4798,7 @@ msgstr "Не встановлено підтримки NFS"
 
 #: pkg/machines/components/vmnetworktab.jsx:67
 msgid "NIC $0 of VM $1 failed to change state"
-msgstr ""
+msgstr "NIC $0 ВМ $1, не вдалося змінити стан"
 
 #: pkg/networkmanager/interfaces.js:2005
 msgid "NSNA Ping"
@@ -4931,11 +4935,11 @@ msgstr "Мережа"
 
 #: pkg/machines/components/networks/network.jsx:117
 msgid "Network $0 failed to get activated"
-msgstr ""
+msgstr "Не вдалося активувати мережу $0"
 
 #: pkg/machines/components/networks/network.jsx:129
 msgid "Network $0 failed to get deactivated"
-msgstr ""
+msgstr "Не вдалося деактивувати мережу $0"
 
 #: pkg/machines/components/create-vm-dialog/createVmDialog.jsx:316
 msgid "Network Boot (PXE)"
@@ -6230,7 +6234,7 @@ msgstr "Процес"
 #: pkg/machines/components/vm/bootOrderModal.jsx:123
 #: pkg/machines/components/vm/bootOrderModal.jsx:129
 msgid "Product"
-msgstr ""
+msgstr "Продукт"
 
 #: pkg/subscriptions/subscriptions-view.jsx:34
 msgid "Product ID"
@@ -6447,7 +6451,7 @@ msgstr "Не вдалося виконати дію REBOOT"
 
 #: pkg/ovirt/provider.js:164
 msgid "REBOOT_VM action failed: %s0"
-msgstr ""
+msgstr "Помилка під час дії REBOOT_VM: %s0"
 
 #: pkg/lib/machine-info.js:86
 msgid "Rack Mount Chassis"
@@ -6490,7 +6494,7 @@ msgstr "Читання і запис із декількох вузлів"
 
 #: pkg/systemd/hwinfo.jsx:193
 msgid "Read more..."
-msgstr ""
+msgstr "Докладніше…"
 
 #: pkg/kubernetes/scripts/volumes.js:212
 msgid "Read only from multiple nodes"
@@ -7112,7 +7116,7 @@ msgstr "Не вдалося виконати дію START"
 
 #: pkg/ovirt/provider.js:203
 msgid "START_VM action failed: %s0"
-msgstr ""
+msgstr "Помилка під час дії START_VM: %s0"
 
 #: pkg/networkmanager/index.html:236
 msgid "STP Forward delay"
@@ -7151,7 +7155,7 @@ msgstr "Зберегти"
 
 #: pkg/systemd/hwinfo.jsx:219
 msgid "Save and reboot"
-msgstr ""
+msgstr "Зберегти і перезавантажити"
 
 #: pkg/storaged/vdos-panel.jsx:82
 msgid "Save space by compressing individual blocks with LZ4"
@@ -7578,6 +7582,9 @@ msgid ""
 "mitigations have the side effect of reducing performance. Change these "
 "settings at your own risk."
 msgstr ""
+"Програмні заходи допомагають усунути проблеми із захистом процесора. Ці "
+"заходи мають побіжний ефект — зниження швидкодії. Змінюйте ці параметри, "
+"лише якщо повністю усвідомлюєте наслідки."
 
 #: pkg/docker/storage.jsx:165
 msgid "Solid-State Disk"
@@ -7806,11 +7813,11 @@ msgstr "Журнали зберігання"
 
 #: pkg/machines/components/storagePools/storagePool.jsx:137
 msgid "Storage Pool $0 failed to get activated"
-msgstr ""
+msgstr "Не вдалося активувати буфер сховища $0"
 
 #: pkg/machines/components/storagePools/storagePool.jsx:149
 msgid "Storage Pool $0 failed to get deactivated"
-msgstr ""
+msgstr "Не вдалося деактивувати буфер сховища $0"
 
 #: pkg/machines/components/storagePools/createStoragePoolDialog.jsx:61
 msgid "Storage Pool Name"
@@ -8409,7 +8416,7 @@ msgstr "Служби «{{ target }}» не існує."
 
 #: pkg/systemd/hwinfo.jsx:65
 msgid "The user $0 is not permitted to change cpu security mitigations"
-msgstr ""
+msgstr "Користувачу $0 заборонено змінювати заходи захисту процесора"
 
 #: pkg/kubernetes/views/user-page.html:29
 msgid "The user '{{ userName }}' does not exist."
@@ -8873,7 +8880,7 @@ msgstr "Тип"
 
 #: pkg/machines/components/vm/bootOrderModal.jsx:147
 msgid "Type ID"
-msgstr ""
+msgstr "Ідентифікатор типу"
 
 #: pkg/lib/machine-change-auth.html:42
 msgid "Type a password"
@@ -9305,43 +9312,43 @@ msgstr "Параметри VLAN"
 
 #: pkg/machines/hostvmslist.jsx:114
 msgid "VM $0 failed to Reboot"
-msgstr ""
+msgstr "Не вдалося перезавантажити віртуальну машину $0"
 
 #: pkg/machines/hostvmslist.jsx:120
 msgid "VM $0 failed to force Reboot"
-msgstr ""
+msgstr "Не вдалося примусово перезавантажити віртуальну машину $0"
 
 #: pkg/machines/hostvmslist.jsx:144
 msgid "VM $0 failed to force shutdown"
-msgstr ""
+msgstr "Не вдалося примусово вимкнути віртуальну машину $0"
 
 #: pkg/machines/components/deleteDialog.jsx:136
 msgid "VM $0 failed to get deleted"
-msgstr ""
+msgstr "Не вдалося вилучити віртуальну машину $0"
 
 #: pkg/machines/hostvmslist.jsx:108 pkg/machines/libvirt-common.js:1290
 msgid "VM $0 failed to get installed"
-msgstr ""
+msgstr "Не вдалося встановити віртуальну машину $0"
 
 #: pkg/machines/hostvmslist.jsx:132
 msgid "VM $0 failed to pause"
-msgstr ""
+msgstr "Не вдалося призупинити віртуальну машину $0"
 
 #: pkg/machines/hostvmslist.jsx:138
 msgid "VM $0 failed to resume"
-msgstr ""
+msgstr "Не вдалося відновити роботу віртуальної машини $0"
 
 #: pkg/machines/hostvmslist.jsx:150
 msgid "VM $0 failed to send NMI"
-msgstr ""
+msgstr "Не вдалося надіслати NMI віртуальній машині $0"
 
 #: pkg/machines/hostvmslist.jsx:126
 msgid "VM $0 failed to shutdown"
-msgstr ""
+msgstr "Не вдалося вимкнути віртуальну машину $0"
 
 #: pkg/machines/hostvmslist.jsx:102
 msgid "VM $0 failed to start"
-msgstr ""
+msgstr "Не вдалося запустити віртуальну машину $0"
 
 #: pkg/ovirt/components/VmOverviewColumn.jsx:37
 msgid "VM icon"
@@ -9482,7 +9489,7 @@ msgstr "Томи:"
 
 #: pkg/machines/components/vm/bootOrderModal.jsx:142
 msgid "WWPN"
-msgstr ""
+msgstr "WWPN"
 
 #: pkg/networkmanager/interfaces.js:833
 msgid "Waiting"
@@ -9800,7 +9807,7 @@ msgstr "вузол"
 
 #: pkg/machines/helpers.js:203
 msgid "host device"
-msgstr ""
+msgstr "пристрій основної системи"
 
 #: pkg/machines/helpers.js:215
 msgid "hostdev"
@@ -9808,7 +9815,7 @@ msgstr "пристрій осн. системи"
 
 #: pkg/machines/components/storagePools/createStoragePoolDialog.jsx:78
 msgid "iSCSI Target"
-msgstr ""
+msgstr "Ціль iSCSI"
 
 #: pkg/storaged/iscsi-panel.jsx:261
 msgid "iSCSI Targets"
@@ -9816,7 +9823,7 @@ msgstr "Призначення iSCSI"
 
 #: pkg/machines/components/storagePools/createStoragePoolDialog.jsx:190
 msgid "iSCSI target IQN"
-msgstr ""
+msgstr "IQN цілі iSCSI"
 
 #: pkg/machines/helpers.js:189
 msgid "idle"
@@ -9975,7 +9982,7 @@ msgstr "найліпший"
 
 #: pkg/machines/helpers.js:202
 msgid "redirected device"
-msgstr ""
+msgstr "переспрямований пристрій"
 
 #: pkg/machines/helpers.js:188
 msgid "running"
