@@ -348,7 +348,7 @@ def execute(*args):
 def find_our_fork(user):
     repos = api.get("/users/{0}/repos".format(user))
     for r in repos:
-        if r["full_name"] == api.repo:
+        if r["full_name"] == "marusak/cockpit":
             # We actually own the origin repo, so use that.
             return api.repo
         if r["fork"]:
@@ -357,11 +357,19 @@ def find_our_fork(user):
                 return full["full_name"]
     raise RuntimeError("%s doesn't have a fork of %s" % (user, api.repo))
 
-def branch(context, message, pathspec=".", issue=None, **kwargs):
-    current = time.strftime('%Y%m%d-%H%M%M')
+def push_branch(user, branch):
+    fork_repo = find_our_fork(user)
+
+    # url = "https://github.com/{0}".format(fork_repo)
+    url = "git@github.com:marusak/cockpit.git"
+    execute("git", "push", url, "+HEAD:refs/heads/{0}".format(branch))
+
+def branch(context, message, pathspec=".", issue=None, branch=None, cont=False, **kwargs):
     name = named(kwargs)
-    branch = "{0} {1} {2}".format(name, context or "", current).strip()
-    branch = branch.replace(" ", "-").replace("--", "-")
+    if not branch:
+        current = time.strftime('%Y%m%d-%H%M%M')
+        branch = "{0} {1} {2}".format(name, context or "", current).strip()
+        branch = branch.replace(" ", "-").replace("--", "-")
 
     # Tell git about our github token as a user name
     try:
@@ -377,7 +385,9 @@ def branch(context, message, pathspec=".", issue=None, **kwargs):
 
     if pathspec is not None:
         execute("git", "add", "--", pathspec)
-    execute("git", "checkout", "--detach")
+
+    if not cont:
+        execute("git", "checkout", "--detach")
 
     # If there's nothing to add at that pathspec return None
     try:
@@ -385,7 +395,8 @@ def branch(context, message, pathspec=".", issue=None, **kwargs):
     except subprocess.CalledProcessError:
         return None
 
-    execute("git", "push", url, "+HEAD:refs/heads/{0}".format(branch))
+    if not cont:
+        push_branch(user, branch)
 
     # Comment on the issue if present
     if issue:
@@ -435,6 +446,13 @@ def pull(branch, body=None, issue=None, base="master", labels=['bot'], **kwargs)
             issue["pull_request"] = { "url": pull["url"] }
         except TypeError:
             pass
+
+    # git show -s --format=%B
+    # append with "Closes #..."
+    # git commit --amend -m ...
+    # git push -f ...
+
+    print(pull)
 
     return pull
 

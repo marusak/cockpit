@@ -116,8 +116,7 @@ update-po: po/cockpit.pot
 ZANATA_CLI = LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 zanata-cli -B
 
 upload-pot: po/cockpit.pot
-	$(ZANATA_CLI) push --includes cockpit.pot --project-config "$(srcdir)/po/zanata.xml" \
-		-s "$(builddir)/po"
+	echo "HELLO"
 
 upload-translations:
 	$(ZANATA_CLI) push --includes=cockpit.pot --project-config "$(srcdir)/po/zanata.xml" \
