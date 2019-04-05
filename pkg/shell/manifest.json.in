@@ -39,7 +39,8 @@
         "zh-cn": "中文（中国）",
         "cs-cz": "čeština",
         "fi-fi": "suomi",
-        "it-it": "italiano"
+        "it-it": "italiano",
+        "ru-ru": "русский"
     },
     "requires": {
         "cockpit": "134.x"
