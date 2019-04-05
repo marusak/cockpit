@@ -112,6 +112,7 @@ def run(context, verbose=False, **kwargs):
             language = name.split("/")[1][:-3]
             locale = language_map[language]
             current_manifest["locales"][locale[2]] = locale[1]
+            current_manifest = dict(sorted(current_manifest.items()))
             execute("git", "add", "--", name)
             current_linguas.append(language)
             current_linguas.sort()
