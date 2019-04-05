@@ -349,7 +349,7 @@ def execute(*args):
 def find_our_fork(user):
     repos = api.get("/users/{0}/repos".format(user))
     for r in repos:
-        if r["full_name"] == api.repo:
+        if r["full_name"] == "marusak/cockpit":
             # We actually own the origin repo, so use that.
             return api.repo
         if r["fork"]:
@@ -362,6 +362,7 @@ def push_branch(user, branch, force=False):
     fork_repo = find_our_fork(user)
 
     url = "https://github.com/{0}".format(fork_repo)
+    url = "git@github.com:marusak/cockpit.git"
     cmd = ["git", "push", url, "+HEAD:refs/heads/{0}".format(branch)]
     if force:
         cmd.insert(2, "-f")
