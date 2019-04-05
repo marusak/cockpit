@@ -17,7 +17,8 @@
         "cs-cz": "čeština",
         "fi-fi": "suomi",
         "it-it": "italiano",
-        "ru-ru": "русский"
+        "ru-ru": "русский",
+        "sv-se": "svenska"
     },
     "bridges": [
         {
