@@ -13,7 +13,8 @@
         "pl-pl": "polski",
         "pt-br": "português (Brasil)",
         "uk-ua": "Українська",
-        "zh-cn": "中文（中国）"
+        "zh-cn": "中文（中国）",
+        "cs-cz": "čeština"
     },
     "bridges": [
         {
