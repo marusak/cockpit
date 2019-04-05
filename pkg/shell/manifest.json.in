@@ -15,7 +15,8 @@
         "uk-ua": "Українська",
         "zh-cn": "中文（中国）",
         "cs-cz": "čeština",
-        "fi-fi": "suomi"
+        "fi-fi": "suomi",
+        "it-it": "italiano"
     },
     "bridges": [
         {
