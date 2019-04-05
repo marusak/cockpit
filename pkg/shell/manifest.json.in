@@ -1,20 +1,4 @@
 {
-    "version": "@VERSION@",
-    "requires": {
-        "cockpit": "134.x"
-    },
-    "locales": {
-        "en-us": "English",
-        "ca-es": "català",
-        "de-de": "Deutsch",
-        "es-es": "español",
-        "fr-fr": "français",
-        "ja-jp": "日本語",
-        "pl-pl": "polski",
-        "pt-br": "português (Brasil)",
-        "uk-ua": "Українська",
-        "zh-cn": "中文（中国）"
-    },
     "bridges": [
         {
             "match": {
@@ -41,5 +25,22 @@
                 "--privileged"
             ]
         }
-    ]
+    ],
+    "locales": {
+        "en-us": "English",
+        "ca-es": "català",
+        "de-de": "Deutsch",
+        "es-es": "español",
+        "fr-fr": "français",
+        "ja-jp": "日本語",
+        "pl-pl": "polski",
+        "pt-br": "português (Brasil)",
+        "uk-ua": "Українська",
+        "zh-cn": "中文（中国）",
+        "cs-cz": "čeština"
+    },
+    "requires": {
+        "cockpit": "134.x"
+    },
+    "version": "@VERSION@"
 }
