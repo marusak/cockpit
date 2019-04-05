@@ -40,7 +40,8 @@
         "cs-cz": "čeština",
         "fi-fi": "suomi",
         "it-it": "italiano",
-        "ru-ru": "русский"
+        "ru-ru": "русский",
+        "sv-se": "svenska"
     },
     "requires": {
         "cockpit": "134.x"
