@@ -4,9 +4,10 @@
         "cockpit": "134.x"
     },
     "locales": {
-        "en-us": "English",
         "ca-es": "català",
+        "cs-cz": "čeština",
         "de-de": "Deutsch",
+        "en-us": "English",
         "es-es": "español",
         "fr-fr": "français",
         "ja-jp": "日本語",
