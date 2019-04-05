@@ -21,6 +21,7 @@
 import os
 import json
 import subprocess
+import collections
 import sys
 
 sys.dont_write_bytecode = True
@@ -81,6 +82,7 @@ def run(context, verbose=False, **kwargs):
 
     with open("pkg/shell/manifest.json.in", "r", encoding='utf-8') as mnfst:
         current_manifest = json.load(mnfst)
+        current_manifest["locales"] = collections.OrderedDict(current_manifest["locales"])
 
     with open("po/LINGUAS", "r", encoding='utf-8') as lngs:
         for line in lngs:
