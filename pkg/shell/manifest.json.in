@@ -41,7 +41,8 @@
         "fi-fi": "suomi",
         "it-it": "italiano",
         "ru-ru": "русский",
-        "sv-se": "svenska"
+        "sv-se": "svenska",
+        "zh-tw": "中文（台灣）"
     },
     "requires": {
         "cockpit": "134.x"
