@@ -122,7 +122,7 @@ def get_origin_repo():
 class GitHub(object):
     def __init__(self, base=None, cacher=None, repo=None):
         if base is None:
-            self.repo = repo or os.environ.get("GITHUB_BASE", None) or get_origin_repo()
+            self.repo = "marusak/cockpit"
             netloc = os.environ.get("GITHUB_API", "https://api.github.com")
             base = "{0}/repos/{1}/".format(netloc, self.repo)
         self.url = urllib.parse.urlparse(base)
