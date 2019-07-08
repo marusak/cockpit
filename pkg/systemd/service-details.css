@@ -1,0 +1,69 @@
+.service-top-panel {
+    padding-bottom: 20px;
+}
+
+#service-details {
+    padding-bottom: 40px;
+}
+
+.service-top-panel .service-name {
+    font-size: var(--pf-global--FontSize--3xl);
+    font-weight: lighter;
+}
+
+.service-top-panel .onoff-ct {
+    vertical-align: text-bottom;
+}
+
+.service-top-panel .onoff-ct {
+    padding-left: 60px;
+}
+
+.action-button {
+    margin-left: 30px;
+}
+
+#service-details .ct-form > :not(hr) {
+    line-height: 1.5;
+    row-gap: normal;
+}
+
+.closer-lines {
+    line-height: 1 !important;
+}
+
+.ct-form label {
+    font-weight: bolder;
+}
+
+.status-icon {
+    padding-right: 5px;
+}
+
+.green,
+.green::before {
+    color: var(--pf-global--success-color--200);
+}
+
+.grey,
+.grey::before {
+    color: var(--pf-global--icon--Color--light);
+}
+
+.red,
+.red::before {
+    color: var(--pf-global--danger-color--200);
+}
+
+.side-note {
+    color: var(--pf-global--Color--300);
+    padding-left: 10px;
+}
+
+.font-xs {
+    font-size: var(--pf-global--FontSize--xs);
+}
+
+.list-group-item {
+    border: none;
+}
