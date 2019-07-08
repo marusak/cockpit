@@ -1,0 +1,83 @@
+#service-details {
+    padding-bottom: 2.5rem;
+}
+
+.service-top-panel {
+    padding-bottom: 1.25rem;
+    display: flex;
+    align-items: baseline;
+}
+
+.service-top-panel > .service-name {
+    margin: 0 1.5rem 0 0;
+}
+
+.service-top-panel .onoff-ct {
+    vertical-align: text-bottom;
+}
+
+/* Make the kebab wrapper and button flex to parents for proper alignment */
+.service-top-panel .dropdown-kebab-pf,
+.service-top-panel .dropdown-kebab-pf > .dropdown-toggle {
+    display: flex;
+}
+
+.service-top-panel .dropdown-kebab-pf > .dropdown-toggle {
+    margin: 0;
+}
+
+.service-top-panel .dropdown-kebab-pf > .dropdown-menu-left {
+    left: 0;
+}
+
+.service-top-panel .dropdown-kebab-pf > .dropdown-menu-right {
+    right: 0;
+}
+
+.action-button {
+    margin-left: 2rem;
+}
+
+#service-details .ct-form > :not(hr) {
+    line-height: 1.5rem;
+    row-gap: normal;
+}
+
+.ct-form .closer-lines {
+    margin: 0;
+}
+
+.ct-form label {
+}
+
+.status-icon {
+    padding-right: 0.5rem;
+}
+
+.green,
+.green::before {
+    color: var(--pf-global--success-color--200);
+}
+
+.grey,
+.grey::before {
+    color: var(--pf-global--icon--Color--light);
+}
+
+.red,
+.red::before {
+    color: var(--pf-global--danger-color--200);
+}
+
+.side-note {
+    color: var(--pf-global--Color--300);
+    padding-left: 1em;
+}
+
+.font-xs {
+    font-size: var(--pf-global--FontSize--xs);
+}
+
+.list-group-item {
+    border: none;
+}
