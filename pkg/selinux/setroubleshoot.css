@@ -76,13 +76,26 @@ div.alert-ct-top {
     margin-top: 10px;
 }
 
-.selinux-policy-ct label {
-    font-size: 13px;
+.selinux-state {
+    display: flex;
+    align-items: center;
 }
 
-.selinux-policy-ct .onoff-ct {
-    padding-left: 10px;
-    padding-right: 10px;
+.selinux-state .onoff-ct {
+    vertical-align: text-bottom;
+}
+
+.selinux-state .status {
+    font-size: var(--pf-global--FontSize--xs);
+    margin-left: 0.5rem;
+}
+
+.selinux-state > h2 {
+    margin: 0 1.5rem 0 0;
+}
+
+.selinux-policy-ct .pficon-info {
+    padding-right: 5px;
 }
 
 .listing-ct-body .list-group {
