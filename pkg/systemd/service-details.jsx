@@ -372,7 +372,7 @@ export class ServiceDetails extends React.Component {
                     </div>
                     : <React.Fragment>
                         <div className="service-top-panel">
-                            <span className="service-name">{this.props.unit.Description}</span>
+                            <h2 className="service-name">{this.props.unit.Description}</h2>
                             { this.props.permitted &&
                                 <React.Fragment>
                                     { !masked && !isStatic &&
