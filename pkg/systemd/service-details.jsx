@@ -20,7 +20,7 @@
 import React from "react";
 import moment from "moment";
 import PropTypes from "prop-types";
-import { Button, Modal, OverlayTrigger, Tooltip } from 'patternfly-react';
+import { Button, Modal, OverlayTrigger, Tooltip, DropdownKebab, MenuItem } from 'patternfly-react';
 
 import cockpit from "cockpit";
 import { OnOffSwitch } from "cockpit-components-onoff.jsx";
@@ -145,50 +145,38 @@ class ServiceActions extends React.Component {
         // If masked, only show unmasking and nothing else
         if (this.props.masked)
             actions.push(
-                <li role="presentation" key="unmask">
-                    <a role="menuitem" onClick={() => this.props.fileActionCallback("UnmaskUnitFiles", undefined)}>{ _("Allow running (unmask)") }</a>
-                </li>
+                <MenuItem onClick={() => this.props.fileActionCallback("UnmaskUnitFiles", undefined)}>{ _("Allow running (unmask)") }</MenuItem>
             );
         else { // All cases when not masked
             // Only show stop when running but not enabled
             if (this.props.active && !this.props.enabled && !this.props.isStatic) {
                 actions.push(
-                    <li role="presentation" key="stop">
-                        <a role="menuitem" onClick={() => this.props.actionCallback("StopUnit")}>{ _("Stop") }</a>
-                    </li>,
-                    <li className="divider" role="presentation" key="divider1" />
+                    <MenuItem onClick={() => this.props.actionCallback("StopUnit")}>{ _("Stop") }</MenuItem>,
+                    <MenuItem divider />
                 );
             }
             if (!this.props.isStatic && this.props.enabled) {
                 if (this.props.active)
                     actions.push(
-                        <li role="presentation" key="restart">
-                            <a role="menuitem" onClick={() => this.props.actionCallback("RestartUnit")}>{ _("Restart") }</a>
-                        </li>,
+                        <MenuItem onClick={() => this.props.actionCallback("RestartUnit")}>{ _("Restart") }</MenuItem>
                     );
                 else
                     actions.push(
-                        <li role="presentation" key="restart">
-                            <a role="menuitem" onClick={() => this.props.actionCallback("StartUnit")}>{ _("Start") }</a>
-                        </li>,
+                        <MenuItem onClick={() => this.props.actionCallback("StartUnit")}>{ _("Start") }</MenuItem>
                     );
 
                 actions.push(
-                    <li role="presentation" key="reload">
-                        <a role="menuitem" onClick={() => this.props.actionCallback("ReloadUnit")}>{ _("Reload") }</a>
-                    </li>
+                    <MenuItem onClick={() => this.props.actionCallback("ReloadUnit")}>{ _("Reload") }</MenuItem>
                 );
             }
 
             if (actions.length > 0)
                 actions.push(
-                    <li className="divider" role="presentation" key="divider2" />
+                    <MenuItem divider />
                 );
 
             actions.push(
-                <li role="presentation" key="mask">
-                    <a role="menuitem" onClick={() => this.setState({ dialogMaskedOpened: true }) }>{ _("Disallow running (mask)") }</a>
-                </li>
+                <MenuItem onClick={() => this.setState({ dialogMaskedOpened: true }) }>{ _("Disallow running (mask)") }</MenuItem>
             );
         }
 
@@ -201,21 +189,9 @@ class ServiceActions extends React.Component {
                                           confirmText={ _("Mask Service") }
                                           confirmAction={() => { this.props.fileActionCallback("MaskUnitFiles", false); this.setState({ dialogMaskedOpened: false }) }} />
                 }
-                <span className="dropdown dropdown-kebab-pf">
-                    <button
-                        className="btn btn-link dropdown-toggle"
-                        type="button"
-                        id="service-actions"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                    >
-                        <span className="fa fa-ellipsis-v" />
-                    </button>
-                    <ul className="dropdown-menu dropdown-menu-left" aria-labelledby="service-actions">
-                        {actions}
-                    </ul>
-                </span>
+                <DropdownKebab id="service-actions" title={ _("Additions actions") }>
+                    {actions}
+                </DropdownKebab>
             </React.Fragment>
         );
     }
