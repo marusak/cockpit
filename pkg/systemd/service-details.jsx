@@ -256,8 +256,8 @@ export class ServiceDetails extends React.Component {
 
         if (masked)
             status.push(
-                <div key="masked">
-                    <span className="fa fa-ban status-icon grey" />
+                <div key="masked" className="status-masked">
+                    <span className="fa fa-ban status-icon" />
                     <span className="status">{ _("Masked") }</span>
                     <span className="side-note font-xs">{ _("Forbidden from running") }</span>
                 </div>
@@ -265,16 +265,16 @@ export class ServiceDetails extends React.Component {
 
         if (!enabled && !active && !masked && !isStatic)
             status.push(
-                <div key="disabled">
-                    <span className="pficon pficon-off status-icon grey" />
+                <div key="disabled" className="status-disabled">
+                    <span className="pficon pficon-off status-icon" />
                     <span className="status">{ _("Disabled") }</span>
                 </div>
             );
 
         if (failed)
             status.push(
-                <div key="failed">
-                    <span className="pficon pficon-error-circle-o status-icon red" />
+                <div key="failed" className="status-failed">
+                    <span className="pficon pficon-error-circle-o status-icon" />
                     <span className="red status">{ _("Failed to start") }</span>
                     <button className="btn btn-default action-button" onClick={() => this.props.actionCallback("StartUnit") }>{ _("Start Service") }</button>
                 </div>
@@ -283,16 +283,16 @@ export class ServiceDetails extends React.Component {
         if (!status.length) {
             if (active)
                 status.push(
-                    <div key="running">
-                        <span className="pficon pficon-on-running status-icon green" />
+                    <div key="running" className="status-running">
+                        <span className="pficon pficon-on-running status-icon" />
                         <span className="status">{ _("Running") }</span>
                         <span className="side-note font-xs">{ _("Active since ") + moment(this.props.unit.ActiveEnterTimestamp / 1000).format('LLL') }</span>
                     </div>
                 );
             else
                 status.push(
-                    <div key="stopped">
-                        <span className="pficon pficon-off status-icon grey" />
+                    <div key="stopped" className="status-stopped">
+                        <span className="pficon pficon-off status-icon" />
                         <span className="status">{ _("Not running") }</span>
                     </div>
                 );
@@ -300,8 +300,8 @@ export class ServiceDetails extends React.Component {
 
         if (isStatic && !masked)
             status.unshift(
-                <div key="static">
-                    <span className="pficon pficon-asleep status-icon grey" />
+                <div key="static" className="status-static">
+                    <span className="pficon pficon-asleep status-icon" />
                     <span className="status">{ _("Static") }</span>
                     { this.props.unit.WantedBy && this.props.unit.WantedBy.length > 0 &&
                         <React.Fragment>
@@ -316,8 +316,8 @@ export class ServiceDetails extends React.Component {
 
         if (!this.props.permitted)
             status.unshift(
-                <div key="readonly">
-                    <span className="fa fa-user status-icon grey" />
+                <div key="readonly" className="status-readonly">
+                    <span className="fa fa-user status-icon" />
                     <span className="status">{ _("Read-only") }</span>
                     <span className="side-note font-xs">{ _("Requires administration access to edit") }</span>
                 </div>
@@ -325,8 +325,8 @@ export class ServiceDetails extends React.Component {
 
         if (enabled)
             status.push(
-                <div key="enabled">
-                    <span className="pficon pficon-ok status-icon green" />
+                <div key="enabled" className="status-enabled">
+                    <span className="pficon pficon-ok status-icon" />
                     <span className="status">{ _("Automatically starts") }</span>
                 </div>
             );
@@ -406,7 +406,7 @@ export class ServiceDetails extends React.Component {
                             }
                             { notMetConditions.length > 0 &&
                                 <React.Fragment>
-                                    <label className="control-label red" htmlFor="condition">{ _("Condition failed") }</label>
+                                    <label className="control-label failed" htmlFor="condition">{ _("Condition failed") }</label>
                                     <div id="condition" className="ct-validation-wrapper">
                                         {notMetConditions.map(cond => <div key={cond.split(' ').join('')}>{cond}</div>)}
                                     </div>

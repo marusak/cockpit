@@ -90,26 +90,23 @@
     margin: 0;
 }
 
-.ct-form label {
+.status-icon::before {
+    color: inherit;
 }
 
 .status-icon {
     padding-right: 0.5rem;
+    color: var(--pf-global--icon--Color--light);
 }
 
-.green,
-.green::before {
+.status-running > .status-icon,
+.status-enabled > .status-icon {
     /* mid-way between PF4 success-100 & 200; then rounded to AA contrast */
     color: #6da000;
 }
 
-.grey,
-.grey::before {
-    color: var(--pf-global--icon--Color--light);
-}
-
-.red,
-.red::before {
+.status-failed > .status-icon,
+.control-label.failed {
     color: var(--pf-global--danger-color--200);
 }
 
