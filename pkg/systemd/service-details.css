@@ -99,7 +99,8 @@
 
 .green,
 .green::before {
-    color: var(--pf-global--success-color--200);
+    /* mid-way between PF4 success-100 & 200; then rounded to AA contrast */
+    color: #6da000;
 }
 
 .grey,
