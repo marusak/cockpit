@@ -68,8 +68,8 @@
 }
 
 /* if we have an error at the top of the page, give it some space */
-div.alert-ct-top {
-    margin-top: 10px;
+.alert-ct-top {
+    margin: 1rem 0;
 }
 
 .list-group-item .alert {
@@ -79,6 +79,7 @@ div.alert-ct-top {
 .selinux-state {
     display: flex;
     align-items: center;
+    margin: 0 0 1rem;
 }
 
 .selinux-state .onoff-ct {
@@ -94,8 +95,14 @@ div.alert-ct-top {
     margin: 0 1.5rem 0 0;
 }
 
+.selinux-policy-ct > .note {
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
 .selinux-policy-ct .pficon-info {
-    padding-right: 5px;
+    padding-right: 0.5rem;
 }
 
 .listing-ct-body .list-group {
