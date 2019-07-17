@@ -292,6 +292,8 @@ class SELinuxStatus extends React.Component {
             note = _("The configured state is unknown, it might change on the next boot.");
         else if (!configUnknown && this.props.selinuxStatus.enforcing !== this.props.selinuxStatus.configEnforcing)
             note = _("Setting deviates from the configured state and will revert on the next boot.");
+        note = null;
+        errorMessage = null;
 
         let statusMsg = this.props.selinuxStatus.enforcing ? _("Enforcing") : _("Permissive");
 
@@ -484,6 +486,7 @@ export class SETroubleshootPage extends React.Component {
                 </div>
             );
         }
+        errorMessage = null;
 
         return (
             <div className="container-fluid">
