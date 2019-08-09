@@ -275,8 +275,8 @@ class UpdateItem extends React.Component {
         }
 
         var pkgList = this.props.pkgNames.map(n => (
-            <OverlayTrigger key={n} overlay={ <Tooltip id="tip-summary">{packageSummaries[n]}</Tooltip> } placement="top">
-                <span>{n}</span>
+            <OverlayTrigger key={n.name + n.arch} overlay={ <Tooltip id="tip-summary">{packageSummaries[n.name] + " for " + n.arch}</Tooltip> } placement="top">
+                <span>{n.name}</span>
             </OverlayTrigger>)
         );
         var pkgs = insertCommas(pkgList);
@@ -354,11 +354,11 @@ function UpdatesList(props) {
         let hash = u.version + u.description;
         let seenId = sameUpdate[hash];
         if (seenId) {
-            packageNames[seenId].push(u.name);
+            packageNames[seenId].push({ name: u.name, arch: u.arch });
         } else {
             // this is a new update
             sameUpdate[hash] = id;
-            packageNames[id] = [u.name];
+            packageNames[id] = [{ name: u.name, arch: u.arch }];
             updates.push(id);
         }
     });
@@ -383,7 +383,7 @@ function UpdatesList(props) {
                     <th scope="col">{_("Details")}</th>
                 </tr>
             </thead>
-            { updates.map(id => <UpdateItem key={id} pkgNames={packageNames[id].sort()} info={props.updates[id]} />) }
+            { updates.map(id => <UpdateItem key={id} pkgNames={packageNames[id].sort((a, b) => a.name > b.name)} info={props.updates[id]} />) }
         </table>
     );
 }
@@ -580,6 +580,11 @@ class OsUpdates extends React.Component {
             UpdateDetail: (packageId, updates, obsoletes, vendor_urls, bug_urls, cve_urls, restart,
                 update_text, changelog /* state, issued, updated */) => {
                 let u = this.state.updates[packageId];
+                let arch = "";
+                let idSplit = packageId.split(";");
+                if (idSplit.length >= 3)
+                    arch = idSplit[2];
+                u.arch = arch;
                 u.vendor_urls = vendor_urls;
                 // HACK: bug_urls and cve_urls also contain titles, in a not-quite-predictable order; ignore them,
                 // only pick out http[s] URLs (https://bugs.freedesktop.org/show_bug.cgi?id=104552)
