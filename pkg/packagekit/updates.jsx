@@ -412,7 +412,7 @@ class ApplyUpdates extends React.Component {
                                 remain = reply[0].RemainingTime.v;
                             // info: see PK_STATUS_* at https://github.com/hughsie/PackageKit/blob/master/lib/packagekit-glib2/pk-enum.h
                             let newActions = this.state.actions.slice();
-                            newActions.push({ status: info, package: pfields[0] + " " + pfields[1] });
+                            newActions.push({ status: info, package: pfields[0] + " " + pfields[1] + " for " + pfields[2] });
 
                             let log = document.getElementById("update-log");
                             let atBottom = false;
