@@ -75,13 +75,6 @@ REPO_BRANCH_CONTEXT = {
         ],
         '_manual': [
             'fedora-30/azure',
-            'rhel-8-1',
-            'rhel-8-1/live-iso',
-            'rhel-8-1/qcow2',
-            'rhel-8-1/aws',
-            'rhel-8-1/azure',
-            'rhel-8-1/openstack',
-            'rhel-8-1/vmware',
         ],
         'rhel7-extras': [
             'rhel-7-7',
@@ -91,6 +84,15 @@ REPO_BRANCH_CONTEXT = {
             'rhel-7-7/azure',
             'rhel-7-7/openstack',
             'rhel-7-7/vmware',
+        ],
+        'rhel8-branch': [
+            'rhel-8-1',
+            'rhel-8-1/live-iso',
+            'rhel-8-1/qcow2',
+            'rhel-8-1/aws',
+            'rhel-8-1/azure',
+            'rhel-8-1/openstack',
+            'rhel-8-1/vmware',
         ],
     },
     'weldr/cockpit-composer': {
