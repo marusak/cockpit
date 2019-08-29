@@ -55,11 +55,11 @@ function instance_sampler(metrics, source) {
 
     function handle_meta(msg) {
         self.data = { };
-        instances = [ ];
+        instances = [];
         for (var m = 0; m < msg.metrics.length; m++) {
             instances[m] = msg.metrics[m].instances;
             for (var i = 0; i < instances[m].length; i++)
-                self.data[instances[m][i]] = [ ];
+                self.data[instances[m][i]] = [];
         }
         if (Object.keys(self.data).length > 100) {
             close();
@@ -163,15 +163,15 @@ function init_proxies () {
 /* Monitors
  */
 
-client.fsys_sizes = instance_sampler([ { name: "mount.used" },
+client.fsys_sizes = instance_sampler([{ name: "mount.used" },
     { name: "mount.total" }
 ]);
 
-client.swap_sizes = instance_sampler([ { name: "swapdev.length" },
+client.swap_sizes = instance_sampler([{ name: "swapdev.length" },
     { name: "swapdev.free" },
 ], "direct");
 
-client.blockdev_io = instance_sampler([ { name: "block.device.read", derive: "rate" },
+client.blockdev_io = instance_sampler([{ name: "block.device.read", derive: "rate" },
     { name: "block.device.written", derive: "rate" }
 ]);
 
@@ -197,7 +197,7 @@ function update_indices() {
     client.drives_multipath_blocks = { };
     client.drives_block = { };
     for (path in client.drives) {
-        client.drives_multipath_blocks[path] = [ ];
+        client.drives_multipath_blocks[path] = [];
     }
     for (path in client.blocks) {
         block = client.blocks[path];
@@ -216,7 +216,7 @@ function update_indices() {
 
         if (!client.drives_block[path] && client.drives_multipath_blocks[path].length == 1) {
             client.drives_block[path] = client.drives_multipath_blocks[path][0];
-            client.drives_multipath_blocks[path] = [ ];
+            client.drives_multipath_blocks[path] = [];
         } else {
             client.drives_multipath_blocks[path].sort(utils.block_cmp);
             if (!client.drives_block[path])
@@ -233,7 +233,7 @@ function update_indices() {
 
     client.mdraids_members = { };
     for (path in client.mdraids) {
-        client.mdraids_members[path] = [ ];
+        client.mdraids_members[path] = [];
     }
     for (path in client.blocks) {
         block = client.blocks[path];
@@ -270,7 +270,7 @@ function update_indices() {
 
     client.vgroups_pvols = { };
     for (path in client.vgroups) {
-        client.vgroups_pvols[path] = [ ];
+        client.vgroups_pvols[path] = [];
     }
     for (path in client.blocks_pvol) {
         pvol = client.blocks_pvol[path];
@@ -286,7 +286,7 @@ function update_indices() {
 
     client.vgroups_lvols = { };
     for (path in client.vgroups) {
-        client.vgroups_lvols[path] = [ ];
+        client.vgroups_lvols[path] = [];
     }
     for (path in client.lvols) {
         lvol = client.lvols[path];
@@ -305,7 +305,7 @@ function update_indices() {
     client.lvols_pool_members = { };
     for (path in client.lvols) {
         if (client.lvols[path].Type == "pool")
-            client.lvols_pool_members[path] = [ ];
+            client.lvols_pool_members[path] = [];
     }
     for (path in client.lvols) {
         lvol = client.lvols[path];
@@ -325,7 +325,7 @@ function update_indices() {
 
     client.blocks_partitions = { };
     for (path in client.blocks_ptable) {
-        client.blocks_partitions[path] = [ ];
+        client.blocks_partitions[path] = [];
     }
     for (path in client.blocks_part) {
         part = client.blocks_part[path];
@@ -384,7 +384,7 @@ function init_model(callback) {
                 var defer = cockpit.defer();
                 client.manager_lvm2 = proxy("Manager.LVM2", "Manager");
                 client.manager_iscsi = proxy("Manager.ISCSI.Initiator", "Manager");
-                wait_all([ client.manager_lvm2, client.manager_iscsi ],
+                wait_all([client.manager_lvm2, client.manager_iscsi],
                          function () {
                              client.features.lvm2 = client.manager_lvm2.valid;
                              client.features.iscsi = (hacks.with_storaged_iscsi_sessions != "no" &&
@@ -411,7 +411,7 @@ function init_model(callback) {
     }
 
     function enable_clevis_features() {
-        return cockpit.spawn([ "which", "clevis-luks-bind" ], { err: "ignore" }).then(
+        return cockpit.spawn(["which", "clevis-luks-bind"], { err: "ignore" }).then(
             function () {
                 client.features.clevis = true;
                 return cockpit.resolve();
@@ -426,7 +426,7 @@ function init_model(callback) {
         // $PATH, such as when connecting from CentOS to another
         // machine via SSH as non-root.
         const std_path = "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin";
-        return cockpit.spawn([ "which", "mount.nfs" ], { err: "message", environ: [ std_path ] }).then(
+        return cockpit.spawn(["which", "mount.nfs"], { err: "message", environ: [std_path] }).then(
             function () {
                 client.features.nfs = true;
                 client.nfs.start();
@@ -506,7 +506,7 @@ function init_model(callback) {
         }
     }
 
-    wait_all([ client.manager,
+    wait_all([client.manager,
         client.mdraids, client.vgroups, client.drives,
         client.blocks, client.blocks_ptable, client.blocks_lvm2, client.blocks_fsys
     ], function () {
@@ -538,7 +538,7 @@ client.older_than = function older_than(version) {
 
 function nfs_mounts() {
     var self = {
-        entries: [ ],
+        entries: [],
         fsys_sizes: { },
 
         start: start,
@@ -559,12 +559,12 @@ function nfs_mounts() {
     };
 
     function spawn_nfs_mounts(args) {
-        return python.spawn([ inotify_py, nfs_mounts_py ], args, { superuser: "try", err: "message" });
+        return python.spawn([inotify_py, nfs_mounts_py], args, { superuser: "try", err: "message" });
     }
 
     function start() {
         var buf = "";
-        spawn_nfs_mounts([ "monitor" ])
+        spawn_nfs_mounts(["monitor"])
                 .stream(function (output) {
                     var lines;
 
@@ -593,14 +593,14 @@ function nfs_mounts() {
             return null;
 
         self.fsys_sizes[path] = false;
-        cockpit.spawn([ "stat", "-f", "-c", "[ %S, %f, %b ]", path ], { err: "message" })
+        cockpit.spawn(["stat", "-f", "-c", "[ %S, %f, %b ]", path], { err: "message" })
                 .done(function (output) {
                     var data = JSON.parse(output);
-                    self.fsys_sizes[path] = [ (data[2] - data[1]) * data[0], data[2] * data[0] ];
+                    self.fsys_sizes[path] = [(data[2] - data[1]) * data[0], data[2] * data[0]];
                     client.dispatchEvent('changed');
                 })
                 .fail(function () {
-                    self.fsys_sizes[path] = [ 0, 0 ];
+                    self.fsys_sizes[path] = [0, 0];
                     client.dispatchEvent('changed');
                 });
 
@@ -608,37 +608,37 @@ function nfs_mounts() {
     }
 
     function update_entry(entry, new_fields) {
-        return spawn_nfs_mounts([ "update", JSON.stringify(entry), JSON.stringify(new_fields) ]);
+        return spawn_nfs_mounts(["update", JSON.stringify(entry), JSON.stringify(new_fields)]);
     }
 
     function add_entry(fields) {
-        return spawn_nfs_mounts([ "add", JSON.stringify(fields) ]);
+        return spawn_nfs_mounts(["add", JSON.stringify(fields)]);
     }
 
     function remove_entry(entry) {
-        return spawn_nfs_mounts([ "remove", JSON.stringify(entry) ]);
+        return spawn_nfs_mounts(["remove", JSON.stringify(entry)]);
     }
 
     function mount_entry(entry) {
-        return spawn_nfs_mounts([ "mount", JSON.stringify(entry) ]);
+        return spawn_nfs_mounts(["mount", JSON.stringify(entry)]);
     }
 
     function unmount_entry(entry) {
-        return spawn_nfs_mounts([ "unmount", JSON.stringify(entry) ]);
+        return spawn_nfs_mounts(["unmount", JSON.stringify(entry)]);
     }
 
     function stop_and_unmount_entry(users, entry) {
         var units = users.map(function (u) { return u.unit });
-        return spawn_nfs_mounts([ "stop-and-unmount", JSON.stringify(units), JSON.stringify(entry) ]);
+        return spawn_nfs_mounts(["stop-and-unmount", JSON.stringify(units), JSON.stringify(entry)]);
     }
 
     function stop_and_remove_entry(users, entry) {
         var units = users.map(function (u) { return u.unit });
-        return spawn_nfs_mounts([ "stop-and-remove", JSON.stringify(units), JSON.stringify(entry) ]);
+        return spawn_nfs_mounts(["stop-and-remove", JSON.stringify(units), JSON.stringify(entry)]);
     }
 
     function entry_users(entry) {
-        return spawn_nfs_mounts([ "users", JSON.stringify(entry) ]).then(JSON.parse);
+        return spawn_nfs_mounts(["users", JSON.stringify(entry)]).then(JSON.parse);
     }
 
     function find_entry(remote, local) {
@@ -659,7 +659,7 @@ function vdo_overlay() {
     var self = {
         start: start,
 
-        volumes: [ ],
+        volumes: [],
 
         by_name: { },
         by_dev: { },
@@ -672,7 +672,7 @@ function vdo_overlay() {
     };
 
     function cmd(args) {
-        return cockpit.spawn([ "vdo" ].concat(args),
+        return cockpit.spawn(["vdo"].concat(args),
                              { superuser: true,
                                err: "message"
                              });
@@ -687,7 +687,7 @@ function vdo_overlay() {
             var name = vol.name;
 
             function volcmd(args) {
-                return cmd(args.concat([ "--name", name ]));
+                return cmd(args.concat(["--name", name]));
             }
 
             var v = { name: name,
@@ -702,39 +702,39 @@ function vdo_overlay() {
                       activated: vol.activated,
 
                       set_compression: function(val) {
-                          return volcmd([ val ? "enableCompression" : "disableCompression" ]);
+                          return volcmd([val ? "enableCompression" : "disableCompression"]);
                       },
 
                       set_deduplication: function(val) {
-                          return volcmd([ val ? "enableDeduplication" : "disableDeduplication" ]);
+                          return volcmd([val ? "enableDeduplication" : "disableDeduplication"]);
                       },
 
                       set_activate: function(val) {
-                          return volcmd([ val ? "activate" : "deactivate" ]);
+                          return volcmd([val ? "activate" : "deactivate"]);
                       },
 
                       start: function() {
-                          return volcmd([ "start" ]);
+                          return volcmd(["start"]);
                       },
 
                       stop: function() {
-                          return volcmd([ "stop" ]);
+                          return volcmd(["stop"]);
                       },
 
                       remove: function() {
-                          return volcmd([ "remove" ]);
+                          return volcmd(["remove"]);
                       },
 
                       force_remove: function() {
-                          return volcmd([ "remove", "--force" ]);
+                          return volcmd(["remove", "--force"]);
                       },
 
                       grow_physical: function() {
-                          return volcmd([ "growPhysical" ]);
+                          return volcmd(["growPhysical"]);
                       },
 
                       grow_logical: function(lsize) {
-                          return volcmd([ "growLogical", "--vdoLogicalSize", lsize + "B" ]);
+                          return volcmd(["growLogical", "--vdoLogicalSize", lsize + "B"]);
                       }
             };
 
@@ -756,12 +756,12 @@ function vdo_overlay() {
     function start() {
         var buf = "";
 
-        return cockpit.spawn([ "/bin/sh", "-c", "head -1 $(which vdo || echo /dev/null)" ],
+        return cockpit.spawn(["/bin/sh", "-c", "head -1 $(which vdo || echo /dev/null)"],
                              { err: "ignore" })
                 .then(function (shebang) {
                     if (shebang != "") {
                         self.python = shebang.replace(/#! */, "").trim("\n");
-                        cockpit.spawn([ self.python, "--", "-" ], { superuser: "try", err: "message" })
+                        cockpit.spawn([self.python, "--", "-"], { superuser: "try", err: "message" })
                                 .input(inotify_py + vdo_monitor_py)
                                 .stream(function (output) {
                                     var lines;
@@ -806,8 +806,8 @@ function vdo_overlay() {
     }
 
     function create(options) {
-        var args = [ "create", "--name", options.name,
-            "--device", utils.decode_filename(options.block.PreferredDevice) ];
+        var args = ["create", "--name", options.name,
+            "--device", utils.decode_filename(options.block.PreferredDevice)];
         if (options.logical_size !== undefined)
             args.push("--vdoLogicalSize", options.logical_size + "B");
         if (options.index_mem !== undefined)
