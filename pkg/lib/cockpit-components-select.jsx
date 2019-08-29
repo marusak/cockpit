@@ -52,8 +52,7 @@ export class Select extends React.Component {
         super();
         this.onChange = this.onChange.bind(this);
 
-        this.state = { value: props.initial,
-        };
+        this.state = { value: props.initial, };
     }
 
     onChange(value) {
