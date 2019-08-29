@@ -197,7 +197,7 @@ key="nosmt" heading={ <span>{ _("Disable simultaneous multithreading") } (nosmt)
 </small></span> }
                                actions={ <div id="nosmt-switch">
                                    <OnOffSwitch disabled={this.state.rebooting} onChange={ value => this.setState({ nosmt: value }) } state={ this.state.nosmt } />
-                               </div> } >
+                               </div> }>
                 </ListView.Item>
             ));
 
@@ -251,7 +251,7 @@ class HardwareInfo extends React.Component {
             pci = (
                 <Listing
 title={ _("PCI") } columnTitles={ [_("Class"), _("Model"), _("Vendor"), _("Slot")] }
-                         columnTitleClick={ index => this.setState({ sortBy: this.sortColumnFields[index] }) } >
+                         columnTitleClick={ index => this.setState({ sortBy: this.sortColumnFields[index] }) }>
                     { sortedPci.map(dev => <ListingRow key={dev.slot} columns={[dev.cls, dev.model, dev.vendor, dev.slot]} />) }
                 </Listing>
             );

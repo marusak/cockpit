@@ -843,7 +843,7 @@ export class CreateVmAction extends React.Component {
 disabled={!this.props.systemInfo.osInfoList || !this.state.virtInstallAvailable}
                     id={this.props.mode == 'create' ? 'create-new-vm' : 'import-vm-disk'}
                     bsStyle='default'
-                    onClick={this.open} >
+                    onClick={this.open}>
                 {this.props.mode == 'create' ? _("Create VM") : _("Import VM")}
             </Button>
         );

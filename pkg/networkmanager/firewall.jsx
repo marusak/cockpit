@@ -75,7 +75,7 @@ function ServiceRow(props) {
         deleteButton = (
             <OverlayTrigger
 className="pull-right" placement="top"
-                            overlay={ <Tooltip id="tip-auth">{ _("You are not authorized to modify the firewall.") }</Tooltip> } >
+                            overlay={ <Tooltip id="tip-auth">{ _("You are not authorized to modify the firewall.") }</Tooltip> }>
                 <button className="btn btn-danger pficon pficon-delete" disabled />
             </OverlayTrigger>
         );
@@ -135,7 +135,7 @@ function ZoneRow(props) {
         deleteButton = (
             <OverlayTrigger
 className="pull-right" placement="top"
-                            overlay={ <Tooltip id="tip-auth">{ _("You are not authorized to modify the firewall.") }</Tooltip> } >
+                            overlay={ <Tooltip id="tip-auth">{ _("You are not authorized to modify the firewall.") }</Tooltip> }>
                 <button className="btn btn-danger pficon pficon-delete" disabled />
             </OverlayTrigger>
         );
@@ -912,14 +912,14 @@ export class Firewall extends React.Component {
             addServiceAction = (
                 <OverlayTrigger
 className="pull-right" placement="top"
-                                overlay={ <Tooltip id="tip-auth">{ _("You are not authorized to modify the firewall.") }</Tooltip> } >
+                                overlay={ <Tooltip id="tip-auth">{ _("You are not authorized to modify the firewall.") }</Tooltip> }>
                     <Button bsStyle="primary" className="pull-right" disabled> {_("Add Services")} </Button>
                 </OverlayTrigger>
             );
             addZoneAction = (
                 <OverlayTrigger
 className="pull-right" placement="top"
-                                overlay={ <Tooltip id="tip-auth">{ _("You are not authorized to modify the firewall.") }</Tooltip> } >
+                                overlay={ <Tooltip id="tip-auth">{ _("You are not authorized to modify the firewall.") }</Tooltip> }>
                     <Button bsStyle="primary" className="pull-right" disabled> {_("Add Zone")} </Button>
                 </OverlayTrigger>
             );
