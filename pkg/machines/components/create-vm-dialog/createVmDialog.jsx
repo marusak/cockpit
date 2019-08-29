@@ -450,8 +450,8 @@ const StorageRow = ({ connectionName, storageSize, storageSizeUnit, onValueChang
 id="storage-pool-select"
                            initial={storagePoolName}
                            onChange={e => onValueChanged('storagePool', e)}>
-                <Select.SelectEntry data="NewVolume" key="NewVolume">{"Create New Volume"}</Select.SelectEntry>
-                <Select.SelectEntry data="NoStorage" key="NoStorage">{"No Storage"}</Select.SelectEntry>
+                <Select.SelectEntry data="NewVolume" key="NewVolume">Create New Volume</Select.SelectEntry>
+                <Select.SelectEntry data="NoStorage" key="NoStorage">No Storage</Select.SelectEntry>
                 <Select.SelectDivider />
                 <optgroup key="Storage Pools" label="Storage Pools">
                     { storagePools.map(pool => {
@@ -487,7 +487,7 @@ id="storage-volume-select"
                 </label>
                 <FormGroup validationState={validationStateStorage} bsClass='form-group ct-validation-wrapper' controlId='storage'>
                     <MemorySelectRow
-id={"storage-size"}
+id="storage-size"
                         value={storageSize}
                         maxValue={poolSpaceAvailable && convertToUnit(poolSpaceAvailable, units.B, storageSizeUnit)}
                         initialUnit={storageSizeUnit}

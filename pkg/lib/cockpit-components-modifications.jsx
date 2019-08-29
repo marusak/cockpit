@@ -71,25 +71,25 @@ class ModificationsExportDialog extends React.Component {
                     <Modal.Title>{ _("Automation Script") }</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <TabContainer id="basic-tabs-pf" defaultActiveKey={"shell"}>
+                    <TabContainer id="basic-tabs-pf" defaultActiveKey="shell">
                         <>
                             <Nav bsClass="nav nav-tabs nav-tabs-pf" onSelect={this.handleSelect}>
-                                <NavItem eventKey={"shell"}>
+                                <NavItem eventKey="shell">
                                     {_("Shell Script")}
                                 </NavItem>
                                 {this.props.ansible &&
-                                    <NavItem eventKey={"ansible"}>
+                                    <NavItem eventKey="ansible">
                                         {_("Ansible Playbook")}
                                     </NavItem>}
                             </Nav>
                             <TabContent animation>
-                                <TabPane eventKey={"shell"}>
+                                <TabPane eventKey="shell">
                                     <pre>
                                         {this.props.shell}
                                     </pre>
                                 </TabPane>
                                 {this.props.ansible &&
-                                    <TabPane eventKey={"ansible"}>
+                                    <TabPane eventKey="ansible">
                                         <pre>
                                             {this.props.ansible}
                                         </pre>
@@ -142,7 +142,7 @@ export class Modifications extends React.Component {
         let fail_message = this.props.permitted ? _("No System Modifications") : _("The logged in user is not permitted to view system modifications");
         fail_message = this.props.failed ? _("Error running semanage to discover system modifications") : fail_message;
         if (this.props.entries === null) {
-            emptyRow = <thead className={"listing-ct-empty"}>
+            emptyRow = <thead className="listing-ct-empty">
                 <tr className="modification-row">
                     <td>
                         <div className="spinner spinner-sm" />
@@ -152,7 +152,7 @@ export class Modifications extends React.Component {
             </thead>;
         }
         if (this.props.entries !== null && this.props.entries.length === 0) {
-            emptyRow = <thead className={"listing-ct-empty"}>
+            emptyRow = <thead className="listing-ct-empty">
                 <tr className="modification-row">
                     <td>
                         { fail_message }
@@ -171,7 +171,7 @@ export class Modifications extends React.Component {
                             <a className="modifications-export" onClick={ () => this.setState({ showDialog: true }) }>{_("View automation script")}</a>}
                     </div>
                 </header>
-                <table className={"listing-ct listing-ct-wide modifications-table"}>
+                <table className="listing-ct listing-ct-wide modifications-table">
                     { emptyRow ||
                         <tbody>
                             {this.props.entries.map(entry => <tr className="modification-row" key={entry.split(' ').join('')}><td>{entry}</td></tr>)}
