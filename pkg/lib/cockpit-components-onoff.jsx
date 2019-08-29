@@ -31,7 +31,8 @@ import "./cockpit-components-onoff.less";
  */
 export const OnOffSwitch = ({ state, onChange, text, disabled, id }) => (
     <label id={id} className="onoff-ct">
-        <input type="checkbox" disabled={disabled} checked={state}
+        <input
+type="checkbox" disabled={disabled} checked={state}
             onChange={ ev => onChange ? onChange(ev.target.checked) : null } />
         <span className="switch-toggle" />
         { text ? <span className={ state ? "switch-on" : "switch-off" }>{text}</span> : null }

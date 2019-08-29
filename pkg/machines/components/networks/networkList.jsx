@@ -46,7 +46,8 @@ export class NetworkList extends React.Component {
                     </Breadcrumb.Item>
                 </Breadcrumb>
                 <div id='networks-listing' className='container-fluid'>
-                    <Listing title={_("Networks")}
+                    <Listing
+title={_("Networks")}
                         columnTitles={[_("Name"), _("Device"), _("Connection"), _("Forwarding mode"), _("State")]}
                         emptyCaption={_("No network is defined on this host")}
                         actions={actions}>
@@ -54,7 +55,8 @@ export class NetworkList extends React.Component {
                                 .sort(sortFunction)
                                 .map(network => {
                                     return (
-                                        <Network key={`${networkId(network.name, network.connectionName)}`}
+                                        <Network
+key={`${networkId(network.name, network.connectionName)}`}
                                             dispatch={dispatch} network={network}
                                             resourceHasError={resourceHasError}
                                             onAddErrorNotification={onAddErrorNotification} />

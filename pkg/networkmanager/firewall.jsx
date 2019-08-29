@@ -73,7 +73,8 @@ function ServiceRow(props) {
     var deleteButton;
     if (props.readonly) {
         deleteButton = (
-            <OverlayTrigger className="pull-right" placement="top"
+            <OverlayTrigger
+className="pull-right" placement="top"
                             overlay={ <Tooltip id="tip-auth">{ _("You are not authorized to modify the firewall.") }</Tooltip> } >
                 <button className="btn btn-danger pficon pficon-delete" disabled />
             </OverlayTrigger>
@@ -113,7 +114,8 @@ function ServiceRow(props) {
     if (description || includes)
         simpleBody = <React.Fragment>{description}{includes}</React.Fragment>;
 
-    return <ListingRow key={props.service.id}
+    return <ListingRow
+key={props.service.id}
                        rowId={props.service.id}
                        columns={columns}
                        simpleBody={simpleBody} />;
@@ -131,7 +133,8 @@ function ZoneRow(props) {
     let deleteButton;
     if (props.readonly) {
         deleteButton = (
-            <OverlayTrigger className="pull-right" placement="top"
+            <OverlayTrigger
+className="pull-right" placement="top"
                             overlay={ <Tooltip id="tip-auth">{ _("You are not authorized to modify the firewall.") }</Tooltip> } >
                 <button className="btn btn-danger pficon pficon-delete" disabled />
             </OverlayTrigger>
@@ -147,7 +150,8 @@ function ZoneRow(props) {
         <React.Fragment>{ props.zone.source.length > 0 ? props.zone.source.join(', ') : '*' }</React.Fragment>,
         deleteButton,
     ];
-    return <ListingRow key={props.zone.id}
+    return <ListingRow
+key={props.zone.id}
                        rowId={props.zone.id}
                        columns={columns} />;
 }
@@ -174,7 +178,8 @@ class SearchInput extends React.Component {
     }
 
     render() {
-        return <input autoFocus
+        return <input
+autoFocus
                       id={this.props.id}
                       value={this.state.value}
                       className={this.props.className}
@@ -517,16 +522,19 @@ class AddServicesModal extends React.Component {
                                                 <label htmlFor="filter-services-input" className="control-label">
                                                     {_("Filter Services")}
                                                 </label>
-                                                <SearchInput id="filter-services-input"
+                                                <SearchInput
+id="filter-services-input"
                                                     value={this.state.filter}
                                                     className="form-control"
                                                     onChange={this.onFilterChanged} />
                                                 <ListView className="list-group dialog-list-ct ct-form-full">
                                                     {
                                                         services.map(s => (
-                                                            <ListView.Item key={s.id}
+                                                            <ListView.Item
+key={s.id}
                                                                         className="list-group-item"
-                                                                        checkboxInput={ <input data-id={s.id}
+                                                                        checkboxInput={ <input
+data-id={s.id}
                                                                                                 id={"firewall-service-" + s.id}
                                                                                                 type="checkbox"
                                                                                                 checked={this.state.selected.has(s.id)}
@@ -557,7 +565,8 @@ class AddServicesModal extends React.Component {
                                     </p>
 
                                     <label className="control-label" htmlFor="tcp-ports">TCP</label>
-                                    <input id="tcp-ports" type="text" onChange={this.validate}
+                                    <input
+id="tcp-ports" type="text" onChange={this.validate}
                                            className={"form-control " + (this.state.tcp_error ? "error" : "") }
                                            value={this.state.custom_tcp_value}
                                            placeholder={_("Example: 22,ssh,8080,5900-5910")}
@@ -565,14 +574,16 @@ class AddServicesModal extends React.Component {
                                     <output className="has-error" htmlFor="tcp-ports">{this.state.tcp_error}</output>
 
                                     <label className="control-label" htmlFor="udp-ports">UDP</label>
-                                    <input id="udp-ports" type="text" onChange={this.validate}
+                                    <input
+id="udp-ports" type="text" onChange={this.validate}
                                            className={"form-control " + (this.state.udp_error ? "error" : "") }
                                            value={this.state.custom_udp_value}
                                            placeholder={_("Example: 88,2019,nfs,rsync")} />
                                     <output className="has-error" htmlFor="udp-ports">{this.state.udp_error}</output>
 
                                     <label className="control-label" htmlFor="service-name">Name</label>
-                                    <input id="service-name" className="form-control" type="text" onChange={this.setName}
+                                    <input
+id="service-name" className="form-control" type="text" onChange={this.setName}
                                            placeholder={_("(Optional)")} value={this.state.custom_name} />
                                 </React.Fragment>
                             }
@@ -802,7 +813,8 @@ class ActivateZoneModal extends React.Component {
                     <Button bsStyle="default" className="btn-cancel" onClick={this.props.close}>
                         { _("Cancel") }
                     </Button>
-                    <Button bsStyle="primary" onClick={this.save} disabled={this.state.zone === null ||
+                    <Button
+bsStyle="primary" onClick={this.save} disabled={this.state.zone === null ||
                                                                             (this.state.interfaces.size === 0 && this.state.ipRange === "ip-entire-subnet") ||
                                                                             (this.state.ipRange === "ip-range" && !this.state.ipRangeValue)}>
                         { _("Add zone") }
@@ -901,13 +913,15 @@ export class Firewall extends React.Component {
         var addServiceAction, addZoneAction;
         if (this.state.firewall.readonly) {
             addServiceAction = (
-                <OverlayTrigger className="pull-right" placement="top"
+                <OverlayTrigger
+className="pull-right" placement="top"
                                 overlay={ <Tooltip id="tip-auth">{ _("You are not authorized to modify the firewall.") }</Tooltip> } >
                     <Button bsStyle="primary" className="pull-right" disabled> {_("Add Services")} </Button>
                 </OverlayTrigger>
             );
             addZoneAction = (
-                <OverlayTrigger className="pull-right" placement="top"
+                <OverlayTrigger
+className="pull-right" placement="top"
                                 overlay={ <Tooltip id="tip-auth">{ _("You are not authorized to modify the firewall.") }</Tooltip> } >
                     <Button bsStyle="primary" className="pull-right" disabled> {_("Add Zone")} </Button>
                 </OverlayTrigger>
@@ -948,17 +962,20 @@ export class Firewall extends React.Component {
                 </ol>
                 <h1>
                     {_("Firewall")}
-                    <OnOffSwitch state={enabled}
+                    <OnOffSwitch
+state={enabled}
                                  disabled={!!this.state.pendingTarget}
                                  onChange={this.onSwitchChanged} />
                 </h1>
                 <div id="zones-listing">
-                    { enabled && <Listing title={_("Active zones")}
+                    { enabled && <Listing
+title={_("Active zones")}
                              columnTitles={[_("Zone"), "", _("Interfaces"), _("IP Range"), ""]}
                              emptyCaption={_("No active zones")}
                              actions={addZoneAction}>
                         {
-                            zones.map(z => <ZoneRow key={z.id}
+                            zones.map(z => <ZoneRow
+key={z.id}
                                                     zone={z}
                                                     readonly={this.state.firewall.readonly}
                                                     onRemoveZone={this.onRemoveZone} />)
@@ -966,12 +983,14 @@ export class Firewall extends React.Component {
                     </Listing> }
                 </div>
                 <div id="services-listing">
-                    { enabled && <Listing title={_("Allowed Services")}
+                    { enabled && <Listing
+title={_("Allowed Services")}
                              columnTitles={[_("Service"), _("TCP"), _("UDP"), _("Zones"), ""]}
                              emptyCaption={_("No open ports")}
                              actions={addServiceAction}>
                         {
-                            services.map(s => <ServiceRow key={s.id}
+                            services.map(s => <ServiceRow
+key={s.id}
                                                       service={s}
                                                       zones={zones}
                                                       readonly={this.state.firewall.readonly}

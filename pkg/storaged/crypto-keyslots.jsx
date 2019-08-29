@@ -366,17 +366,20 @@ const RemovePassphraseField = (tag, key, dev) => {
                     <div name="remove-passphrase" className="progressive-disclosure ct-form">
                         <div className="form-group">
                             <label>
-                                <input type="radio" checked={val !== false}
+                                <input
+type="radio" checked={val !== false}
                                        autoFocus
                                        onChange={event => change("")} />
                                 {_("Confirm removal with passphrase")}
                             </label>
-                            <input className="form-control" type="password" hidden={val === false}
+                            <input
+className="form-control" type="password" hidden={val === false}
                                    value={val} onChange={event => change(event.target.value)} />
                         </div>
                         <div className="form-group">
                             <label>
-                                <input type="radio" checked={val === false}
+                                <input
+type="radio" checked={val === false}
                                        onChange={event => change(false)} />
                                 { fmt_to_fragments(_("Force remove passphrase in $0"), <b>{key_slot}</b>) }
                             </label>
@@ -543,14 +546,16 @@ export class CryptoKeyslots extends React.Component {
                         <td>{ desc }</td>
                         <td className="shrink key-slot">{ cockpit.format(_("Slot $0"), slot) }</td>
                         <td className="shrink text-right">
-                            <StorageButton onClick={edit}
+                            <StorageButton
+onClick={edit}
                                            excuse={(keys.length == this.state.max_slots)
                                                ? _("Editing a key requires a free slot")
                                                : null}>
                                 <span className="pficon pficon-edit" />
                             </StorageButton>
                             { "\n" }
-                            <StorageButton onClick={remove}
+                            <StorageButton
+onClick={remove}
                                            excuse={keys.length == 1 ? _("The last key slot can not be removed") : null}>
                                 <span className="fa fa-minus" />
                             </StorageButton>
@@ -589,7 +594,8 @@ export class CryptoKeyslots extends React.Component {
                             { remaining < 6 ? (remaining ? cockpit.format(_("$0 slots remain"), remaining) : _("No available slots")) : null }
                         </span>
                         { "\n" }
-                        <StorageButton onClick={() => add_dialog(client, block)}
+                        <StorageButton
+onClick={() => add_dialog(client, block)}
                                        excuse={(keys.length == this.state.max_slots)
                                            ? _("No free key slots")
                                            : null}>

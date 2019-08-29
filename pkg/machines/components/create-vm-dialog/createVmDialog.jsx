@@ -191,7 +191,8 @@ const NameRow = ({ vmName, onValueChanged, validationFailed }) => {
                 {_("Name")}
             </label>
             <FormGroup validationState={validationStateName} controlId='name'>
-                <input id='vm-name' className='form-control'
+                <input
+id='vm-name' className='form-control'
                     type='text'
                     minLength={1}
                     value={vmName || ''}
@@ -216,7 +217,8 @@ const SourceRow = ({ connectionName, source, sourceType, networks, nodeDevices, 
     case LOCAL_INSTALL_MEDIA_SOURCE:
         installationSourceId = "source-file";
         installationSource = (
-            <FileAutoComplete id={installationSourceId}
+            <FileAutoComplete
+id={installationSourceId}
                 placeholder={_("Path to ISO file on host's file system")}
                 onChange={value => onValueChanged('source', value)}
                 superuser="try" />
@@ -225,7 +227,8 @@ const SourceRow = ({ connectionName, source, sourceType, networks, nodeDevices, 
     case EXISTING_DISK_IMAGE_SOURCE:
         installationSourceId = "source-disk";
         installationSource = (
-            <FileAutoComplete id={installationSourceId}
+            <FileAutoComplete
+id={installationSourceId}
                 placeholder={_("Existing disk image on host's file system")}
                 onChange={value => onValueChanged('source', value)}
                 superuser="try" />
@@ -245,7 +248,8 @@ const SourceRow = ({ connectionName, source, sourceType, networks, nodeDevices, 
 
         installationSource = (
             <React.Fragment>
-                <Select.StatelessSelect id="network-select"
+                <Select.StatelessSelect
+id="network-select"
                     selected={source || 'no-resource'}
                     onChange={value => onValueChanged('source', value)}>
                     {getPXENetworkRows(nodeDevices, networks)}
@@ -262,7 +266,8 @@ const SourceRow = ({ connectionName, source, sourceType, networks, nodeDevices, 
     default:
         installationSourceId = "source-url";
         installationSource = (
-            <input id={installationSourceId} className="form-control"
+            <input
+id={installationSourceId} className="form-control"
                 type="text"
                 minLength={1}
                 placeholder={_("Remote URL")}
@@ -279,14 +284,17 @@ const SourceRow = ({ connectionName, source, sourceType, networks, nodeDevices, 
                 <label className="control-label" htmlFor="source-type">
                     {_("Installation Source Type")}
                 </label>
-                <Select.Select id="source-type"
+                <Select.Select
+id="source-type"
                     initial={sourceType}
                     onChange={value => onValueChanged('sourceType', value)}>
-                    <Select.SelectEntry data={LOCAL_INSTALL_MEDIA_SOURCE}
+                    <Select.SelectEntry
+data={LOCAL_INSTALL_MEDIA_SOURCE}
                         key={LOCAL_INSTALL_MEDIA_SOURCE}>{_("Local Install Media")}</Select.SelectEntry>
                     <Select.SelectEntry data={URL_SOURCE} key={URL_SOURCE}>{_("URL")}</Select.SelectEntry>
                     { providerName == 'LibvirtDBus' &&
-                    <Select.SelectEntry title={connectionName == 'session' ? _("Network Boot is available only when using System connection") : null}
+                    <Select.SelectEntry
+title={connectionName == 'session' ? _("Network Boot is available only when using System connection") : null}
                         disabled={connectionName == 'session'}
                         data={PXE_SOURCE}
                         key={PXE_SOURCE}>{_("Network Boot (PXE)")}
@@ -389,7 +397,8 @@ const MemoryRow = ({ memorySize, memorySizeUnit, nodeMaxMemory, recommendedMemor
                 {_("Memory")}
             </label>
             <FormGroup validationState={validationStateMemory} bsClass='form-group ct-validation-wrapper' controlId='memory'>
-                <MemorySelectRow id='memory-size'
+                <MemorySelectRow
+id='memory-size'
                     value={memorySize}
                     maxValue={nodeMaxMemory && convertToUnit(nodeMaxMemory, units.KiB, memorySizeUnit)}
                     initialUnit={memorySizeUnit}
@@ -437,7 +446,8 @@ const StorageRow = ({ connectionName, storageSize, storageSizeUnit, onValueChang
             <label className="control-label" htmlFor="storage-pool-select">
                 {_("Storage")}
             </label>
-            <Select.Select id="storage-pool-select"
+            <Select.Select
+id="storage-pool-select"
                            initial={storagePoolName}
                            onChange={e => onValueChanged('storagePool', e)}>
                 <Select.SelectEntry data="NewVolume" key="NewVolume">{"Create New Volume"}</Select.SelectEntry>
@@ -457,7 +467,8 @@ const StorageRow = ({ connectionName, storageSize, storageSizeUnit, onValueChang
                 <label className="control-label" htmlFor="storage-volume-select">
                     {_("Volume")}
                 </label>
-                <Select.Select id="storage-volume-select"
+                <Select.Select
+id="storage-volume-select"
                                initial={storageVolume}
                                onChange={e => onValueChanged('storageVolume', e)}>
                     {volumeEntries}
@@ -475,7 +486,8 @@ const StorageRow = ({ connectionName, storageSize, storageSizeUnit, onValueChang
                     {_("Size")}
                 </label>
                 <FormGroup validationState={validationStateStorage} bsClass='form-group ct-validation-wrapper' controlId='storage'>
-                    <MemorySelectRow id={"storage-size"}
+                    <MemorySelectRow
+id={"storage-size"}
                         value={storageSize}
                         maxValue={poolSpaceAvailable && convertToUnit(poolSpaceAvailable, units.B, storageSizeUnit)}
                         initialUnit={storageSizeUnit}
@@ -694,7 +706,8 @@ class CreateVmModal extends React.Component {
 
         const dialogBody = (
             <form className="ct-form">
-                <MachinesConnectionSelector id='connection'
+                <MachinesConnectionSelector
+id='connection'
                     connectionName={this.state.connectionName}
                     onValueChanged={this.onValueChanged}
                     loggedUser={loggedUser} />
@@ -758,7 +771,8 @@ class CreateVmModal extends React.Component {
                 <hr />
 
                 <label className="checkbox-inline">
-                    <input id="start-vm" type="checkbox"
+                    <input
+id="start-vm" type="checkbox"
                         checked={this.state.startVm}
                         onChange={e => this.onValueChanged('startVm', e.target.checked)} />
                     {_("Immediately Start VM")}
@@ -780,7 +794,8 @@ class CreateVmModal extends React.Component {
                     <Button bsStyle='default' className='btn-cancel' onClick={ this.props.close }>
                         {_("Cancel")}
                     </Button>
-                    <Button bsStyle='primary'
+                    <Button
+bsStyle='primary'
                             disabled={Object.getOwnPropertyNames(validationFailed).length > 0}
                             onClick={this.onCreateClicked}>
                         {_("Create")}
@@ -824,7 +839,8 @@ export class CreateVmAction extends React.Component {
             return null;
 
         let createButton = (
-            <Button disabled={!this.props.systemInfo.osInfoList || !this.state.virtInstallAvailable}
+            <Button
+disabled={!this.props.systemInfo.osInfoList || !this.state.virtInstallAvailable}
                     id={this.props.mode == 'create' ? 'create-new-vm' : 'import-vm-disk'}
                     bsStyle='default'
                     onClick={this.open} >

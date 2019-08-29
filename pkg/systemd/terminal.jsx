@@ -79,7 +79,8 @@ const _ = cockpit.gettext;
         render() {
             var terminal;
             if (this.state.channel)
-                terminal = (<Terminal ref="terminal"
+                terminal = (<Terminal
+ref="terminal"
                      channel={this.state.channel}
                      theme={this.state.theme}
                      onTitleChanged={this.onTitleChanged} />);
@@ -91,7 +92,8 @@ const _ = cockpit.gettext;
                     <div className="panel-heading terminal-group">
                         <tt className="terminal-title">{this.state.title}</tt>
                         <label className="control-label" htmlFor="theme-select">{_("Appearance:")}</label>
-                        <Select onChange={this.onThemeChanged}
+                        <Select
+onChange={this.onThemeChanged}
                             id="theme-select"
                             className="theme-select"
                             initial={this.state.theme}>
@@ -100,7 +102,8 @@ const _ = cockpit.gettext;
                             <SelectEntry data='light-theme'>{_("Light")}</SelectEntry>
                             <SelectEntry data='white-theme'>{_("White")}</SelectEntry>
                         </Select>
-                        <button ref="resetButton"
+                        <button
+ref="resetButton"
                             className="btn btn-default terminal-reset"
                             onClick={this.onResetClick}>{_("Reset")}</button>
                     </div>

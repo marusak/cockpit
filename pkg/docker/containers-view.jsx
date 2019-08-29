@@ -108,7 +108,8 @@ export class ContainerHeader extends React.Component {
                     <Select.SelectEntry data='all'>{_("Everything")}</Select.SelectEntry>
                     <Select.SelectEntry data='running'>{_("Images and running containers")}</Select.SelectEntry>
                 </Select.Select>
-                <input type="text"
+                <input
+type="text"
                        id="containers-filter"
                        ref="filterTextInput"
                        className="form-control"
@@ -319,9 +320,11 @@ export class ContainerList extends React.Component {
 
             var actions = (
                 <React.Fragment>
-                    <button className="btn btn-danger btn-delete pficon pficon-delete"
+                    <button
+className="btn btn-danger btn-delete pficon pficon-delete"
                             onClick={ this.deleteContainer.bind(this, container) } />
-                    <button className="btn btn-default"
+                    <button
+className="btn btn-default"
                             disabled={isRunning}
                             data-container-id={container.Id}
                             data-toggle="modal" data-target="#container-commit-dialog">
@@ -349,7 +352,8 @@ export class ContainerList extends React.Component {
                 );
             }
 
-            return <Listing.ListingRow key={container.Id}
+            return <Listing.ListingRow
+key={container.Id}
                                        columns={columns}
                                        tabRenderers={tabs}
                                        navigateToItem={ this.navigateToContainer.bind(this, container) }
@@ -439,7 +443,8 @@ class ImageSecurity extends React.Component {
 
             rows = info.vulnerabilities.map(function (vulnerability) {
                 return (
-                    <div key={vulnerability.description}
+                    <div
+key={vulnerability.description}
                          className="vulnerability-row-ct-docker" title={vulnerability.description}>
                         <span>{vulnerability.title}</span>
                         <span className="pull-right">{vulnerability.severity}</span>
@@ -620,7 +625,8 @@ export class ImageList extends React.Component {
         if (this.props.client.waiting[image.Id]) {
             element = <div className="spinner" />;
         } else {
-            element = <button className="btn btn-default btn-control-ct fa fa-play"
+            element = <button
+className="btn btn-default btn-control-ct fa fa-play"
                 onClick={ this.showRunImageDialog }
                 data-image={image.Id} />;
         }
@@ -656,11 +662,13 @@ export class ImageList extends React.Component {
         }
 
         var actions = (
-            <button className="btn btn-danger btn-delete pficon pficon-delete"
+            <button
+className="btn btn-danger btn-delete pficon pficon-delete"
                     onClick={ this.deleteImage.bind(this, image) } />
         );
 
-        return <Listing.ListingRow key={image.Id}
+        return <Listing.ListingRow
+key={image.Id}
                                    rowId={image.Id}
                                    columns={columns}
                                    tabRenderers={tabs}
@@ -708,7 +716,8 @@ export class ImageList extends React.Component {
 
         return (
             <div>
-                <Listing.Listing title={_("Images")}
+                <Listing.Listing
+title={_("Images")}
                     columnTitles={columnTitles}
                     emptyCaption={emptyCaption}
                     actions={getNewImageAction}>

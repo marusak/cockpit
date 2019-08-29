@@ -203,15 +203,18 @@ export class VCPUModal extends React.Component {
                     />
                 </div>
                 <div className="ct-form">
-                    <InfoRecord descr={_("Sockets")} tooltip={_("Preferred number of sockets to expose to the guest.")} value={
-                        <Select extraClass='ct-form-stretch' id='socketsSelect' value={this.state.sockets.toString()} onChange={this.onSocketChange} items={dividers(this.state.max).map((t) => t.toString())} />
-                    } />
-                    <InfoRecord descr={_("Cores per socket")} value={
-                        <Select extraClass="ct-form-stretch" id='coresSelect' value={this.state.cores.toString()} onChange={this.onCoresChange} items={dividers(this.state.max).map((t) => t.toString())} />
-                    } />
-                    <InfoRecord descr={_("Threads per core")} value={
-                        <Select extraClass="ct-form-stretch" id='threadsSelect' value={this.state.threads.toString()} onChange={this.onThreadsChange} items={dividers(this.state.max).map((t) => t.toString())} />
-                    } />
+                    <InfoRecord
+descr={_("Sockets")} tooltip={_("Preferred number of sockets to expose to the guest.")} value={
+    <Select extraClass='ct-form-stretch' id='socketsSelect' value={this.state.sockets.toString()} onChange={this.onSocketChange} items={dividers(this.state.max).map((t) => t.toString())} />
+} />
+                    <InfoRecord
+descr={_("Cores per socket")} value={
+    <Select extraClass="ct-form-stretch" id='coresSelect' value={this.state.cores.toString()} onChange={this.onCoresChange} items={dividers(this.state.max).map((t) => t.toString())} />
+} />
+                    <InfoRecord
+descr={_("Threads per core")} value={
+    <Select extraClass="ct-form-stretch" id='threadsSelect' value={this.state.threads.toString()} onChange={this.onThreadsChange} items={dividers(this.state.max).map((t) => t.toString())} />
+} />
                 </div>
             </div>
         );

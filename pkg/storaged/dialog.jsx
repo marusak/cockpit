@@ -335,7 +335,8 @@ export const dialog_open = (def) => {
         return {
             id: "dialog",
             title: def.Title,
-            body: <Body body={def.Body}
+            body: <Body
+body={def.Body}
                         fields={nested_fields}
                         values={values}
                         errors={errors}
@@ -462,7 +463,8 @@ export const TextInput = (tag, title, options) => {
         initial_value: options.value || "",
 
         render: (val, change) =>
-            <input data-field={tag} data-field-type="text-input"
+            <input
+data-field={tag} data-field-type="text-input"
                    className="form-control" type="text" value={val}
                    disabled={options.disabled}
                    onChange={event => change(event.target.value)} />
@@ -477,7 +479,8 @@ export const PassInput = (tag, title, options) => {
         initial_value: options.value || "",
 
         render: (val, change) =>
-            <input data-field={tag} data-field-type="text-input"
+            <input
+data-field={tag} data-field-type="text-input"
                    className="form-control" type="password" value={val}
                    onChange={event => change(event.target.value)} />
     };
@@ -507,12 +510,14 @@ class ComboboxElement extends React.Component {
         return (
             <div className="combobox-container">
                 <div className={"input-group" + (this.state.open ? " open" : "")}>
-                    <input className="combobox form-control" type="text"
+                    <input
+className="combobox form-control" type="text"
                        disabled={disabled} value={value}
                            onChange={event => onChange(event.target.value)} />
                     { choices.length > 0 && !disabled
                         ? <React.Fragment>
-                            <span className="input-group-addon"
+                            <span
+className="input-group-addon"
                               onClick={toggle_open}>
                                 <span className="caret" />
                             </span>
@@ -537,7 +542,8 @@ export const ComboBox = (tag, title, options) => {
 
         render: (val, change) =>
             <div data-field={tag} data-field-type="combobox">
-                <ComboboxElement value={val} choices={options.choices}
+                <ComboboxElement
+value={val} choices={options.choices}
                                  disabled={options.disabled} onChange={change} />
             </div>
     };
@@ -554,7 +560,8 @@ export const SelectOne = (tag, title, options) => {
             return (
                 <div data-field={tag} data-field-type="select" data-value={val}>
                     <StatelessSelect extraClass="form-control" selected={val} onChange={change}>
-                        { options.choices.map(c => <SelectEntry data={c.value} disabled={c.disabled}
+                        { options.choices.map(c => <SelectEntry
+data={c.value} disabled={c.disabled}
                                                                 key={c.title}>{c.title}</SelectEntry>) }
                     </StatelessSelect>
                 </div>
@@ -575,7 +582,8 @@ export const SelectOneRadio = (tag, title, options) => {
                 <span className="radio radio-horizontal" data-field={tag} data-field-type="select-radio" >
                     { options.choices.map(c => (
                         <label key={c.value}>
-                            <input type="radio" checked={val == c.value} data-data={c.value}
+                            <input
+type="radio" checked={val == c.value} data-data={c.value}
                                      onChange={event => change(c.value)} />{c.title}
                         </label>))
                     }
@@ -601,7 +609,8 @@ export const SelectRow = (tag, headers, options) => {
                     <tbody>
                         { options.choices.map(row => {
                             return (
-                                <tr key={row.value}
+                                <tr
+key={row.value}
                                     onMouseDown={ev => { if (ev && ev.button === 0) change(row.value); }}
                                     className={row.value == val ? "highlight-ct" : ""}>
                                     {row.columns.map(c => <td key={c}>{c}</td>)}
@@ -628,7 +637,8 @@ export const SelectSpaces = (tag, title, options) => {
                 return <span className="text-danger">{options.empty_warning}</span>;
 
             return (
-                <ul className="list-group dialog-list-ct"
+                <ul
+className="list-group dialog-list-ct"
                     data-field={tag} data-field-type="select-spaces">
                     { options.spaces.map(spc => {
                         const selected = (val.indexOf(spc) >= 0);
@@ -669,7 +679,8 @@ export const SelectSpace = (tag, title, options) => {
                 return <span className="text-danger">{options.empty_warning}</span>;
 
             return (
-                <ul className="list-group dialog-list-ct"
+                <ul
+className="list-group dialog-list-ct"
                     data-field={tag} data-field-type="select-spaces">
                     { options.spaces.map(spc => {
                         const on_change = (event) => {
@@ -698,7 +709,8 @@ const CheckBoxComponent = ({ tag, val, title, tooltip, update_function }) => {
     return (
         <div key={tag} className="checkbox">
             <label key={tag}>
-                <input type="checkbox" data-field={tag} data-field-type="checkbox"
+                <input
+type="checkbox" data-field={tag} data-field-type="checkbox"
                        checked={val}
                        onChange={event => update_function(event.target.checked)} />
                 {title}
@@ -730,7 +742,8 @@ export const CheckBoxes = (tag, title, options) => {
                 }
 
                 if (field.type === undefined || field.type == "checkbox")
-                    return <CheckBoxComponent key={`checkbox-${ftag}`}
+                    return <CheckBoxComponent
+key={`checkbox-${ftag}`}
                                               tag={ftag}
                                               val={fval}
                                               title={field.title}
@@ -738,7 +751,8 @@ export const CheckBoxes = (tag, title, options) => {
                                               options={options}
                                               update_function={fchange} />;
                 else if (field.type == "checkboxWithInput")
-                    return <TextInputCheckedComponent key={`checkbox-with-text-${ftag}`}
+                    return <TextInputCheckedComponent
+key={`checkbox-with-text-${ftag}`}
                                                       tag={ftag}
                                                       val={fval}
                                                       title={field.title}
@@ -759,12 +773,14 @@ const TextInputCheckedComponent = ({ tag, val, title, update_function }) => {
         <React.Fragment key={tag}>
             <div className="checkbox ct-form-split dialog-checkbox-text" data-field={tag} data-field-type="text-input-checked">
                 <label>
-                    <input type="checkbox" checked={val !== false}
+                    <input
+type="checkbox" checked={val !== false}
                         onChange={event => update_function(event.target.checked ? "" : false)} />
                     {title}
                 </label>
             </div>
-            <input className="form-control ct-form-split" type="text" hidden={val === false}
+            <input
+className="form-control ct-form-split" type="text" hidden={val === false}
                    value={val} onChange={event => update_function(event.target.value)} />
         </React.Fragment>
     );
@@ -889,7 +905,8 @@ class SizeSliderElement extends React.Component {
         return (
             <div className="size-sliderx">
                 <StatelessSlider fraction={val / max} onChange={change_slider} />
-                <input className="size-text form-control"
+                <input
+className="size-text form-control"
                        value={ val === "" || isNaN(val) ? val : cockpit.format_number(val / unit) }
                        onChange={change_text} />
                 <StatelessSelect extraClass="size-unit" selected={unit} onChange={change_unit}>
@@ -935,7 +952,8 @@ export const SizeSlider = (tag, title, options) => {
         render: (val, change) => {
             return (
                 <div data-field={tag} data-field-type="size-slider">
-                    <SizeSliderElement val={val}
+                    <SizeSliderElement
+val={val}
                                        max={all_options.max}
                                        min={all_options.min}
                                        round={all_options.round}

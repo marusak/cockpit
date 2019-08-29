@@ -143,7 +143,8 @@ export class VDOsPanel extends React.Component {
         function make_vdo(vdo) {
             var block = client.slashdevs_block[vdo.dev];
             return (
-                <OverviewSidePanelRow client={client}
+                <OverviewSidePanelRow
+client={client}
                                       kind="array"
                                       name={vdo.name}
                                       detail={fmt_size(vdo.logical_size)}
@@ -171,7 +172,8 @@ export class VDOsPanel extends React.Component {
         };
 
         return (
-            <OverviewSidePanel id="vdos"
+            <OverviewSidePanel
+id="vdos"
                                title={_("VDO Devices")}
                                empty_text={_("No storage set up as VDO")}
                                actions={actions}

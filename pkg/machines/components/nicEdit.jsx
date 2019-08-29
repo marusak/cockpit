@@ -54,7 +54,8 @@ const NetworkModelRow = ({ idPrefix, onValueChanged, dialogValues, network, osTy
             <label className='control-label' htmlFor={`${idPrefix}-select-model`}>
                 {_("Model")}
             </label>
-            <Select.Select id={`${idPrefix}-select-model`}
+            <Select.Select
+id={`${idPrefix}-select-model`}
                            onChange={value => onValueChanged('networkModel', value)}
                            initial={defaultModelType}
                            extraClass='form-control ct-form-split'>
@@ -131,7 +132,8 @@ const NetworkTypeAndSourceRow = ({ idPrefix, onValueChanged, dialogValues, netwo
             <label className='control-label' htmlFor={`${idPrefix}-select-type`}>
                 {_("Interface Type")}
             </label>
-            <Select.Select id={`${idPrefix}-select-type`}
+            <Select.Select
+id={`${idPrefix}-select-type`}
                            onChange={value => onValueChanged('networkType', value)}
                            initial={defaultNetworkType}
                            extraClass='form-control ct-form-split'>
@@ -149,7 +151,8 @@ const NetworkTypeAndSourceRow = ({ idPrefix, onValueChanged, dialogValues, netwo
                     <label className='control-label' htmlFor={`${idPrefix}-select-source`}>
                         {_("Source")}
                     </label>
-                    <Select.Select id={`${idPrefix}-select-source`}
+                    <Select.Select
+id={`${idPrefix}-select-source`}
                                    onChange={value => onValueChanged('networkSource', value)}
                                    enabled={networkSourceEnabled}
                                    initial={defaultNetworkSource}
@@ -254,7 +257,8 @@ export class EditNICAction extends React.Component {
         const { idPrefix, vm, network, networks, nodeDevices, interfaces } = this.props;
         const defaultBody = (
             <form className='ct-form'>
-                <NetworkTypeAndSourceRow idPrefix={idPrefix}
+                <NetworkTypeAndSourceRow
+idPrefix={idPrefix}
                                          dialogValues={this.state}
                                          onValueChanged={this.onValueChanged}
                                          network={network}
@@ -264,7 +268,8 @@ export class EditNICAction extends React.Component {
                                          connectionName={vm.connectionName}
                                          isRunning={vm.state == 'running'} />
                 <hr />
-                <NetworkModelRow idPrefix={idPrefix}
+                <NetworkModelRow
+idPrefix={idPrefix}
                                  dialogValues={this.state}
                                  onValueChanged={this.onValueChanged}
                                  network={network}

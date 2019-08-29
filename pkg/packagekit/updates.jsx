@@ -325,7 +325,8 @@ class UpdateItem extends React.Component {
 
         return (
             <tbody className={ this.state.expanded ? "open" : null } >
-                <tr className={ "listing-ct-item" + (info.severity === PK.Enum.INFO_SECURITY ? " security" : "") }
+                <tr
+className={ "listing-ct-item" + (info.severity === PK.Enum.INFO_SECURITY ? " security" : "") }
                     onClick={ () => this.setState({ expanded: !this.state.expanded }) }>
                     <td className="listing-ct-toggle">
                         <i className="fa fa-fw" />
@@ -469,11 +470,12 @@ class ApplyUpdates extends React.Component {
                 </div>
 
                 <div className="update-log">
-                    <Expander title={_("Update Log")} onExpand={() => {
-                        // always scroll down on expansion
-                        const log = document.getElementById("update-log");
-                        log.scrollTop = log.scrollHeight;
-                    }}>
+                    <Expander
+title={_("Update Log")} onExpand={() => {
+    // always scroll down on expansion
+    const log = document.getElementById("update-log");
+    log.scrollTop = log.scrollHeight;
+}}>
                         <div id="update-log" className="update-log-content">
                             <table>
                                 <tbody>
@@ -777,7 +779,8 @@ class OsUpdates extends React.Component {
                     <h1>{_("This system is not registered")}</h1>
                     <p>{_("To get software updates, this system needs to be registered with Red Hat, either using the Red Hat Customer Portal or a local subscription server.")}</p>
                     <div className="blank-slate-pf-main-action">
-                        <button className="btn btn-lg btn-primary"
+                        <button
+className="btn btn-lg btn-primary"
                             onClick={ () => cockpit.jump("/subscriptions", cockpit.transport.host) }>
                             {_("Register…")}
                         </button>
@@ -919,7 +922,8 @@ class OsUpdates extends React.Component {
     render() {
         return (
             <div>
-                <HeaderBar state={this.state.state} updates={this.state.updates}
+                <HeaderBar
+state={this.state.state} updates={this.state.updates}
                            timeSinceRefresh={this.state.timeSinceRefresh} onRefresh={this.handleRefresh}
                            unregistered={this.state.unregistered}
                            allowCancel={this.state.allowCancel}

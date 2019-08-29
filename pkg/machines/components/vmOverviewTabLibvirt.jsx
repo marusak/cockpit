@@ -127,7 +127,8 @@ class VmOverviewTabLibvirt extends React.Component {
         if (config.provider.name === "LibvirtDBus") {
             autostart = (
                 <label className='checkbox-inline'>
-                    <input id={`${idPrefix}-autostart-checkbox`}
+                    <input
+id={`${idPrefix}-autostart-checkbox`}
                            type="checkbox"
                            checked={vm.autostart}
                            onChange={this.onAutostartChanged} />
@@ -168,7 +169,8 @@ class VmOverviewTabLibvirt extends React.Component {
 
         return (
             <div>
-                <VmOverviewTab idPrefix={idPrefix} items={items}
+                <VmOverviewTab
+idPrefix={idPrefix} items={items}
                     extraItems={config.provider.vmOverviewExtra && config.provider.vmOverviewExtra(vm, config.providerState)} />
                 { this.state.showVcpuModal && <VCPUModal close={this.close} vm={vm} dispatch={dispatch} config={config} /> }
                 { this.state.showBootOrderModal && <BootOrderModal close={this.close} vm={vm} dispatch={dispatch} nodeDevices={nodeDevices} /> }

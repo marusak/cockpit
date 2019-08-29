@@ -42,7 +42,8 @@ const StoragePoolNameRow = ({ onValueChanged, dialogValues }) => {
                 {_("Name")}
             </label>
             <FormGroup validationState={validationState} controlId='name'>
-                <input id='storage-pool-dialog-name'
+                <input
+id='storage-pool-dialog-name'
                        type='text'
                        placeholder={_("Storage Pool Name")}
                        value={dialogValues.name || ''}
@@ -84,7 +85,8 @@ const StoragePoolTypeRow = ({ onValueChanged, dialogValues, libvirtVersion }) =>
             <label className='control-label'>
                 {_("Type")}
             </label>
-            <Select.Select id='storage-pool-dialog-type'
+            <Select.Select
+id='storage-pool-dialog-type'
                            initial={dialogValues.type}
                            onChange={value => onValueChanged('type', value)}>
                 { poolTypes
@@ -111,7 +113,8 @@ const StoragePoolTargetRow = ({ onValueChanged, dialogValues }) => {
                     {_("Target Path")}
                 </label>
                 <FormGroup validationState={validationState} controlId='target'>
-                    <FileAutoComplete id='storage-pool-dialog-target'
+                    <FileAutoComplete
+id='storage-pool-dialog-target'
                         superuser='try'
                         placeholder={_("Path on host's filesystem")}
                         onChange={value => onValueChanged('target', value)} />
@@ -137,7 +140,8 @@ const StoragePoolHostRow = ({ onValueChanged, dialogValues }) => {
                     {_("Host")}
                 </label>
                 <FormGroup validationState={validationState} controlId='host'>
-                    <input id='storage-pool-dialog-host'
+                    <input
+id='storage-pool-dialog-host'
                            type='text'
                            placeholder={_("Host Name")}
                            value={dialogValues.source.host || ''}
@@ -164,7 +168,8 @@ const StoragePoolInitiatorRow = ({ onValueChanged, dialogValues }) => {
                     {_("Initiator")}
                 </label>
                 <FormGroup validationState={validationState} controlId='initiator'>
-                    <input id='storage-pool-dialog-initiator'
+                    <input
+id='storage-pool-dialog-initiator'
                            type='text'
                            placeholder={_("iSCSI Initiator IQN")}
                            value={dialogValues.source.initiator || ''}
@@ -207,7 +212,8 @@ const StoragePoolSourceRow = ({ onValueChanged, dialogValues }) => {
                     {_("Source Path")}
                 </label>
                 <FormGroup validationState={validationState} controlId='source'>
-                    <input id='storage-pool-dialog-source'
+                    <input
+id='storage-pool-dialog-source'
                            type='text'
                            minLength={1}
                            value={dialogValues.source.dir || dialogValues.source.device || ''}
@@ -233,10 +239,12 @@ const StoragePoolSourceRow = ({ onValueChanged, dialogValues }) => {
                 <label className='control-label' htmlFor='storage-pool-dialog-source'>
                     {_("Source Path")}
                 </label>
-                <FormGroup className='ct-form-split'
+                <FormGroup
+className='ct-form-split'
                            validationState={validationState}
                            controlId='source'>
-                    <FileAutoComplete id='storage-pool-dialog-source'
+                    <FileAutoComplete
+id='storage-pool-dialog-source'
                         superuser='try'
                         placeholder={placeholder}
                         onChange={value => onValueChanged('source', { device: value })} />
@@ -248,7 +256,8 @@ const StoragePoolSourceRow = ({ onValueChanged, dialogValues }) => {
                 <label className='control-label' htmlFor='storage-pool-dialog-source-format'>
                     {_("Format")}
                 </label>
-                <Select.Select id='storage-pool-dialog-source-format'
+                <Select.Select
+id='storage-pool-dialog-source-format'
                                extraClass='form-control ct-form-split'
                                initial={dialogValues.source.format}
                                onChange={value => onValueChanged('source', { format: value })}>
@@ -272,7 +281,8 @@ const StoragePoolSourceRow = ({ onValueChanged, dialogValues }) => {
                     {_("Source Volume Group")}
                 </label>
                 <FormGroup validationState={validationState} controlId='source'>
-                    <input id='storage-pool-dialog-source'
+                    <input
+id='storage-pool-dialog-source'
                            type='text'
                            minLength={1}
                            value={dialogValues.source.name || ''}
@@ -297,7 +307,8 @@ const StoragePoolAutostartRow = ({ onValueChanged, dialogValues }) => {
                 {_("Startup")}
             </label>
             <label className='checkbox-inline'>
-                <input id='storage-pool-dialog-autostart'
+                <input
+id='storage-pool-dialog-autostart'
                     type='checkbox'
                     checked={dialogValues.autostart}
                     onChange={e => onValueChanged('autostart', e.target.checked)} />
@@ -469,28 +480,36 @@ class CreateStoragePoolModal extends React.Component {
     render() {
         const defaultBody = (
             <form className="ct-form ct-form-maxmin">
-                <MachinesConnectionSelector id='storage-pool-dialog-connection'
+                <MachinesConnectionSelector
+id='storage-pool-dialog-connection'
                     connectionName={this.state.connectionName}
                     onValueChanged={this.onValueChanged}
                     loggedUser={this.props.loggedUser} />
                 <hr />
 
-                <StoragePoolNameRow dialogValues={this.state}
+                <StoragePoolNameRow
+dialogValues={this.state}
                                     onValueChanged={this.onValueChanged} />
                 <hr />
-                <StoragePoolTypeRow dialogValues={this.state}
+                <StoragePoolTypeRow
+dialogValues={this.state}
                                     libvirtVersion={this.props.libvirtVersion}
                                     onValueChanged={this.onValueChanged} />
                 <hr />
-                <StoragePoolTargetRow dialogValues={this.state}
+                <StoragePoolTargetRow
+dialogValues={this.state}
                                       onValueChanged={this.onValueChanged} />
-                <StoragePoolHostRow dialogValues={this.state}
+                <StoragePoolHostRow
+dialogValues={this.state}
                                     onValueChanged={this.onValueChanged} />
-                <StoragePoolSourceRow dialogValues={this.state}
+                <StoragePoolSourceRow
+dialogValues={this.state}
                                       onValueChanged={this.onValueChanged} />
-                <StoragePoolInitiatorRow dialogValues={this.state}
+                <StoragePoolInitiatorRow
+dialogValues={this.state}
                                       onValueChanged={this.onValueChanged} />
-                <StoragePoolAutostartRow dialogValues={this.state}
+                <StoragePoolAutostartRow
+dialogValues={this.state}
                                          onValueChanged={this.onValueChanged} />
             </form>
         );

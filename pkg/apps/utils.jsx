@@ -80,7 +80,8 @@ export const ProgressBar = ({ title, data }) => {
 
 export const CancelButton = ({ data }) => {
     return (
-        <button className="btn btn-default"
+        <button
+className="btn btn-default"
                 disabled={!data.cancel}
                 onClick={left_click(data.cancel)}>
             {_("Cancel")}

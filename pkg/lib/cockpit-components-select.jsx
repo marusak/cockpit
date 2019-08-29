@@ -40,7 +40,8 @@ const textForUndefined = _("undefined");
  *  - extraClass (optional) CSS class name(s) to be added to the main <select> of the component
  */
 export const StatelessSelect = ({ selected, onChange, id, enabled, extraClass, children }) => (
-    <select className={ "ct-select " + (extraClass || "") }
+    <select
+className={ "ct-select " + (extraClass || "") }
             onChange={ ev => onChange(ev.target.value) }
             id={id} value={selected} disabled={enabled === false}>
         {children}
@@ -67,7 +68,8 @@ export class Select extends React.Component {
 
     render() {
         return (
-            <StatelessSelect onChange={this.onChange}
+            <StatelessSelect
+onChange={this.onChange}
                              selected={this.state.value}
                              id={this.props.id}
                              enabled={this.props.enabled}
@@ -98,7 +100,8 @@ export class SelectEntry extends React.Component {
     render() {
         const value = (this.props.children !== undefined) ? this.props.children : textForUndefined;
         return (
-            <option key={value} disabled={this.props.disabled}
+            <option
+key={value} disabled={this.props.disabled}
                 title={this.props.title}
                 data-value={value} value={this.props.data}>
                 {value}

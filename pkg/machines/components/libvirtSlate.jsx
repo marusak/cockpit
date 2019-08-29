@@ -82,7 +82,8 @@ class LibvirtSlate extends React.Component {
             detail = (
                 <div className="checkbox">
                     <label>
-                        <input type="checkbox"
+                        <input
+type="checkbox"
                                id="enable-libvirt"
                                disabled={!name}
                                checked={this.state.libvirtEnabled}
@@ -93,12 +94,14 @@ class LibvirtSlate extends React.Component {
             );
             action = (
                 <div className="blank-slate-pf-main-action">
-                    <button className="btn btn-default btn-lg"
+                    <button
+className="btn btn-default btn-lg"
                             id="troubleshoot"
                             onClick={mouseClick(this.goToServicePage)}>
                         {_("Troubleshoot")}
                     </button>
-                    <button className="btn btn-primary btn-lg"
+                    <button
+className="btn btn-primary btn-lg"
                             id="start-libvirt"
                             disabled={!name}
                             onClick={mouseClick(this.startService)}>

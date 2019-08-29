@@ -73,7 +73,8 @@ export class StoragePoolVolumesTab extends React.Component {
 
         /* Storage Volumes Deletion */
         const actions = [
-            <StorageVolumeDelete key='volume-delete-action'
+            <StorageVolumeDelete
+key='volume-delete-action'
                                  storagePool={storagePool}
                                  isVolumeUsed={isVolumeUsed}
                                  volumes={this.state.selected}
@@ -84,7 +85,8 @@ export class StoragePoolVolumesTab extends React.Component {
         return (
             <div id='storage-volumes-list'>
                 { this.state.deleteError &&
-                <ExpandableNotification type='error' text={this.state.deleteError}
+                <ExpandableNotification
+type='error' text={this.state.deleteError}
                     detail={this.state.deleteErrorDetail}
                     onDismiss={() => this.setState({ deleteError: undefined }) } /> }
                 <Listing compact hasCheckbox columnTitles={columnTitles} actions={actions} emptyCaption=''>
@@ -106,7 +108,8 @@ export class StoragePoolVolumesTab extends React.Component {
                         const selectCallback = this.selectedChanged.bind(this, volume.name);
 
                         return (
-                            <ListingRow addCheckbox
+                            <ListingRow
+addCheckbox
                                 selectChanged={selectCallback}
                                 selected={false}
                                 columns={columns}

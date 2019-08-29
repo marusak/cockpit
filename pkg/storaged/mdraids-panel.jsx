@@ -122,7 +122,8 @@ export class MDRaidsPanel extends React.Component {
             var mdraid = client.mdraids[path];
 
             return (
-                <OverviewSidePanelRow client={client}
+                <OverviewSidePanelRow
+client={client}
                                       kind="array"
                                       name={mdraid_name(mdraid)}
                                       detail={fmt_size(mdraid.Size)}
@@ -142,7 +143,8 @@ export class MDRaidsPanel extends React.Component {
         );
 
         return (
-            <OverviewSidePanel id="mdraids"
+            <OverviewSidePanel
+id="mdraids"
                                title={_("RAID Devices")}
                                empty_text={_("No storage set up as RAID")}
                                actions={actions}>

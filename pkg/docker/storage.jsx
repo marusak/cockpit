@@ -180,7 +180,8 @@ class DriveBox extends React.Component {
 
             drive_rows.push(
                 <tr key={drive.path} onClick={self.toggleDrive.bind(self, drive)}>
-                    <td><input type="checkbox"
+                    <td><input
+type="checkbox"
                                onChange={ () => null /* click handled by parent element, silence React warning */ }
                                checked={self.driveChecked(drive)} />
                     </td>
@@ -214,7 +215,8 @@ class DriveBox extends React.Component {
                     { drive_list }
                 </div>
                 <div className="drives-panel-footer">
-                    <button className="btn btn-primary"
+                    <button
+className="btn btn-primary"
                             disabled={ !button_enabled }
                             onClick={ self.onButtonClicked }>{_("Add Storage")}</button>
                 </div>

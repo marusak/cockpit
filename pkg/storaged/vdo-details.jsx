@@ -309,13 +309,15 @@ export class VDODetails extends React.Component {
 
                         <label className="control-label">{_("Compression")}</label>
                         <div>
-                            <StorageOnOff state={vdo.compression}
+                            <StorageOnOff
+state={vdo.compression}
                                           onChange={() => vdo.set_compression(!vdo.compression)} />
                         </div>
 
                         <label className="control-label">{_("Deduplication")}</label>
                         <div>
-                            <StorageOnOff state={vdo.deduplication}
+                            <StorageOnOff
+state={vdo.deduplication}
                                            onChange={() => vdo.set_deduplication(!vdo.deduplication)} />
                         </div>
                     </div>
@@ -325,7 +327,8 @@ export class VDODetails extends React.Component {
 
         var content = <Block client={client} block={block} allow_partitions={false} />;
 
-        return <StdDetailsLayout client={this.props.client}
+        return <StdDetailsLayout
+client={this.props.client}
                                  alert={alert}
                                  header={header}
                                  content={content} />;

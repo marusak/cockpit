@@ -50,7 +50,8 @@ export class OthersPanel extends React.Component {
             var dev = name.replace(/^\/dev\//, "");
 
             return (
-                <OverviewSidePanelRow client={client}
+                <OverviewSidePanelRow
+client={client}
                                       kind={false}
                                       testkey={dev}
                                       name={name}
@@ -67,7 +68,8 @@ export class OthersPanel extends React.Component {
 
         if (others.length > 0)
             return (
-                <OverviewSidePanel id="others"
+                <OverviewSidePanel
+id="others"
                                    title={_("Other Devices")}>
                     { others }
                 </OverviewSidePanel>

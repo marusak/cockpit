@@ -163,7 +163,8 @@ export class StoragePoolDelete extends React.Component {
                         </label>
                         <div role="group">
                             <label className='checkbox-inline'>
-                                <input id='storage-pool-delete-volumes'
+                                <input
+id='storage-pool-delete-volumes'
                                     type='checkbox'
                                     checked={this.state.deleteVolumes}
                                     onChange={e => this.onValueChanged('deleteVolumes', e.target.checked)} />
@@ -180,14 +181,16 @@ export class StoragePoolDelete extends React.Component {
         const deleteButton = () => {
             if (!canDelete(storagePool, vms)) {
                 return (
-                    <OverlayTrigger overlay={
-                        <Tooltip id='delete-tooltip'>
-                            {_("Pool's volumes are used by VMs ")}
-                            <b> {vmsUsage + "."} </b>
-                            {_("Detach the disks using this pool from any VMs before attempting deletion.")}
-                        </Tooltip> } placement='top'>
+                    <OverlayTrigger
+overlay={
+    <Tooltip id='delete-tooltip'>
+        {_("Pool's volumes are used by VMs ")}
+        <b> {vmsUsage + "."} </b>
+        {_("Detach the disks using this pool from any VMs before attempting deletion.")}
+    </Tooltip> } placement='top'>
                         <span>
-                            <Button id={`delete-${id}`}
+                            <Button
+id={`delete-${id}`}
                                 bsStyle='danger'
                                 style={{ pointerEvents: 'none' }}
                                 disabled>
@@ -198,7 +201,8 @@ export class StoragePoolDelete extends React.Component {
                 );
             } else {
                 return (
-                    <Button id={`delete-${id}`}
+                    <Button
+id={`delete-${id}`}
                         bsStyle='danger'
                         onClick={this.open}>
                         {_("Delete")}
@@ -224,7 +228,8 @@ export class StoragePoolDelete extends React.Component {
                         <Button bsStyle='default' className='btn-cancel' onClick={this.close}>
                             {_("Cancel")}
                         </Button>
-                        <Button bsStyle='danger'
+                        <Button
+bsStyle='danger'
                             onClick={this.delete}
                             disabled={canDeleteOnlyWithoutVolumes(storagePool, vms) && this.state.deleteVolumes}>
                             {_("Delete")}

@@ -86,7 +86,8 @@ export class Network extends React.Component {
             extraClasses.push('error');
 
         return (
-            <ListingRow rowId={idPrefix}
+            <ListingRow
+rowId={idPrefix}
                 extraClasses={extraClasses}
                 columns={cols}
                 tabRenderers={tabRenderers}

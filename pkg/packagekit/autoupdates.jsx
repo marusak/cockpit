@@ -302,7 +302,8 @@ export default class AutoUpdates extends React.Component {
             autoConfig = (
                 <div className="auto-conf">
                     <span className="auto-conf-group">
-                        <Select.Select id="auto-update-type" enabled={!this.state.pending} initial={backend.type}
+                        <Select.Select
+id="auto-update-type" enabled={!this.state.pending} initial={backend.type}
                                        onChange={ t => this.handleChange(null, t, null, null) }>
                             <Select.SelectEntry data="all">{_("Apply all updates")}</Select.SelectEntry>
                             <Select.SelectEntry data="security">{_("Apply security updates")}</Select.SelectEntry>
@@ -310,7 +311,8 @@ export default class AutoUpdates extends React.Component {
                     </span>
 
                     <span className="auto-conf-group">
-                        <Select.Select id="auto-update-day" initial={backend.day}
+                        <Select.Select
+id="auto-update-day" initial={backend.day}
                                        onChange={ d => this.handleChange(null, null, d, null) }>
                             <Select.SelectEntry data="">{_("every day")}</Select.SelectEntry>
                             <Select.SelectDivider />
@@ -327,7 +329,8 @@ export default class AutoUpdates extends React.Component {
                     <span className="auto-conf-group">
                         <span className="auto-conf-text">{_("at")}</span>
 
-                        <Select.Select id="auto-update-time" initial={backend.time}
+                        <Select.Select
+id="auto-update-time" initial={backend.time}
                                        onChange={ t => this.handleChange(null, null, null, t) }>
                             { hours.map(h => <Select.SelectEntry key={h} data={h + ":00"}>{('0' + h).slice(-2) + ":00"}</Select.SelectEntry>)}
                         </Select.Select>
@@ -345,7 +348,8 @@ export default class AutoUpdates extends React.Component {
             <div className="header-buttons pk-updates--header pk-updates--header--auto" id="automatic">
                 <h2 className="pk-updates--header--heading">{_("Automatic Updates")}</h2>
                 <div className="pk-updates--header--actions">
-                    <OnOffSwitch state={onOffState} disabled={this.state.pending}
+                    <OnOffSwitch
+state={onOffState} disabled={this.state.pending}
                                  onChange={e => {
                                      if (!this.state.backend.installed) {
                                          install_dialog(this.state.backend.packageName)

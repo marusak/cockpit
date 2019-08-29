@@ -95,7 +95,8 @@ class Vnc extends React.Component {
         const encrypt = this.getEncrypt();
 
         return (
-            <VncConsole host={window.location.hostname}
+            <VncConsole
+host={window.location.hostname}
                         port={window.location.port || (encrypt ? '443' : '80')}
                         path={path}
                         encrypt={encrypt}

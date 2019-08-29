@@ -131,7 +131,8 @@ export class MemoryModal extends React.Component {
                 </label>
                 <div className='form-group ct-validation-wrapper'>
                     <div role='group'>
-                        <input id={`${idPrefix}-memory`}
+                        <input
+id={`${idPrefix}-memory`}
                             className='form-control'
                             type='number'
                             value={toFixedPrecision(convertToUnit(this.state.memory, 'KiB', this.state.memoryUnit))}
@@ -143,7 +144,8 @@ export class MemoryModal extends React.Component {
                                 this.onValueBlurred('memory', e.target.value);
                             }}
                             onBlur={e => this.onValueBlurred('memory', e.target.value)} />
-                        <Select.Select id={`${idPrefix}-memory-unit`}
+                        <Select.Select
+id={`${idPrefix}-memory-unit`}
                             initial={this.state.memoryUnit}
                             onChange={value => this.onValueChanged('memoryUnit', value)}>
                             <Select.SelectEntry data={units.MiB.name} key={units.MiB.name}>
@@ -166,7 +168,8 @@ export class MemoryModal extends React.Component {
                 </label>
                 <div className='form-group ct-validation-wrapper'>
                     <div role='group'>
-                        <input id={`${idPrefix}-max-memory`}
+                        <input
+id={`${idPrefix}-max-memory`}
                             className='form-control ct-form-split'
                             type='number'
                             value={toFixedPrecision(convertToUnit(this.state.maxMemory, 'KiB', this.state.maxMemoryUnit))}
@@ -179,7 +182,8 @@ export class MemoryModal extends React.Component {
                             }}
                             onBlur={e => this.onValueBlurred('maxMemory', e.target.value)}
                             readOnly={vm.state != 'shut off'} />
-                        <Select.Select id={`${idPrefix}-max-memory-unit`}
+                        <Select.Select
+id={`${idPrefix}-max-memory-unit`}
                             className='ct-form-split'
                             initial={this.state.maxMemoryUnit}
                             onChange={value => this.onValueChanged('maxMemoryUnit', value)}

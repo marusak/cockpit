@@ -84,7 +84,8 @@ class KdumpTargetBody extends React.Component {
             detailRows = (
                 <React.Fragment>
                     <label className="control-label" htmlFor="kdump-settings-local-directory">{_("Directory")}</label>
-                    <input id="kdump-settings-local-directory" key="directory" className="form-control" type="text"
+                    <input
+id="kdump-settings-local-directory" key="directory" className="form-control" type="text"
                            placeholder="/var/crash" value={directory}
                            data-stored={directory}
                            onChange={this.changeValue.bind(this, "path")} />
@@ -98,7 +99,8 @@ class KdumpTargetBody extends React.Component {
                 <React.Fragment>
                     <label className="control-label" htmlFor="kdump-settings-nfs-mount">{_("Mount")}</label>
                     <label>
-                        <input id="kdump-settings-nfs-mount" key="mount" className="form-control" type="text"
+                        <input
+id="kdump-settings-nfs-mount" key="mount" className="form-control" type="text"
                                placeholder="penguin.example.com:/export/cores" value={nfs}
                                onChange={this.changeValue.bind(this, "nfs")} />
                     </label>
@@ -114,17 +116,20 @@ class KdumpTargetBody extends React.Component {
             detailRows = (
                 <React.Fragment>
                     <label className="control-label" htmlFor="kdump-settings-ssh-server">{_("Server")}</label>
-                    <input id="kdump-settings-ssh-server" key="server" className="form-control" type="text"
+                    <input
+id="kdump-settings-ssh-server" key="server" className="form-control" type="text"
                            placeholder="user@server.com" value={ssh}
                            onChange={this.changeValue.bind(this, "ssh")} />
 
                     <label className="control-label" htmlFor="kdump-settings-ssh-key">{_("ssh key")}</label>
-                    <input id="kdump-settings-ssh-key" key="ssh" className="form-control" type="text"
+                    <input
+id="kdump-settings-ssh-key" key="ssh" className="form-control" type="text"
                            placeholder="/root/.ssh/kdump_id_rsa" value={sshkey}
                            onChange={this.changeValue.bind(this, "sshkey")} />
 
                     <label className="control-label" htmlFor="kdump-settings-local-directory">{_("Directory")}</label>
-                    <input id="kdump-settings-local-directory" key="directory" className="form-control" type="text"
+                    <input
+id="kdump-settings-local-directory" key="directory" className="form-control" type="text"
                            placeholder="/var/crash" value={directory}
                            data-stored={directory}
                            onChange={this.changeValue.bind(this, "path")} />
@@ -143,7 +148,8 @@ class KdumpTargetBody extends React.Component {
             <div className="modal-body">
                 <form className="ct-form">
                     <label className="control-label" htmlFor="kdump-settings-location">{_("Location")}</label>
-                    <Select.Select key="location" onChange={this.changeLocation}
+                    <Select.Select
+key="location" onChange={this.changeLocation}
                                    id="kdump-settings-location" initial={storageDest}>
                         <Select.SelectEntry data='local' key='local'>{targetDescription.local}</Select.SelectEntry>
                         <Select.SelectEntry data='ssh' key='ssh'>{targetDescription.ssh}</Select.SelectEntry>
@@ -155,7 +161,8 @@ class KdumpTargetBody extends React.Component {
 
                     <label className="control-label">{_("Compression")}</label>
                     <label className="checkbox-inline" key="compression">
-                        <input id="kdump-settings-compression" type="checkbox"
+                        <input
+id="kdump-settings-compression" type="checkbox"
                                checked={this.props.compressionEnabled}
                                onChange={this.handleCompressionClick.bind(this)}
                                enabled={compressionPossible.toString()} />
@@ -494,7 +501,8 @@ export class KdumpPage extends React.Component {
                 <form className="ct-form">
                     <label className="control-label">{_("kdump status")}</label>
                     <div role="group">
-                        <OnOffSwitch state={!!serviceRunning} onChange={this.props.onSetServiceState}
+                        <OnOffSwitch
+state={!!serviceRunning} onChange={this.props.onSetServiceState}
                             disabled={this.props.stateChanging} />
                         {serviceWaiting}
                         {kdumpServiceDetails}

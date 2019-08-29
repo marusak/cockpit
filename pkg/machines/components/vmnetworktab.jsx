@@ -187,7 +187,8 @@ class VmNetworkTab extends React.Component {
                     const isUp = network.state === 'up';
                     const editNICAction = (providerName) => {
                         if (providerName === "LibvirtDBus")
-                            return <EditNICAction dispatch={dispatch}
+                            return <EditNICAction
+dispatch={dispatch}
                                    idPrefix={`${id}-network-${networkId}`}
                                    vm={vm}
                                    network={network}

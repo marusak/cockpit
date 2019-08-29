@@ -208,7 +208,8 @@ export class ListingRow extends React.Component {
         }
 
         const listingItem = (
-            <tr data-row-id={ this.props.rowId }
+            <tr
+data-row-id={ this.props.rowId }
                 className={ listingItemClasses.join(' ') }
                 onClick={clickHandler}>
                 {expandToggle}

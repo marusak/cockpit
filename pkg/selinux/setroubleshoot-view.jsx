@@ -108,7 +108,8 @@ class SELinuxEventDetails extends React.Component {
                 }
                 fixit = (
                     <div className="setroubleshoot-listing-action">
-                        <button className="btn btn-default"
+                        <button
+className="btn btn-default"
                                 onClick={ self.runFix.bind(self, itmIdx) }
                         >{ _("Apply this solution") }
                         </button>

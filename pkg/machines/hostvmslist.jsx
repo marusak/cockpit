@@ -79,7 +79,8 @@ class HostVmsList extends React.Component {
         const sortFunction = (vmA, vmB) => vmA.name.localeCompare(vmB.name);
 
         return (<div id='virtual-machines-listing' className='container-fluid'>
-            <Listing title={_("Virtual Machines")}
+            <Listing
+title={_("Virtual Machines")}
                 columnTitles={[_("Name"), _("Connection"), _("State")]}
                 actions={actions}
                 emptyCaption={_("No VM is running or defined on this host")}>
@@ -94,7 +95,8 @@ class HostVmsList extends React.Component {
                             const connectionName = vm.connectionName;
 
                             return (
-                                <Vm vm={vm} config={config}
+                                <Vm
+vm={vm} config={config}
                                     resourceHasError={this.props.resourceHasError}
                                     onAddErrorNotification={this.props.onAddErrorNotification}
                                     hostDevices={this.deviceProxies}

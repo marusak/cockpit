@@ -60,7 +60,8 @@ export class OverviewSidePanel extends React.Component {
         }
 
         return (
-            <OptionalPanel id={this.props.id}
+            <OptionalPanel
+id={this.props.id}
                            title={this.props.title}
                            actions={this.props.actions}
                            client={this.props.client}
@@ -100,7 +101,8 @@ export class OverviewSidePanelRow extends React.Component {
             : null);
 
         return (
-            <tr data-testkey={this.props.testkey}
+            <tr
+data-testkey={this.props.testkey}
                 onClick={this.props.go ? go : null} className={this.props.highlight ? "highlight-ct" : ""}>
                 <td className="storage-icon">
                     { this.props.kind !== false

@@ -377,7 +377,8 @@ function append_row(client, rows, level, key, name, desc, tabs, job_object) {
     var last_column = null;
     if (job_object)
         last_column = (
-            <span className="spinner spinner-sm spinner-inline"
+            <span
+className="spinner spinner-sm spinner-inline"
                   style={{ visibility: client.path_jobs[job_object] ? "visible" : "hidden" }} />);
     if (tabs.row_action) {
         if (last_column) {
@@ -400,7 +401,8 @@ function append_row(client, rows, level, key, name, desc, tabs, job_object) {
     ];
 
     rows.push(
-        <ListingRow key={key}
+        <ListingRow
+key={key}
                     columns={cols}
                     tabRenderers={tabs.renderers}
                     listingActions={tabs.actions} />
@@ -567,7 +569,8 @@ const BlockContent = ({ client, block, allow_partitions }) => {
             </div>);
 
     return (
-        <Listing title={_("Content")}
+        <Listing
+title={_("Content")}
                  actions={format_disk_btn}
                  emptyCaption="">
             { block_rows(client, block) }
@@ -577,7 +580,8 @@ const BlockContent = ({ client, block, allow_partitions }) => {
 
 export const Block = ({ client, block, allow_partitions }) => {
     return (
-        <BlockContent client={client}
+        <BlockContent
+client={client}
                       block={block}
                       allow_partitions={allow_partitions !== false} />
     );
@@ -721,7 +725,8 @@ export class VGroup extends React.Component {
 
         var new_volume_link = (
             <div className="pull-right">
-                <StorageLink onClick={create_logical_volume}
+                <StorageLink
+onClick={create_logical_volume}
                              excuse={excuse}>
                     <span className="pficon pficon-add-circle-o" />
                     {" "}
@@ -730,7 +735,8 @@ export class VGroup extends React.Component {
             </div>);
 
         return (
-            <Listing title="Logical Volumes"
+            <Listing
+title="Logical Volumes"
                      actions={new_volume_link}
                      emptyCaption={_("No Logical Volumes")}>
                 { vgroup_rows(self.props.client, vgroup) }

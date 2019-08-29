@@ -85,7 +85,8 @@ export class NetworkOverviewTab extends React.Component {
 
                         <label className='control-label' htmlFor={`${idPrefix}-autostart`}> {_("Autostart")} </label>
                         <label className='checkbox-inline'>
-                            <input id={`${idPrefix}-autostart-checkbox`}
+                            <input
+id={`${idPrefix}-autostart-checkbox`}
                                    type="checkbox"
                                    checked={network.autostart}
                                    onChange={this.onAutostartChanged} />

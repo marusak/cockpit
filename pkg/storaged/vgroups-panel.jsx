@@ -88,7 +88,8 @@ export class VGroupsPanel extends React.Component {
             var vgroup = client.vgroups[path];
 
             return (
-                <OverviewSidePanelRow client={client}
+                <OverviewSidePanelRow
+client={client}
                                       kind="array"
                                       name={vgroup.Name}
                                       detail={fmt_size(vgroup.Size)}
@@ -112,7 +113,8 @@ export class VGroupsPanel extends React.Component {
         };
 
         return (
-            <OverviewSidePanel id="vgroups"
+            <OverviewSidePanel
+id="vgroups"
                                title={_("Volume Groups")}
                                empty_text={_("No volume groups created")}
                                actions={actions}

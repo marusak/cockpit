@@ -36,14 +36,16 @@ export const MachinesConnectionSelector = ({ onValueChanged, loggedUser, connect
             <fieldset className='form-inline' id={id}>
                 <div className='radio'>
                     <label>
-                        <input type="radio"
+                        <input
+type="radio"
                                checked={connectionName === LIBVIRT_SYSTEM_CONNECTION}
                                onChange={() => onValueChanged('connectionName', LIBVIRT_SYSTEM_CONNECTION)}
                                className={connectionName === LIBVIRT_SYSTEM_CONNECTION ? "active" : ''} />
                         {_("System")}
                     </label>
                     <label>
-                        <input type="radio"
+                        <input
+type="radio"
                                checked={connectionName == LIBVIRT_SESSION_CONNECTION}
                                onChange={() => onValueChanged('connectionName', LIBVIRT_SESSION_CONNECTION)}
                                className={connectionName == LIBVIRT_SESSION_CONNECTION ? "active" : ''} />

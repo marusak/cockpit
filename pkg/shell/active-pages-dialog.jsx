@@ -45,7 +45,8 @@ export class ActivePagesDialogBody extends React.Component {
             if (self.props.selectionChanged)
                 selectCallback = self.props.selectionChanged.bind(self, frame);
             return (
-                <ListingRow key={frame.name} columns={columns}
+                <ListingRow
+key={frame.name} columns={columns}
                     rowId={frame.name}
                     selected={frame.selected}
                     selectChanged={selectCallback}

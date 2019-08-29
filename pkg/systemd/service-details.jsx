@@ -196,7 +196,8 @@ class ServiceActions extends React.Component {
         return (
             <React.Fragment>
                 { this.state.dialogMaskedOpened &&
-                    <ServiceConfirmDialog title={ _("Mask Service") }
+                    <ServiceConfirmDialog
+title={ _("Mask Service") }
                                           message={ _("Masking service prevents all dependant units from running. This can have bigger impact than anticipated. Please confirm that you want to mask this unit.")}
                                           close={() => this.setState({ dialogMaskedOpened: false }) }
                                           confirmText={ _("Mask Service") }
@@ -447,7 +448,8 @@ export class ServiceDetails extends React.Component {
         return (
             <React.Fragment>
                 { (this.state.note || this.state.error) &&
-                    <ServiceConfirmDialog title={ this.state.error ? _("Error") : _("Note") }
+                    <ServiceConfirmDialog
+title={ this.state.error ? _("Error") : _("Note") }
                                           message={ this.state.error || this.state.note }
                                           close={ () => this.setState(this.state.error ? { error:"" } : { note:"" }) }
                     />

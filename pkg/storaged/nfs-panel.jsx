@@ -87,7 +87,8 @@ export class NFSPanel extends React.Component {
         };
 
         return (
-            <OptionalPanel className="storage-mounts" id="nfs-mounts"
+            <OptionalPanel
+className="storage-mounts" id="nfs-mounts"
                            client={client}
                            title={_("NFS Mounts")}
                            actions={actions}

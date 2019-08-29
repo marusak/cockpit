@@ -114,9 +114,11 @@ export class StorageButton extends React.Component {
             classes += " btn-default";
 
         return (
-            <StorageControl excuse={this.props.excuse}
+            <StorageControl
+excuse={this.props.excuse}
                             content={(excuse) => (
-                                <button id={this.props.id}
+                                <button
+id={this.props.id}
                                             onClick={checked(this.props.onClick)}
                                             className={classes + (excuse ? " disabled" : "")}
                                             disabled={excuse}>
@@ -130,9 +132,11 @@ export class StorageButton extends React.Component {
 export class StorageLink extends React.Component {
     render() {
         return (
-            <StorageControl excuse={this.props.excuse}
+            <StorageControl
+excuse={this.props.excuse}
                             content={(excuse) => (
-                                <a onClick={checked(this.props.onClick)}
+                                <a
+onClick={checked(this.props.onClick)}
                                        role="link"
                                        tabIndex="0"
                                        className={excuse ? " disabled" : ""}>
@@ -201,11 +205,13 @@ export class StorageOnOff extends React.Component {
         }
 
         return (
-            <StorageControl excuse={this.props.excuse}
+            <StorageControl
+excuse={this.props.excuse}
                             content={(excuse) => (
-                                <OnOffSwitch state={this.state.promise
-                                    ? this.state.promise_goal_state
-                                    : this.props.state}
+                                <OnOffSwitch
+state={this.state.promise
+    ? this.state.promise_goal_state
+    : this.props.state}
                                                  disabled={!!(excuse || this.state.promise)}
                                                  onChange={onChange} />
                             )} />
@@ -218,7 +224,8 @@ export class StorageMultiAction extends React.Component {
         var dflt = this.props.actions[this.props.default];
 
         return (
-            <StorageControl excuse={this.props.excuse}
+            <StorageControl
+excuse={this.props.excuse}
                             content={(excuse) => {
                                 var btn_classes = "btn btn-default";
                                 if (excuse)
@@ -228,7 +235,8 @@ export class StorageMultiAction extends React.Component {
                                         <button className={btn_classes} onClick={checked(dflt.action)}>
                                             {dflt.title}
                                         </button>
-                                        <button className={btn_classes + " dropdown-toggle"}
+                                        <button
+className={btn_classes + " dropdown-toggle"}
                                                     data-toggle="dropdown">
                                             <span className="caret" />
                                         </button>
@@ -261,7 +269,8 @@ export class StorageUsageBar extends React.Component {
         return (
             <div className="progress">
                 { stats
-                    ? <div className={ "progress-bar" + (fraction > this.props.critical ? " progress-bar-danger" : "") }
+                    ? <div
+className={ "progress-bar" + (fraction > this.props.critical ? " progress-bar-danger" : "") }
                         style={{ width: fraction * 100 + "%" }} />
                     : null
                 }

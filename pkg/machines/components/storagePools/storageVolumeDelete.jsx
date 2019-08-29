@@ -62,7 +62,8 @@ export class StorageVolumeDelete extends React.Component {
             return null;
 
         const deleteBtn = (
-            <Button className='storage-volumes-actions' id='storage-volumes-delete'
+            <Button
+className='storage-volumes-actions' id='storage-volumes-delete'
                     bsStyle='danger' onClick={this.storageVolumeListDelete}
                     disabled={ anyVolumeUsed }>
                 {cockpit.format(cockpit.ngettext("Delete $0 volume", 'Delete $0 volumes', volCount), volCount)}
@@ -73,7 +74,8 @@ export class StorageVolumeDelete extends React.Component {
             return deleteBtn;
 
         return (
-            <OverlayTrigger placement='top'
+            <OverlayTrigger
+placement='top'
                             overlay={<Tooltip id='volume-delete-tooltip'>{ _("One or more selected volumes are used by domains. Detach the disks first to allow volume deletion.") }</Tooltip>}>
                 { deleteBtn }
             </OverlayTrigger>

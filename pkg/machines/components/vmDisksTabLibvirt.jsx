@@ -95,7 +95,8 @@ class VmDisksTabLibvirt extends React.Component {
             diskSourceCell: (<DiskSourceCell diskSource={disk.source} idPrefix={idPrefix} />),
             diskExtras: (
                 (disk.driver.cache || disk.driver.io || disk.driver.discard || disk.driver.errorPolicy)
-                    ? <DiskExtras idPrefix={idPrefix}
+                    ? <DiskExtras
+idPrefix={idPrefix}
                                   cache={disk.driver.cache}
                                   io={disk.driver.io}
                                   discard={disk.driver.discard}
@@ -122,7 +123,8 @@ class VmDisksTabLibvirt extends React.Component {
             actions = [<AddDiskAction dispatch={dispatch} provider={config.provider} idPrefix={idPrefix} key='add-disk' vm={vm} storagePools={storagePools} />];
 
         return (
-            <VmDisksTab idPrefix={idPrefix}
+            <VmDisksTab
+idPrefix={idPrefix}
                 actions={actions}
                 vm={vm}
                 disks={disks}

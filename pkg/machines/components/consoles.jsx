@@ -79,7 +79,8 @@ const ConsoleSelector = ({ onChange, selected, isSerialConsole, vm }) => {
                         <label>{_("Console Type")}</label>
                     </td>
                     <td>
-                        <Select.StatelessSelect id="console-type-select"
+                        <Select.StatelessSelect
+id="console-type-select"
                                                 selected={selected}
                                                 onChange={onChange}>
                             {entries}
@@ -197,7 +198,8 @@ class Consoles extends React.Component {
         logDebug('Consoles render, this.state.consoleType: ', this.state.consoleType);
 
         const consoleSelector = (
-            <ConsoleSelector onChange={this.onConsoleTypeSelected}
+            <ConsoleSelector
+onChange={this.onConsoleTypeSelected}
                              isSerialConsole={!!serialConsoleCommand}
                              selected={this.state.consoleType}
                              vm={vm} />

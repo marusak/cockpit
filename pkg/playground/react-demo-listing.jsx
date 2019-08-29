@@ -102,7 +102,8 @@ export function showListingDemo (rootElement, rootElementSelectable, rootElement
 
     // create the listings
     var listing = (
-        <cockpitListing.Listing title="Demo Listing Pattern with expandable rows"
+        <cockpitListing.Listing
+title="Demo Listing Pattern with expandable rows"
             actions={addLink}
             columnTitles={['Name', 'Random', 'IP', 'State']}>
             <cockpitListing.ListingRow
@@ -125,7 +126,8 @@ export function showListingDemo (rootElement, rootElementSelectable, rootElement
     ReactDOM.render(listing, rootElement);
 
     listing = (
-        <cockpitListing.Listing title="Demo Listing Pattern with selectable rows"
+        <cockpitListing.Listing
+title="Demo Listing Pattern with selectable rows"
             actions={addLink}
             columnTitles={['Name', 'Random', 'IP', 'State']}>
             <cockpitListing.ListingRow

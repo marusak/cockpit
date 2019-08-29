@@ -28,7 +28,8 @@ const _ = cockpit.gettext;
 const MemorySelectRow = ({ id, value, maxValue, initialUnit, onValueChange, onUnitChange }) => {
     return (
         <div role="group">
-            <input id={id} className="form-control"
+            <input
+id={id} className="form-control"
                    type="number"
                    value={toFixedPrecision(value)}
                    onKeyPress={digitFilter}
@@ -36,7 +37,8 @@ const MemorySelectRow = ({ id, value, maxValue, initialUnit, onValueChange, onUn
                    min={0}
                    max={maxValue}
                    onChange={onValueChange} />
-            <Select.Select id={id + "-unit-select"}
+            <Select.Select
+id={id + "-unit-select"}
                            initial={initialUnit}
                            onChange={onUnitChange}>
                 <Select.SelectEntry data={units.MiB.name} key={units.MiB.name}>

@@ -88,7 +88,8 @@ const SelectExistingVolume = ({ idPrefix, storagePoolName, existingVolumeName, o
             <label className='control-label' htmlFor={`${idPrefix}-select-volume`}>
                 {_("Volume")}
             </label>
-            <Select.Select id={`${idPrefix}-select-volume`}
+            <Select.Select
+id={`${idPrefix}-select-volume`}
                            onChange={value => onValueChanged('existingVolumeName', value)}
                            initial={initiallySelected}
                            enabled={filteredVolumes.length > 0}
@@ -109,7 +110,8 @@ const PermanentChange = ({ idPrefix, onValueChanged, permanent, provider, vm }) 
         <React.Fragment>
             <label className="control-label"> {_("Persistence")} </label>
             <label className='checkbox-inline'>
-                <input id={`${idPrefix}-permanent`}
+                <input
+id={`${idPrefix}-permanent`}
                        type="checkbox"
                        checked={permanent}
                        onChange={e => onValueChanged('permanent', e.target.checked)} />
@@ -125,7 +127,8 @@ const VolumeName = ({ idPrefix, volumeName, onValueChanged }) => {
             <label className='control-label' htmlFor={`${idPrefix}-name`}>
                 {_("Name")}
             </label>
-            <input id={`${idPrefix}-name`}
+            <input
+id={`${idPrefix}-name`}
                    className="form-control"
                    type="text"
                    minLength={1}
@@ -156,7 +159,8 @@ const VolumeDetails = ({ idPrefix, size, unit, diskFileFormat, storagePoolType, 
                 <label className='control-label' htmlFor={`${idPrefix}-fileformat`}>
                     {_("Format")}
                 </label>
-                <Select.Select id={`${idPrefix}-diskfileformat`}
+                <Select.Select
+id={`${idPrefix}-diskfileformat`}
                     onChange={value => onValueChanged('diskFileFormat', value)}
                     initial={diskFileFormat}
                     extraClass='form-control ct-form-split'>
@@ -172,7 +176,8 @@ const VolumeDetails = ({ idPrefix, size, unit, diskFileFormat, storagePoolType, 
                 {_("Size")}
             </label>
             <div role="group" className="ct-form-split">
-                <input id={`${idPrefix}-size`}
+                <input
+id={`${idPrefix}-size`}
                        className="form-control add-disk-size"
                        type="number"
                        value={toFixedPrecision(size)}
@@ -181,7 +186,8 @@ const VolumeDetails = ({ idPrefix, size, unit, diskFileFormat, storagePoolType, 
                        min={0}
                        onChange={e => onValueChanged('size', e.target.value)} />
 
-                <Select.Select id={`${idPrefix}-unit`}
+                <Select.Select
+id={`${idPrefix}-unit`}
                                initial={unit}
                                onChange={value => onValueChanged('unit', value)}>
                     <Select.SelectEntry data={units.MiB.name} key={units.MiB.name}>
@@ -203,7 +209,8 @@ const PoolRow = ({ idPrefix, onValueChanged, storagePoolName, vmStoragePools }) 
             <label className='control-label' htmlFor={`${idPrefix}-select-pool`}>
                 {_("Pool")}
             </label>
-            <Select.Select id={`${idPrefix}-select-pool`}
+            <Select.Select
+id={`${idPrefix}-select-pool`}
                            enabled={vmStoragePools.length > 0}
                            onChange={value => onValueChanged('storagePoolName', value)}
                            initial={storagePoolName || _("No Storage Pools available")}
@@ -250,7 +257,8 @@ class PerformanceOptions extends React.Component {
                     <label className='control-label' htmlFor='cache-mode'>
                         {_("Cache")}
                     </label>
-                    <Select.Select id={'cache-mode'}
+                    <Select.Select
+id={'cache-mode'}
                         onChange={value => this.props.onValueChanged('cacheMode', value)}
                         initial={this.props.cacheMode}
                         extraClass='form-control ct-form-split'>
@@ -275,29 +283,34 @@ const CreateNewDisk = ({ idPrefix, onValueChanged, dialogValues, vmStoragePools,
     return (
         <React.Fragment>
             <hr />
-            <PoolRow idPrefix={idPrefix}
+            <PoolRow
+idPrefix={idPrefix}
                      storagePoolName={dialogValues.storagePoolName}
                      onValueChanged={onValueChanged}
                      vmStoragePools={vmStoragePools.map(pool => ({ ...pool, disabled: poolTypesNotSupportingVolumeCreation.includes(pool.type) }))} />
             {storagePool &&
             <React.Fragment>
                 <hr />
-                <VolumeName idPrefix={idPrefix}
+                <VolumeName
+idPrefix={idPrefix}
                             volumeName={dialogValues.volumeName}
                             onValueChanged={onValueChanged} />
-                <VolumeDetails idPrefix={idPrefix}
+                <VolumeDetails
+idPrefix={idPrefix}
                                size={dialogValues.size}
                                unit={dialogValues.unit}
                                diskFileFormat={dialogValues.diskFileFormat}
                                storagePoolType={storagePool.type}
                                onValueChanged={onValueChanged} />
                 <hr />
-                <PermanentChange idPrefix={idPrefix}
+                <PermanentChange
+idPrefix={idPrefix}
                                  permanent={dialogValues.permanent}
                                  onValueChanged={onValueChanged}
                                  provider={provider}
                                  vm={vm} />
-                {provider.name == 'LibvirtDBus' && <PerformanceOptions cacheMode={dialogValues.cacheMode}
+                {provider.name == 'LibvirtDBus' && <PerformanceOptions
+cacheMode={dialogValues.cacheMode}
                                     onValueChanged={onValueChanged} />}
             </React.Fragment>}
         </React.Fragment>
@@ -308,26 +321,30 @@ const UseExistingDisk = ({ idPrefix, onValueChanged, dialogValues, vmStoragePool
     return (
         <React.Fragment>
             <hr />
-            <PoolRow idPrefix={idPrefix}
+            <PoolRow
+idPrefix={idPrefix}
                      storagePoolName={dialogValues.storagePoolName}
                      onValueChanged={onValueChanged}
                      vmStoragePools={vmStoragePools} />
             <hr />
             {vmStoragePools.length > 0 &&
             <React.Fragment>
-                <SelectExistingVolume idPrefix={idPrefix}
+                <SelectExistingVolume
+idPrefix={idPrefix}
                                       storagePoolName={dialogValues.storagePoolName}
                                       existingVolumeName={dialogValues.existingVolumeName}
                                       onValueChanged={onValueChanged}
                                       vmStoragePools={vmStoragePools}
                                       vmDisks={vm.disks} />
                 <hr />
-                <PermanentChange idPrefix={idPrefix}
+                <PermanentChange
+idPrefix={idPrefix}
                                  permanent={dialogValues.PermanentChange}
                                  onValueChanged={onValueChanged}
                                  provider={provider}
                                  vm={vm} />
-                {provider.name == 'LibvirtDBus' && <PerformanceOptions cacheMode={dialogValues.cacheMode}
+                {provider.name == 'LibvirtDBus' && <PerformanceOptions
+cacheMode={dialogValues.cacheMode}
                                     onValueChanged={onValueChanged} />}
             </React.Fragment>}
         </React.Fragment>
@@ -547,7 +564,8 @@ class AddDiskModalBody extends React.Component {
                 <fieldset className='form-inline'>
                     <div className='radio'>
                         <label>
-                            <input id={`${idPrefix}-createnew`}
+                            <input
+id={`${idPrefix}-createnew`}
                                    type="radio"
                                    name="source"
                                    checked={this.state.mode === CREATE_NEW}
@@ -556,7 +574,8 @@ class AddDiskModalBody extends React.Component {
                             {_("Create New")}
                         </label>
                         <label>
-                            <input id={`${idPrefix}-useexisting`}
+                            <input
+id={`${idPrefix}-useexisting`}
                                    type="radio"
                                    name="source"
                                    checked={this.state.mode === USE_EXISTING}
@@ -567,7 +586,8 @@ class AddDiskModalBody extends React.Component {
                     </div>
                 </fieldset>
                 {this.state.mode === CREATE_NEW && (
-                    <CreateNewDisk idPrefix={`${idPrefix}-new`}
+                    <CreateNewDisk
+idPrefix={`${idPrefix}-new`}
                                    onValueChanged={this.onValueChanged}
                                    dialogValues={this.state}
                                    vmStoragePools={storagePoolsFiltered}
@@ -575,7 +595,8 @@ class AddDiskModalBody extends React.Component {
                                    vm={vm} />
                 )}
                 {this.state.mode === USE_EXISTING && (
-                    <UseExistingDisk idPrefix={`${idPrefix}-existing`}
+                    <UseExistingDisk
+idPrefix={`${idPrefix}-existing`}
                                      onValueChanged={this.onValueChanged}
                                      dialogValues={this.state}
                                      vmStoragePools={storagePoolsFiltered}

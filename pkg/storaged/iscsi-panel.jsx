@@ -223,7 +223,8 @@ export class IscsiPanel extends React.Component {
                 );
 
             return (
-                <OverviewSidePanelRow client={client}
+                <OverviewSidePanelRow
+client={client}
                                       kind="array"
                                       name={session.data.target_name || ""}
                                       detail={session.data.persistent_address + ":" +
@@ -245,7 +246,8 @@ export class IscsiPanel extends React.Component {
         var actions = (
             <React.Fragment>
                 { sessions.length > 0
-                    ? <button className={"btn btn-default fa fa-check" + (this.state.armed ? " active" : "")}
+                    ? <button
+className={"btn btn-default fa fa-check" + (this.state.armed ? " active" : "")}
                   onClick={toggle_armed} /> : null
                 }
                 { "\n" }
@@ -264,7 +266,8 @@ export class IscsiPanel extends React.Component {
         };
 
         return (
-            <OverviewSidePanel id="iscsi-sessions"
+            <OverviewSidePanel
+id="iscsi-sessions"
                                title={_("iSCSI Targets")}
                                empty_text={_("No iSCSI targets set up")}
                                hover={false}

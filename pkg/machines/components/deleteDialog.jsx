@@ -35,7 +35,8 @@ const DeleteDialogBody = ({ disks, destroy, onChange }) => {
             <li className='list-group-item' key={disk.target}>
                 <div className='checkbox disk-row'>
                     <label>
-                        <input type="checkbox" checked={disk.checked}
+                        <input
+type="checkbox" checked={disk.checked}
                             onChange={(event) => {
                                 onChange(index, event.target.checked);
                             }} />

@@ -40,7 +40,8 @@ const onDetachDisk = (dispatch, vm, target, onAddErrorNotification) => {
 const RemoveDiskAction = ({ dispatch, vm, target, idPrefixRow, onAddErrorNotification }) => {
     const getRemoveButton = (disabled) => {
         return (
-            <button id={`${idPrefixRow}-detach`}
+            <button
+id={`${idPrefixRow}-detach`}
                     disabled={disabled}
                     className="btn btn-default btn-control-ct fa fa-minus"
                     onClick={onDetachDisk(dispatch, vm, target, onAddErrorNotification)} />

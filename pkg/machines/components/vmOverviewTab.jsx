@@ -56,7 +56,8 @@ const VmOverviewTab = ({ message, idPrefix, items, extraItems }) => {
             {message}
             <Items items={items} idPrefix={idPrefix} />
             {extraItems && extraItems.map(col =>
-                (<Items items={col} idPrefix={idPrefix}
+                (<Items
+items={col} idPrefix={idPrefix}
                         key={col} />))}
         </div>);
 };

@@ -105,7 +105,8 @@ const NetworkConnectionRow = ({ onValueChanged, dialogValues, loggedUser }) => {
             <label className='control-label' htmlFor='create-network-connection'>
                 {_("Connection")}
             </label>
-            <MachinesConnectionSelector id='create-network-connection'
+            <MachinesConnectionSelector
+id='create-network-connection'
                 dialogValues={dialogValues}
                 onValueChanged={onValueChanged}
                 loggedUser={loggedUser} />
@@ -146,7 +147,8 @@ const NetworkForwardModeRow = ({ onValueChanged, dialogValues }) => {
             <label className='control-label' htmlFor='create-network-forward-mode'>
                 {_("Forward Mode")}
             </label>
-            <Select.Select id='create-network-forward-mode'
+            <Select.Select
+id='create-network-forward-mode'
                            initial={dialogValues.forwardMode}
                            onChange={value => onValueChanged('forwardMode', value)}>
                 { forwardModes.map(mode => {
@@ -168,7 +170,8 @@ const NetworkDeviceRow = ({ devices, onValueChanged, dialogValues }) => {
             <label className='control-label' htmlFor='create-network-device'>
                 {_("Device")}
             </label>
-            <Select.Select id='create-network-device'
+            <Select.Select
+id='create-network-device'
                            enabled={devices.length > 0}
                            initial={dialogValues.device}
                            onChange={value => onValueChanged('device', value)}>
@@ -196,7 +199,8 @@ const IpRow = ({ onValueChanged, dialogValues }) => {
             <label className='control-label' htmlFor='create-network-ip-configuration'>
                 {_("IP Configuration")}
             </label>
-            <Select.Select id='create-network-ip-configuration'
+            <Select.Select
+id='create-network-ip-configuration'
                            initial={dialogValues.ip}
                            onChange={value => onValueChanged('ip', value)}>
                 { (dialogValues.forwardMode === "none") &&
@@ -224,7 +228,8 @@ const DhcpRow = ({ ipVersion, rangeStart, rangeEnd, expanded, onValueChanged, va
     return (
         <React.Fragment>
             <label className='checkbox-inline'>
-                <input id={'network-ipv' + ipVersion + '-dhcp'}
+                <input
+id={'network-ipv' + ipVersion + '-dhcp'}
                     type='checkbox'
                     checked={expanded}
                     onChange={e => onValueChanged('ipv' + ipVersion + 'DhcpEnabled', !expanded)} />
@@ -278,7 +283,8 @@ const Ipv4Row = ({ validationFailed, dialogValues, onValueChanged }) => {
             <div className='ct-form'>
                 <label className='control-label' htmlFor='network-ipv4-address'> {_("IPv4 Network")} </label>
                 <FormGroup validationState={validationAddress} controlId='ipv4-address'>
-                    <input id='network-ipv4-address'
+                    <input
+id='network-ipv4-address'
                        type='text'
                        value={dialogValues.ipv4}
                        onChange={e => onValueChanged('ipv4', e.target.value)}
@@ -292,7 +298,8 @@ const Ipv4Row = ({ validationFailed, dialogValues, onValueChanged }) => {
             <div className='ct-form'>
                 <label className='control-label' htmlFor='network-ipv4-netmask'> {_("Mask or Prefix Length")} </label>
                 <FormGroup validationState={validationNetmask} controlId='ipv4-netmask'>
-                    <input id='network-ipv4-netmask'
+                    <input
+id='network-ipv4-netmask'
                        type='text'
                        value={dialogValues.netmask}
                        onChange={e => onValueChanged('netmask', e.target.value)}
@@ -303,7 +310,8 @@ const Ipv4Row = ({ validationFailed, dialogValues, onValueChanged }) => {
                     </HelpBlock> }
                 </FormGroup>
             </div>
-            <DhcpRow ipVersion='4'
+            <DhcpRow
+ipVersion='4'
                 rangeStart={dialogValues.ipv4DhcpRangeStart}
                 rangeEnd={dialogValues.ipv4DhcpRangeEnd}
                 expanded={dialogValues.ipv4DhcpEnabled}
@@ -322,7 +330,8 @@ const Ipv6Row = ({ validationFailed, dialogValues, onValueChanged }) => {
             <div className='ct-form'>
                 <label className='control-label' htmlFor='network-ipv6-address'> {_("IPv6 Network")} </label>
                 <FormGroup validationState={validationAddress} controlId='ipv6-address'>
-                    <input id='network-ipv6-address'
+                    <input
+id='network-ipv6-address'
                        type='text'
                        value={dialogValues.ipv6}
                        onChange={e => onValueChanged('ipv6', e.target.value)}
@@ -336,7 +345,8 @@ const Ipv6Row = ({ validationFailed, dialogValues, onValueChanged }) => {
             <div className='ct-form'>
                 <label className='control-label' htmlFor='network-ipv6-prefix'> {_("Prefix Length")} </label>
                 <FormGroup validationState={validationPrefix} controlId='ipv6-prefix'>
-                    <input id='network-ipv6-prefix'
+                    <input
+id='network-ipv6-prefix'
                        type='text'
                        value={dialogValues.prefix}
                        onChange={e => onValueChanged('prefix', e.target.value)}
@@ -347,7 +357,8 @@ const Ipv6Row = ({ validationFailed, dialogValues, onValueChanged }) => {
                     </HelpBlock> }
                 </FormGroup>
             </div>
-            <DhcpRow ipVersion='6'
+            <DhcpRow
+ipVersion='6'
                 rangeStart={dialogValues.ipv6DhcpRangeStart}
                 rangeEnd={dialogValues.ipv6DhcpRangeEnd}
                 expanded={dialogValues.ipv6DhcpEnabled}
@@ -434,22 +445,26 @@ class CreateNetworkModal extends React.Component {
 
         const body = (
             <form className='ct-form'>
-                <NetworkConnectionRow dialogValues={this.state}
+                <NetworkConnectionRow
+dialogValues={this.state}
                                       onValueChanged={this.onValueChanged}
                                       loggedUser={this.props.loggedUser} />
 
                 <hr />
 
-                <NetworkNameRow dialogValues={this.state}
+                <NetworkNameRow
+dialogValues={this.state}
                                 onValueChanged={this.onValueChanged}
                                 validationFailed={validationFailed} />
 
                 <hr />
 
-                <NetworkForwardModeRow dialogValues={this.state}
+                <NetworkForwardModeRow
+dialogValues={this.state}
                                        onValueChanged={this.onValueChanged} />
                 { (this.state.forwardMode === "nat" || this.state.forwardMode === "route") &&
-                <NetworkDeviceRow dialogValues={this.state}
+                <NetworkDeviceRow
+dialogValues={this.state}
                                   devices={this.props.devices}
                                   onValueChanged={this.onValueChanged}
                                   validationFailed={validationFailed} /> }
@@ -458,16 +473,19 @@ class CreateNetworkModal extends React.Component {
 
                 { (this.state.forwardMode !== "vepa" && this.state.forwardMode !== "bridge") &&
                 <React.Fragment>
-                    <IpRow dialogValues={this.state}
+                    <IpRow
+dialogValues={this.state}
                            onValueChanged={this.onValueChanged} />
 
                     { (this.state.ip === "IPv4 only" || this.state.ip === "IPv4 and IPv6") &&
-                    <Ipv4Row dialogValues={this.state}
+                    <Ipv4Row
+dialogValues={this.state}
                              onValueChanged={this.onValueChanged}
                              validationFailed={validationFailed} /> }
 
                     { (this.state.ip === "IPv6 only" || this.state.ip === "IPv4 and IPv6") &&
-                    <Ipv6Row dialogValues={this.state}
+                    <Ipv6Row
+dialogValues={this.state}
                              onValueChanged={this.onValueChanged}
                              validationFailed={validationFailed} /> }
                 </React.Fragment> }
@@ -489,7 +507,8 @@ class CreateNetworkModal extends React.Component {
                     <Button bsStyle='default' className='btn-cancel' onClick={ this.props.close }>
                         {_("Cancel")}
                     </Button>
-                    <Button bsStyle='primary'
+                    <Button
+bsStyle='primary'
                         disabled={ this.state.createInProgress || Object.getOwnPropertyNames(validationFailed).length > 0 }
                         onClick={ this.onCreate }>
                         {_("Create")}
@@ -524,7 +543,8 @@ export class CreateNetworkAction extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <Button className='pull-right' id='create-network'
+                <Button
+className='pull-right' id='create-network'
                         bsStyle='default' onClick={this.open} >
                     {_("Create Virtual Network")}
                 </Button>

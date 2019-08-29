@@ -68,7 +68,8 @@ class ApplicationRow extends React.Component {
                     <div>
                         {comp.summary}
                         <div className="alert alert-danger alert-dismissable">
-                            <button className="close"
+                            <button
+className="close"
                                     onClick={left_click(() => { this.setState({ error: null }) })}>
                                 <span className="pficon pficon-close" />
                             </button>

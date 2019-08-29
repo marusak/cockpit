@@ -134,7 +134,8 @@ class App extends React.Component {
                             const notification = this.state.notifications[notificationId];
 
                             return (
-                                <ToastNotification type='error' key={notification.index}
+                                <ToastNotification
+type='error' key={notification.index}
                                     onDismiss={() => this.onDismissErrorNotification(notification.index)}>
                                     <InlineNotification
                                         text={notification.text}
@@ -144,7 +145,8 @@ class App extends React.Component {
                         })}
                     </ToastNotificationList>
                 </section>}
-                {pathVms && <HostVmsList vms={vms}
+                {pathVms && <HostVmsList
+vms={vms}
                     config={config}
                     ui={ui}
                     storagePools={storagePools}
@@ -157,7 +159,8 @@ class App extends React.Component {
                     nodeDevices={nodeDevices} />
                 }
                 {config.provider.name === 'LibvirtDBus' && path.length > 0 && path[0] == 'storages' &&
-                <StoragePoolList storagePools={storagePools}
+                <StoragePoolList
+storagePools={storagePools}
                     dispatch={dispatch}
                     vms={vms}
                     loggedUser={systemInfo.loggedUser}
@@ -166,7 +169,8 @@ class App extends React.Component {
                     onAddErrorNotification={this.onAddErrorNotification} />
                 }
                 {config.provider.name === 'LibvirtDBus' && path.length > 0 && path[0] == 'networks' &&
-                <NetworkList networks={networks}
+                <NetworkList
+networks={networks}
                     dispatch={dispatch}
                     loggedUser={systemInfo.loggedUser}
                     resourceHasError={this.state.resourceHasError}

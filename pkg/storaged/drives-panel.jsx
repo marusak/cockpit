@@ -100,7 +100,8 @@ export class DrivesPanel extends React.Component {
             }
 
             return (
-                <OverviewSidePanelRow client={client}
+                <OverviewSidePanelRow
+client={client}
                                       name={name}
                                       detail={desc}
                                       stats={io}
@@ -115,7 +116,8 @@ export class DrivesPanel extends React.Component {
                 .map(make_drive);
 
         return (
-            <OverviewSidePanel id="drives"
+            <OverviewSidePanel
+id="drives"
                                className="storage-drives-list"
                                title={_("Drives")}
                                empty_text={_("No drives attached")}

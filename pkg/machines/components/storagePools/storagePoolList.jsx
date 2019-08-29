@@ -45,7 +45,8 @@ export class StoragePoolList extends React.Component {
                     </Breadcrumb.Item>
                 </Breadcrumb>
                 <div id='storage-pools-listing' className='container-fluid'>
-                    <Listing title={_("Storage Pools")}
+                    <Listing
+title={_("Storage Pools")}
                         columnTitles={[_("Name"), _("Size"), "", _("Connection"), _("State")]}
                         emptyCaption={_("No storage pool is defined on this host")}
                         actions={actions}>
@@ -55,7 +56,8 @@ export class StoragePoolList extends React.Component {
                                     const filterVmsByConnection = vms.filter(vm => vm.connectionName == storagePool.connectionName);
 
                                     return (
-                                        <StoragePool key={`${storagePoolId(storagePool.name, storagePool.connectionName)}`}
+                                        <StoragePool
+key={`${storagePoolId(storagePool.name, storagePool.connectionName)}`}
                                             storagePool={storagePool}
                                             vms={filterVmsByConnection}
                                             resourceHasError={resourceHasError}

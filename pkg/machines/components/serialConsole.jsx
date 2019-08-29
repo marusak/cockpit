@@ -123,7 +123,8 @@ class SerialConsoleCockpit extends React.Component {
         return (
             <React.Fragment>
                 {this.props.children}
-                <SerialConsole id={this.props.vmName} ref='serialconsole'
+                <SerialConsole
+id={this.props.vmName} ref='serialconsole'
                     rows={XTERM_ROWS}
                     cols={XTERM_COLS}
                     fontFamily={XTERM_FONT_FAMILY}

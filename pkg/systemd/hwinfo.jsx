@@ -192,11 +192,12 @@ class CPUSecurityMitigationsDialog extends React.Component {
         const rows = [];
         if (this.state.nosmt !== undefined)
             rows.push((
-                <ListView.Item key="nosmt" heading={ <span>{ _("Disable simultaneous multithreading") } (nosmt)<small>
-                    <a href="https://access.redhat.com/security/vulnerabilities/L1TF" target="_blank" rel="noopener noreferrer">
-                        <i className="fa fa-external-link" aria-hidden="true" /> { _("Read more...") }
-                    </a>
-                </small></span> }
+                <ListView.Item
+key="nosmt" heading={ <span>{ _("Disable simultaneous multithreading") } (nosmt)<small>
+    <a href="https://access.redhat.com/security/vulnerabilities/L1TF" target="_blank" rel="noopener noreferrer">
+        <i className="fa fa-external-link" aria-hidden="true" /> { _("Read more...") }
+    </a>
+</small></span> }
                                actions={ <div id="nosmt-switch">
                                    <OnOffSwitch disabled={this.state.rebooting} onChange={ value => this.setState({ nosmt: value }) } state={ this.state.nosmt } />
                                </div> } >
@@ -251,7 +252,8 @@ class HardwareInfo extends React.Component {
             sortedPci.sort((a, b) => a[this.state.sortBy].localeCompare(b[this.state.sortBy]));
 
             pci = (
-                <Listing title={ _("PCI") } columnTitles={ [_("Class"), _("Model"), _("Vendor"), _("Slot")] }
+                <Listing
+title={ _("PCI") } columnTitles={ [_("Class"), _("Model"), _("Vendor"), _("Slot")] }
                          columnTitleClick={ index => this.setState({ sortBy: this.sortColumnFields[index] }) } >
                     { sortedPci.map(dev => <ListingRow key={dev.slot} columns={[dev.cls, dev.model, dev.vendor, dev.slot]} />) }
                 </Listing>
@@ -275,7 +277,8 @@ class HardwareInfo extends React.Component {
                 </ol>
 
                 <h2>{ _("System Information") }</h2>
-                <SystemInfo info={this.props.info.system}
+                <SystemInfo
+info={this.props.info.system}
                             onSecurityClick={ this.state.mitigationsAvailable ? () => this.setState({ showCpuSecurityDialog: true }) : undefined } />
 
                 <div id="pci-listing">
