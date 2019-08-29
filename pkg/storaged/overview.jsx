@@ -83,7 +83,7 @@ export class OverviewSidePanel extends React.Component {
 
 export class OverviewSidePanelRow extends React.Component {
     render() {
-        let { client, job_path } = this.props;
+        const { client, job_path } = this.props;
 
         const go = (event) => {
             if (!event || event.button !== 0)
@@ -91,11 +91,11 @@ export class OverviewSidePanelRow extends React.Component {
             return this.props.go();
         };
 
-        let job_spinner = (client.path_jobs[job_path]
+        const job_spinner = (client.path_jobs[job_path]
             ? <span className="spinner spinner-sm" />
             : null);
 
-        let warning_triangle = (client.path_warnings[job_path]
+        const warning_triangle = (client.path_warnings[job_path]
             ? <span className="pficon pficon-warning-triangle-o" />
             : null);
 
