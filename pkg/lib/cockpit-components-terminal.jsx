@@ -174,7 +174,7 @@ export class Terminal extends React.Component {
 
     render() {
         return (
-            <React.Fragment>
+            <>
                 <div
 ref="terminal"
                         key={this.state.terminal}
@@ -183,7 +183,7 @@ ref="terminal"
                         onContextMenu={this.contextMenu}
                         onBlur={this.onFocusOut} />
                 <ContextMenu setText={this.setText} getText={this.getText} />
-            </React.Fragment>
+            </>
         );
     }
 

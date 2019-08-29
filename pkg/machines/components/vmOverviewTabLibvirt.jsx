@@ -152,10 +152,10 @@ id={`${idPrefix}-autostart-checkbox`}
             );
         }
         const vcpuLink = (
-            <React.Fragment>
+            <>
                 <a id={`${vmId(vm.name)}-vcpus-count`} onClick={this.openVcpu}>{vm.vcpus.count}</a>
                 { vm.state === "running" && vcpusChanged && <WarningInactive iconId="vcpus-tooltip" tooltipId="tip-vcpus" /> }
-            </React.Fragment>
+            </>
         );
 
         const items = [

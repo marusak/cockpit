@@ -250,16 +250,16 @@ const Row = ({ tag, title, errors, options, children }) => {
         if (title || title == "") {
             if (options.widest_title)
                 title = (
-                    <React.Fragment>
+                    <>
                         <div className="widest-title">{options.widest_title}</div>
                         <div>{title}</div>
-                    </React.Fragment>
+                    </>
                 );
             return (
-                <React.Fragment>
+                <>
                     <label className="control-label">{title}</label>
-                    <React.Fragment>{validated}</React.Fragment>
-                </React.Fragment>
+                    <>{validated}</>
+                </>
             );
         } else {
             return validated;
@@ -386,9 +386,9 @@ body={def.Body}
 
         return {
             idle_message: (running_promise
-                ? <React.Fragment>
+                ? <>
                     <div className="spinner spinner-sm" /><span>{running_title}</span>
-                </React.Fragment>
+                </>
                 : null),
             extra_element: extra,
             actions: actions,
@@ -515,7 +515,7 @@ className="combobox form-control" type="text"
                        disabled={disabled} value={value}
                            onChange={event => onChange(event.target.value)} />
                     { choices.length > 0 && !disabled
-                        ? <React.Fragment>
+                        ? <>
                             <span
 className="input-group-addon"
                               onClick={toggle_open}>
@@ -524,7 +524,7 @@ className="input-group-addon"
                             <ul className="typeahead typeahead-long dropdown-menu">
                                 { choices.map(c => <li key={c}><a tabIndex="0" onClick={ev => set_from_menu(ev, c)}>{c}</a></li>) }
                             </ul>
-                        </React.Fragment>
+                        </>
                         : null
                     }
                 </div>

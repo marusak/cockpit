@@ -244,7 +244,7 @@ client={client}
                 .map(make_session);
 
         var actions = (
-            <React.Fragment>
+            <>
                 { sessions.length > 0
                     ? <button
 className={"btn btn-default fa fa-check" + (this.state.armed ? " active" : "")}
@@ -258,7 +258,7 @@ className={"btn btn-default fa fa-check" + (this.state.armed ? " active" : "")}
                 <StorageButton kind="primary" onClick={iscsi_discover} id="add-iscsi-portal">
                     <span className="fa fa-plus" />
                 </StorageButton>
-            </React.Fragment>
+            </>
         );
 
         var iscsi_feature = {

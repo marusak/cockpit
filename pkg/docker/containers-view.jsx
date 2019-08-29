@@ -103,7 +103,7 @@ export class ContainerHeader extends React.Component {
 
     render() {
         return (
-            <React.Fragment>
+            <>
                 <Select.Select id="containers-containers-filter" initial={this.state.filter} onChange={this.handleFilterChange}>
                     <Select.SelectEntry data='all'>{_("Everything")}</Select.SelectEntry>
                     <Select.SelectEntry data='running'>{_("Images and running containers")}</Select.SelectEntry>
@@ -115,7 +115,7 @@ type="text"
                        className="form-control"
                        placeholder={_("Type to filter…")}
                        onChange={this.handleFilterTextChange} />
-            </React.Fragment>
+            </>
         );
     }
 }
@@ -124,7 +124,7 @@ class ContainerDetails extends React.Component {
     render() {
         var container = this.props.container;
         return (
-            <React.Fragment>
+            <>
                 <dl>
                     <dt>{_("Id")}      </dt> <dd>{ container.Id }</dd>
                     <dt>{_("Created")} </dt>
@@ -133,7 +133,7 @@ class ContainerDetails extends React.Component {
                     <dt>{_("Command")}</dt> <dd>{ util.render_container_cmdline(container) }</dd>
                     <dt>{_("State")}   </dt> <dd>{ util.render_container_state(container.State) }</dd>
                 </dl>
-            </React.Fragment>
+            </>
         );
     }
 }
@@ -319,7 +319,7 @@ export class ContainerList extends React.Component {
             });
 
             var actions = (
-                <React.Fragment>
+                <>
                     <button
 className="btn btn-danger btn-delete pficon pficon-delete"
                             onClick={ this.deleteContainer.bind(this, container) } />
@@ -331,7 +331,7 @@ className="btn btn-default"
                         {_("Commit")}
                     </button>
                     <Dropdown actions={startStopActions} />
-                </React.Fragment>
+                </>
             );
 
             var tabs = [
@@ -407,7 +407,7 @@ class ImageDetails extends React.Component {
         var author = (image.Labels && image.Labels.maintainer) || image.Author;
 
         return (
-            <React.Fragment>
+            <>
                 <dl className='listing-ct-body'>
                     <dt>{_("Id")}</dt>         <dd title={image.Id}>{ docker.truncate_id(image.Id) }</dd>
                     <dt>{_("Tags")}</dt>       <dd>{ repotags.join(" ") }</dd>
@@ -417,7 +417,7 @@ class ImageDetails extends React.Component {
                     <dt>{_("Author")}</dt>     <dd>{ author }</dd>
                     <dt>{_("Ports")}</dt>      <dd>{ ports.join(', ') }</dd>
                 </dl>
-            </React.Fragment>
+            </>
         );
     }
 }

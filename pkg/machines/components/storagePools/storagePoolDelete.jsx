@@ -155,9 +155,9 @@ export class StoragePoolDelete extends React.Component {
         };
 
         const defaultBody = (
-            <React.Fragment>
+            <>
                 <div className='ct-form'>
-                    { storagePool.active && volumes.length > 0 && <React.Fragment>
+                    { storagePool.active && volumes.length > 0 && <>
                         <label className='control-label'>
                             {_("Delete Content")}
                         </label>
@@ -171,11 +171,11 @@ id='storage-pool-delete-volumes'
                                 {_("Delete the Volumes inside this Pool")}
                             </label>
                         </div>
-                    </React.Fragment>}
+                    </>}
                     { !storagePool.active && _("Deleting an inactive Storage Pool will only undefine the Pool. Its content will not be deleted.")}
                 </div>
                 { storagePool.active && showWarning() }
-            </React.Fragment>
+            </>
         );
 
         const deleteButton = () => {
@@ -212,7 +212,7 @@ id={`delete-${id}`}
         };
 
         return (
-            <React.Fragment>
+            <>
                 {deleteButton()}
 
                 <Modal show={this.state.showModal} onHide={this.close}>
@@ -236,7 +236,7 @@ bsStyle='danger'
                         </Button>
                     </Modal.Footer>
                 </Modal>
-            </React.Fragment>
+            </>
         );
     }
 }

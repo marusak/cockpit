@@ -29,7 +29,7 @@ export const MachinesConnectionSelector = ({ onValueChanged, loggedUser, connect
         return null;
 
     return (
-        <React.Fragment>
+        <>
             <label className="control-label" htmlFor={id}>
                 {_("Connection")}
             </label>
@@ -53,6 +53,6 @@ type="radio"
                     </label>
                 </div>
             </fieldset>
-        </React.Fragment>
+        </>
     );
 };

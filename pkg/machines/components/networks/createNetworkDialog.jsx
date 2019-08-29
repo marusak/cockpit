@@ -101,7 +101,7 @@ function validateParams(dialogValues) {
 
 const NetworkConnectionRow = ({ onValueChanged, dialogValues, loggedUser }) => {
     return (
-        <React.Fragment>
+        <>
             <label className='control-label' htmlFor='create-network-connection'>
                 {_("Connection")}
             </label>
@@ -110,7 +110,7 @@ id='create-network-connection'
                 dialogValues={dialogValues}
                 onValueChanged={onValueChanged}
                 loggedUser={loggedUser} />
-        </React.Fragment>
+        </>
     );
 };
 
@@ -118,7 +118,7 @@ const NetworkNameRow = ({ onValueChanged, dialogValues, validationFailed }) => {
     const validationState = validationFailed.name ? 'error' : undefined;
 
     return (
-        <React.Fragment>
+        <>
             <label className='control-label' htmlFor='create-network-name'>
                 {_("Name")}
             </label>
@@ -135,7 +135,7 @@ const NetworkNameRow = ({ onValueChanged, dialogValues, validationFailed }) => {
                     <p className='text-danger'>{validationFailed.name}</p>
                 </HelpBlock> }
             </FormGroup>
-        </React.Fragment>
+        </>
     );
 };
 
@@ -143,7 +143,7 @@ const NetworkForwardModeRow = ({ onValueChanged, dialogValues }) => {
     const forwardModes = ['nat', 'open', 'none'];
 
     return (
-        <React.Fragment>
+        <>
             <label className='control-label' htmlFor='create-network-forward-mode'>
                 {_("Forward Mode")}
             </label>
@@ -160,13 +160,13 @@ id='create-network-forward-mode'
                 })
                 }
             </Select.Select>
-        </React.Fragment>
+        </>
     );
 };
 
 const NetworkDeviceRow = ({ devices, onValueChanged, dialogValues }) => {
     return (
-        <React.Fragment>
+        <>
             <label className='control-label' htmlFor='create-network-device'>
                 {_("Device")}
             </label>
@@ -189,13 +189,13 @@ id='create-network-device'
                     })}
                 </optgroup>
             </Select.Select>
-        </React.Fragment>
+        </>
     );
 };
 
 const IpRow = ({ onValueChanged, dialogValues }) => {
     return (
-        <React.Fragment>
+        <>
             <label className='control-label' htmlFor='create-network-ip-configuration'>
                 {_("IP Configuration")}
             </label>
@@ -217,7 +217,7 @@ id='create-network-ip-configuration'
                     {_("IPv4 and IPv6")}
                 </Select.SelectEntry>
             </Select.Select>
-        </React.Fragment>
+        </>
     );
 };
 
@@ -226,7 +226,7 @@ const DhcpRow = ({ ipVersion, rangeStart, rangeEnd, expanded, onValueChanged, va
     const validationEnd = validationFailed['ipv' + ipVersion + 'DhcpRangeEnd'] ? 'error' : undefined;
 
     return (
-        <React.Fragment>
+        <>
             <label className='checkbox-inline'>
                 <input
 id={'network-ipv' + ipVersion + '-dhcp'}
@@ -236,7 +236,7 @@ id={'network-ipv' + ipVersion + '-dhcp'}
                 {_("Set DHCP Range")}
             </label>
 
-            {expanded && <React.Fragment>
+            {expanded && <>
                 <div className='create-network-dialog-grid'>
                     <div className='ct-form'>
                         <label className='control-label' htmlFor={'network-ipv' + ipVersion + '-dhcp-range-start'}> {_("Start")} </label>
@@ -269,8 +269,8 @@ id={'network-ipv' + ipVersion + '-dhcp'}
                         </FormGroup>
                     </div>
                 </div>
-            </React.Fragment> }
-        </React.Fragment>
+            </> }
+        </>
     );
 };
 
@@ -279,7 +279,7 @@ const Ipv4Row = ({ validationFailed, dialogValues, onValueChanged }) => {
     const validationNetmask = validationFailed.netmask ? 'error' : undefined;
 
     return (
-        <React.Fragment>
+        <>
             <div className='ct-form'>
                 <label className='control-label' htmlFor='network-ipv4-address'> {_("IPv4 Network")} </label>
                 <FormGroup validationState={validationAddress} controlId='ipv4-address'>
@@ -317,7 +317,7 @@ ipVersion='4'
                 expanded={dialogValues.ipv4DhcpEnabled}
                 onValueChanged={onValueChanged}
                 validationFailed={validationFailed} />
-        </React.Fragment>
+        </>
     );
 };
 
@@ -326,7 +326,7 @@ const Ipv6Row = ({ validationFailed, dialogValues, onValueChanged }) => {
     const validationPrefix = validationFailed.prefix ? 'error' : undefined;
 
     return (
-        <React.Fragment>
+        <>
             <div className='ct-form'>
                 <label className='control-label' htmlFor='network-ipv6-address'> {_("IPv6 Network")} </label>
                 <FormGroup validationState={validationAddress} controlId='ipv6-address'>
@@ -364,7 +364,7 @@ ipVersion='6'
                 expanded={dialogValues.ipv6DhcpEnabled}
                 onValueChanged={onValueChanged}
                 validationFailed={validationFailed} />
-        </React.Fragment>
+        </>
     );
 };
 
@@ -472,7 +472,7 @@ dialogValues={this.state}
                 <hr />
 
                 { (this.state.forwardMode !== "vepa" && this.state.forwardMode !== "bridge") &&
-                <React.Fragment>
+                <>
                     <IpRow
 dialogValues={this.state}
                            onValueChanged={this.onValueChanged} />
@@ -488,7 +488,7 @@ dialogValues={this.state}
 dialogValues={this.state}
                              onValueChanged={this.onValueChanged}
                              validationFailed={validationFailed} /> }
-                </React.Fragment> }
+                </> }
             </form>
         );
 
@@ -542,7 +542,7 @@ export class CreateNetworkAction extends React.Component {
 
     render() {
         return (
-            <React.Fragment>
+            <>
                 <Button
 className='pull-right' id='create-network'
                         bsStyle='default' onClick={this.open} >
@@ -553,7 +553,7 @@ className='pull-right' id='create-network'
                     close={this.close}
                     devices={this.props.devices}
                     loggedUser={this.props.loggedUser} /> }
-            </React.Fragment>
+            </>
         );
     }
 }

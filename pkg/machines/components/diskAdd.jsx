@@ -84,7 +84,7 @@ const SelectExistingVolume = ({ idPrefix, storagePoolName, existingVolumeName, o
     }
 
     return (
-        <React.Fragment>
+        <>
             <label className='control-label' htmlFor={`${idPrefix}-select-volume`}>
                 {_("Volume")}
             </label>
@@ -96,7 +96,7 @@ id={`${idPrefix}-select-volume`}
                            extraClass='form-control'>
                 {content}
             </Select.Select>
-        </React.Fragment>
+        </>
     );
 };
 
@@ -107,7 +107,7 @@ const PermanentChange = ({ idPrefix, onValueChanged, permanent, provider, vm }) 
     }
 
     return (
-        <React.Fragment>
+        <>
             <label className="control-label"> {_("Persistence")} </label>
             <label className='checkbox-inline'>
                 <input
@@ -117,13 +117,13 @@ id={`${idPrefix}-permanent`}
                        onChange={e => onValueChanged('permanent', e.target.checked)} />
                 {_("Always attach")}
             </label>
-        </React.Fragment>
+        </>
     );
 };
 
 const VolumeName = ({ idPrefix, volumeName, onValueChanged }) => {
     return (
-        <React.Fragment>
+        <>
             <label className='control-label' htmlFor={`${idPrefix}-name`}>
                 {_("Name")}
             </label>
@@ -135,7 +135,7 @@ id={`${idPrefix}-name`}
                    placeholder={_("New Volume Name")}
                    value={volumeName || ""}
                    onChange={e => onValueChanged('volumeName', e.target.value)} />
-        </React.Fragment>
+        </>
     );
 };
 
@@ -155,7 +155,7 @@ const VolumeDetails = ({ idPrefix, size, unit, diskFileFormat, storagePoolType, 
 
     if (validVolumeFormats) {
         formatRow = (
-            <React.Fragment>
+            <>
                 <label className='control-label' htmlFor={`${idPrefix}-fileformat`}>
                     {_("Format")}
                 </label>
@@ -166,12 +166,12 @@ id={`${idPrefix}-diskfileformat`}
                     extraClass='form-control ct-form-split'>
                     { validVolumeFormats.map(format => <Select.SelectEntry data={format} key={format}>{format}</Select.SelectEntry>) }
                 </Select.Select>
-            </React.Fragment>
+            </>
         );
     }
 
     return (
-        <React.Fragment>
+        <>
             <label className='control-label' htmlFor={`${idPrefix}-size`}>
                 {_("Size")}
             </label>
@@ -199,13 +199,13 @@ id={`${idPrefix}-unit`}
                 </Select.Select>
             </div>
             {formatRow}
-        </React.Fragment>
+        </>
     );
 };
 
 const PoolRow = ({ idPrefix, onValueChanged, storagePoolName, vmStoragePools }) => {
     return (
-        <React.Fragment>
+        <>
             <label className='control-label' htmlFor={`${idPrefix}-select-pool`}>
                 {_("Pool")}
             </label>
@@ -228,7 +228,7 @@ id={`${idPrefix}-select-pool`}
                         {_("No Storage Pools available")}
                     </Select.SelectEntry>]}
             </Select.Select>
-        </React.Fragment>
+        </>
     );
 };
 
@@ -242,7 +242,7 @@ class PerformanceOptions extends React.Component {
         const cacheModes = ['default', 'none', 'writethrough', 'writeback', 'directsync', 'unsafe'];
 
         return (
-            <React.Fragment>
+            <>
                 <div className='expand-collapse-pf' id='expand-collapse-button'>
                     <div className='expand-collapse-pf-link-container'>
                         <button className='btn btn-link' onClick={() => this.setState({ expanded: !this.state.expanded })}>
@@ -253,7 +253,7 @@ class PerformanceOptions extends React.Component {
                     </div>
                 </div>
 
-                {this.state.expanded && <React.Fragment>
+                {this.state.expanded && <>
                     <label className='control-label' htmlFor='cache-mode'>
                         {_("Cache")}
                     </label>
@@ -270,8 +270,8 @@ id={'cache-mode'}
                             );
                         })}
                     </Select.Select>
-                </React.Fragment>}
-            </React.Fragment>
+                </>}
+            </>
         );
     }
 }
@@ -281,7 +281,7 @@ const CreateNewDisk = ({ idPrefix, onValueChanged, dialogValues, vmStoragePools,
     const poolTypesNotSupportingVolumeCreation = ['iscsi', 'iscsi-direct', 'gluster', 'mpath'];
 
     return (
-        <React.Fragment>
+        <>
             <hr />
             <PoolRow
 idPrefix={idPrefix}
@@ -289,7 +289,7 @@ idPrefix={idPrefix}
                      onValueChanged={onValueChanged}
                      vmStoragePools={vmStoragePools.map(pool => ({ ...pool, disabled: poolTypesNotSupportingVolumeCreation.includes(pool.type) }))} />
             {storagePool &&
-            <React.Fragment>
+            <>
                 <hr />
                 <VolumeName
 idPrefix={idPrefix}
@@ -312,14 +312,14 @@ idPrefix={idPrefix}
                 {provider.name == 'LibvirtDBus' && <PerformanceOptions
 cacheMode={dialogValues.cacheMode}
                                     onValueChanged={onValueChanged} />}
-            </React.Fragment>}
-        </React.Fragment>
+            </>}
+        </>
     );
 };
 
 const UseExistingDisk = ({ idPrefix, onValueChanged, dialogValues, vmStoragePools, provider, vm }) => {
     return (
-        <React.Fragment>
+        <>
             <hr />
             <PoolRow
 idPrefix={idPrefix}
@@ -328,7 +328,7 @@ idPrefix={idPrefix}
                      vmStoragePools={vmStoragePools} />
             <hr />
             {vmStoragePools.length > 0 &&
-            <React.Fragment>
+            <>
                 <SelectExistingVolume
 idPrefix={idPrefix}
                                       storagePoolName={dialogValues.storagePoolName}
@@ -346,8 +346,8 @@ idPrefix={idPrefix}
                 {provider.name == 'LibvirtDBus' && <PerformanceOptions
 cacheMode={dialogValues.cacheMode}
                                     onValueChanged={onValueChanged} />}
-            </React.Fragment>}
-        </React.Fragment>
+            </>}
+        </>
     );
 };
 

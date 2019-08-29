@@ -67,14 +67,14 @@ type="checkbox" checked={disk.checked}
     let disksBody = null;
     if (disks.length > 0)
         disksBody = (
-            <React.Fragment>
+            <>
                 <p>{_("Delete associated storage files:")}</p>
                 <form>
                     <ul className="list-group dialog-list-ct">
                         { disks.map(disk_row) }
                     </ul>
                 </form>
-            </React.Fragment>
+            </>
         );
 
     return (
