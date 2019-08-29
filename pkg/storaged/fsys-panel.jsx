@@ -74,20 +74,17 @@ export class FilesystemsPanel extends React.Component {
                     <td>
                         { fsys.MountPoints.length > 0
                             ? fsys.MountPoints.map((mp) => <div key={mp}>{decode_filename(mp)}</div>)
-                            : "-"
-                        }
+                            : "-"}
                     </td>
                     <td>
                         { fsys.MountPoints.length > 0
                             ? <StorageUsageBar stats={fsys_size} critical={0.95} />
-                            : null
-                        }
+                            : null}
                     </td>
                     <td className="usage-text">
                         { fsys_size
                             ? format_fsys_usage(fsys_size[0], fsys_size[1])
-                            : fmt_size(block.Size)
-                        }
+                            : fmt_size(block.Size)}
                     </td>
                 </tr>
             );

@@ -37,8 +37,7 @@ export class PVolTab extends React.Component {
                         ? <a role="link" tabIndex="0" onClick={() => cockpit.location.go(["vg", vgroup.Name])}>
                             {vgroup.Name}
                         </a>
-                        : "-"
-                    }
+                        : "-"}
                     </div>
 
                     <label className="control-label">{_("Free")}</label>
@@ -61,8 +60,7 @@ export class MDRaidMemberTab extends React.Component {
                         ? <a role="link" tabIndex="0" onClick={() => cockpit.location.go(["mdraid", mdraid.UUID])}>
                             {utils.mdraid_name(mdraid)}
                         </a>
-                        : "-"
-                    }
+                        : "-"}
                     </div>
                 </div>
             </div>
@@ -82,8 +80,7 @@ export class VDOBackingTab extends React.Component {
                         ? <a role="link" tabIndex="0" onClick={() => cockpit.location.go(["vdo", vdo.name])}>
                             {vdo.name}
                         </a>
-                        : "-"
-                    }
+                        : "-"}
                     </div>
                 </div>
             </div>

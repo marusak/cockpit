@@ -133,8 +133,7 @@ export class VDODetails extends React.Component {
                     <strong>{_("This VDO device does not use all of its backing device.")}</strong>  <span>
                         { cockpit.format(_("Only $0 of $1 are used."),
                                          fmt_size(vdo.physical_size),
-                                         fmt_size(backing_block.Size))
-                        }
+                                         fmt_size(backing_block.Size))}
                     </span>
                 </div>
             );
@@ -262,8 +261,7 @@ export class VDODetails extends React.Component {
                     <span className="pull-right">
                         { block
                             ? <StorageButton onClick={stop}>{_("Stop")}</StorageButton>
-                            : <StorageButton onClick={vdo.start}>{_("Start")}</StorageButton>
-                        }
+                            : <StorageButton onClick={vdo.start}>{_("Start")}</StorageButton>}
                         { "\n" }
                         <StorageButton kind="danger" onClick={delete_}>{_("Delete")}</StorageButton>
                     </span>
@@ -276,8 +274,7 @@ export class VDODetails extends React.Component {
                         <label className="control-label">{_("Backing Device")}</label>
                         <div>
                             { backing_block ? <StorageBlockNavLink client={client} block={backing_block} />
-                                : vdo.backing_dev
-                            }
+                                : vdo.backing_dev}
                         </div>
 
                         <label className="control-label">{_("Physical")}</label>
@@ -288,8 +285,7 @@ export class VDODetails extends React.Component {
                                                  fmt_size(stats.overheadBlocksUsed * stats.blockSize),
                                                  fmt_size(vdo.physical_size),
                                                  fmt_perc(stats.usedPercent))
-                                : fmt_size(vdo.physical_size)
-                            }
+                                : fmt_size(vdo.physical_size)}
                         </div>
 
                         <label className="control-label">{_("Logical")}</label>
@@ -299,8 +295,7 @@ export class VDODetails extends React.Component {
                                                  fmt_size(stats.logicalBlocksUsed * stats.blockSize),
                                                  fmt_size(vdo.logical_size),
                                                  fmt_perc(stats.savingPercent))
-                                : fmt_size(vdo.logical_size)
-                            }
+                                : fmt_size(vdo.logical_size)}
                             &nbsp; <StorageButton onClick={grow_logical}>{_("Grow")}</StorageButton>
                         </div>
 

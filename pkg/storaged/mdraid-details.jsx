@@ -323,8 +323,7 @@ export class MDRaidDetails extends React.Component {
                     <span className="pull-right">
                         { running
                             ? <StorageButton onClick={stop}>{_("Stop")}</StorageButton>
-                            : <StorageButton onClick={start}>{_("Start")}</StorageButton>
-                        }
+                            : <StorageButton onClick={start}>{_("Start")}</StorageButton>}
                         { "\n" }
                         <StorageButton kind="danger" onClick={delete_dialog}>{_("Delete")}</StorageButton>
                     </span>

@@ -74,8 +74,7 @@ export class SwapTab extends React.Component {
                 <div className="tab-actions">
                     { (is_active)
                         ? <StorageButton onClick={stop}>{_("Stop")}</StorageButton>
-                        : <StorageButton onClick={start}>{_("Start")}</StorageButton>
-                    }
+                        : <StorageButton onClick={start}>{_("Start")}</StorageButton>}
                 </div>
                 <div className="ct-form">
                     <label className="control-label">{_("Used")}</label>

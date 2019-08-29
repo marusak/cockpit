@@ -50,12 +50,10 @@ class JournalOutput {
                 <div className="cockpit-log-warning" role="cell">
                     { warning
                         ? <i className="fa fa-exclamation-triangle" />
-                        : null
-                    }
+                        : null}
                     { problem
                         ? <i className="fa fa-times-circle-o" />
-                        : null
-                    }
+                        : null}
                 </div>
                 <div className="cockpit-log-time" role="cell">{time}</div>
                 <span className="cockpit-log-message" role="cell">{message}</span>

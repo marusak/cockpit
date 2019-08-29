@@ -63,8 +63,7 @@ key={`${storagePoolId(storagePool.name, storagePool.connectionName)}`}
                                             resourceHasError={resourceHasError}
                                             onAddErrorNotification={onAddErrorNotification} />
                                     );
-                                })
-                        }
+                                })}
                     </Listing>
                 </div>
             </>

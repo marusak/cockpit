@@ -147,8 +147,7 @@ class NetworkActions extends React.Component {
                 { !network.active &&
                 <Button id={`activate-${id}`} onClick={this.onActivate}>
                     {_("Activate")}
-                </Button>
-                }
+                </Button>}
                 <NetworkDelete network={network} />
             </>
         );

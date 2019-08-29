@@ -52,14 +52,12 @@ export class NFSPanel extends React.Component {
                     <td>
                         { entry.mounted
                             ? <StorageUsageBar stats={fsys_size} critical={0.95} />
-                            : _("Not mounted")
-                        }
+                            : _("Not mounted")}
                     </td>
                     <td className="usage-text">
                         { entry.mounted && fsys_size
                             ? format_fsys_usage(fsys_size[0], fsys_size[1])
-                            : ""
-                        }
+                            : ""}
                     </td>
                 </tr>
             );
@@ -109,8 +107,7 @@ className="storage-mounts" id="nfs-mounts"
                             { mounts }
                         </tbody>
                     </table>
-                    : <div className="empty-panel-text">{_("No NFS mounts set up")}</div>
-                }
+                    : <div className="empty-panel-text">{_("No NFS mounts set up")}</div>}
             </OptionalPanel>
         );
     }

@@ -551,8 +551,7 @@ data-id={s.id}
                                     ) : (
                                         <div className="spinner spinner-lg" />
                                     )}
-                                </>
-                            }
+                                </>}
                             <label className="radio ct-form-full">
                                 <input type="radio" name="type" value="ports" onChange={this.onToggleType} disabled={this.state.avail_services == null} />
                                 {_("Custom Ports")}
@@ -585,8 +584,7 @@ id="udp-ports" type="text" onChange={this.validate}
                                     <input
 id="service-name" className="form-control" type="text" onChange={this.setName}
                                            placeholder={_("(Optional)")} value={this.state.custom_name} />
-                                </>
-                            }
+                                </>}
                         </form>
                     </Modal.Body>
                 </div>
@@ -597,8 +595,7 @@ id="service-name" className="form-control" type="text" onChange={this.setName}
                     { !this.state.custom ||
                         <Alert type="warning">
                             { _("Adding custom ports will reload firewalld. A reload will result in the loss of any runtime-only configuration!")}
-                        </Alert>
-                    }
+                        </Alert>}
                     <Button bsStyle='default' className='btn-cancel' onClick={this.props.close}>
                         {_("Cancel")}
                     </Button>

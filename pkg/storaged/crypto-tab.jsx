@@ -130,14 +130,12 @@ export class CryptoTab extends React.Component {
                             <div className="ct-form-stretch">
                                 <StorageButton onClick={edit_stored_passphrase}>{_("Edit")}</StorageButton>
                             </div>
-                        </> : null
-                    }
+                        </> : null}
                     { !self.props.client.is_old_udisks2
                         ? <>
                             <label className="control-label">{_("Options")}</label>
                             <StorageLink onClick={edit_options}>{old_options || _("(none)")}</StorageLink>
-                        </> : null
-                    }
+                        </> : null}
                 </div>
                 <br />
                 <CryptoKeyslots client={client} block={block} />

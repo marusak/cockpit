@@ -61,8 +61,7 @@ key={`${networkId(network.name, network.connectionName)}`}
                                             resourceHasError={resourceHasError}
                                             onAddErrorNotification={onAddErrorNotification} />
                                     );
-                                })
-                        }
+                                })}
                     </Listing>
                 </div>
             </>

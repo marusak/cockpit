@@ -186,8 +186,7 @@ export class FilesystemTab extends React.Component {
                                 <div className="tab-row-actions">
                                     { (mounted_at.length > 0)
                                         ? <StorageButton onClick={unmount}>{_("Unmount")}</StorageButton>
-                                        : <StorageButton onClick={mount}>{_("Mount")}</StorageButton>
-                                    }
+                                        : <StorageButton onClick={mount}>{_("Mount")}</StorageButton>}
                                 </div>
                             </div>
                         </>

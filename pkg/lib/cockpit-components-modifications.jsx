@@ -80,8 +80,7 @@ class ModificationsExportDialog extends React.Component {
                                 {this.props.ansible &&
                                     <NavItem eventKey={"ansible"}>
                                         {_("Ansible Playbook")}
-                                    </NavItem>
-                                }
+                                    </NavItem>}
                             </Nav>
                             <TabContent animation>
                                 <TabPane eventKey={"shell"}>
@@ -94,8 +93,7 @@ class ModificationsExportDialog extends React.Component {
                                         <pre>
                                             {this.props.ansible}
                                         </pre>
-                                    </TabPane>
-                                }
+                                    </TabPane>}
                             </TabContent>
                         </>
                     </TabContainer>
@@ -170,16 +168,14 @@ export class Modifications extends React.Component {
                     <h3 className="listing-ct-heading">{this.props.title}</h3>
                     <div className="listing-ct-actions">
                         { !emptyRow &&
-                            <a className="modifications-export" onClick={ () => this.setState({ showDialog: true }) } >{_("View automation script")}</a>
-                        }
+                            <a className="modifications-export" onClick={ () => this.setState({ showDialog: true }) } >{_("View automation script")}</a>}
                     </div>
                 </header>
                 <table className={"listing-ct listing-ct-wide modifications-table"}>
                     { emptyRow ||
                         <tbody>
                             {this.props.entries.map(entry => <tr className="modification-row" key={entry.split(' ').join('')}><td>{entry}</td></tr>)}
-                        </tbody>
-                    }
+                        </tbody>}
                 </table>
             </section>
         );

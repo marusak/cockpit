@@ -125,8 +125,7 @@ class App extends React.Component {
         return (
             <div>
                 { config.provider.name === 'LibvirtDBus' && pathVms &&
-                <AggregateStatusCards networks={networks} storagePools={storagePools} />
-                }
+                <AggregateStatusCards networks={networks} storagePools={storagePools} />}
                 {Object.keys(this.state.notifications).length > 0 &&
                 <section className="toast-notification-wrapper">
                     <ToastNotificationList>
@@ -156,8 +155,7 @@ vms={vms}
                     actions={vmActions}
                     resourceHasError={this.state.resourceHasError}
                     onAddErrorNotification={this.onAddErrorNotification}
-                    nodeDevices={nodeDevices} />
-                }
+                    nodeDevices={nodeDevices} />}
                 {config.provider.name === 'LibvirtDBus' && path.length > 0 && path[0] == 'storages' &&
                 <StoragePoolList
 storagePools={storagePools}
@@ -166,8 +164,7 @@ storagePools={storagePools}
                     loggedUser={systemInfo.loggedUser}
                     libvirtVersion={systemInfo.libvirtVersion}
                     resourceHasError={this.state.resourceHasError}
-                    onAddErrorNotification={this.onAddErrorNotification} />
-                }
+                    onAddErrorNotification={this.onAddErrorNotification} />}
                 {config.provider.name === 'LibvirtDBus' && path.length > 0 && path[0] == 'networks' &&
                 <NetworkList
 networks={networks}
@@ -177,8 +174,7 @@ networks={networks}
                     onAddErrorNotification={this.onAddErrorNotification}
                     vms={vms}
                     nodeDevices={nodeDevices}
-                    interfaces={interfaces} />
-                }
+                    interfaces={interfaces} />}
             </div>
         );
     }

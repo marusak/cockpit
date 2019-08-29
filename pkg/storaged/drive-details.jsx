@@ -52,12 +52,10 @@ export class DriveDetails extends React.Component {
                     <div>
                         { drive_ata.SmartFailing
                             ? <span className="cockpit-disk-failing">{_("DISK IS FAILING")}</span>
-                            : <span>{_("Disk is OK")}</span>
-                        }
+                            : <span>{_("Disk is OK")}</span>}
                         { drive_ata.SmartTemperature > 0
                             ? <span>({utils.format_temperature(drive_ata.SmartTemperature)})</span>
-                            : null
-                        }
+                            : null}
                     </div>
                 </>
             );

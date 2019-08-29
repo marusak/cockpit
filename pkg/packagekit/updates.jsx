@@ -842,8 +842,7 @@ className="btn btn-lg btn-primary"
                                 {_("Your browser will disconnect, but this does not affect the update process. You can reconnect in a few moments to continue watching the progress.")}
                             </span>
                         </div>
-                        : null
-                    }
+                        : null}
                     <UpdatesList updates={this.state.updates} />
 
                     { // automatic updates are not tracked by PackageKit, hide history when they are enabled

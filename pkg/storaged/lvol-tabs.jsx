@@ -407,8 +407,7 @@ export class BlockVolTab extends React.Component {
                                 <StorageButton excuse={grow_excuse} onClick={grow}>{_("Grow")}</StorageButton>
                             </div>
                         </div>
-                    </>
-                    }
+                    </>}
                 </div>
                 { unused_space &&
                 <div>
@@ -424,8 +423,7 @@ export class BlockVolTab extends React.Component {
                         {"\n"}
                         <StorageButton excuse={grow_excuse} onClick={grow}>{_("Grow Content")}</StorageButton>
                     </div>
-                </div>
-                }
+                </div>}
             </div>
         );
     }

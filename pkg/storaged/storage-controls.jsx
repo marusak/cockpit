@@ -246,8 +246,7 @@ className={btn_classes + " dropdown-toggle"}
                                                     <a role="menuitem" tabIndex="0" onClick={checked(act.action)}>
                                                         {act.title}
                                                     </a>
-                                                </li>))
-                                            }
+                                                </li>))}
                                         </ul>
                                     </div>
                                 );
@@ -272,8 +271,7 @@ export class StorageUsageBar extends React.Component {
                     ? <div
 className={ "progress-bar" + (fraction > this.props.critical ? " progress-bar-danger" : "") }
                         style={{ width: fraction * 100 + "%" }} />
-                    : null
-                }
+                    : null}
             </div>
         );
     }

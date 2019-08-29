@@ -248,8 +248,7 @@ client={client}
                 { sessions.length > 0
                     ? <button
 className={"btn btn-default fa fa-check" + (this.state.armed ? " active" : "")}
-                  onClick={toggle_armed} /> : null
-                }
+                  onClick={toggle_armed} /> : null}
                 { "\n" }
                 <StorageButton onClick={iscsi_change_name} id="edit-iscsi">
                     <span className="pficon pficon-edit" />

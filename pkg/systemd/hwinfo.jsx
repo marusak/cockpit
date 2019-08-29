@@ -67,7 +67,8 @@ class SystemInfo extends React.Component {
             : (<OverlayTrigger overlay={
                 <Tooltip id="tip-cpu-security">
                     { cockpit.format(_("The user $0 is not permitted to change cpu security mitigations"), permission.user ? permission.user.name : '') }
-                </Tooltip> }>
+                </Tooltip>
+            }>
                 <span>{ _("Mitigations") }</span>
             </OverlayTrigger>);
 
@@ -87,8 +88,7 @@ class SystemInfo extends React.Component {
                         <th>{ _("Version") }</th>
                         <td>{ info.version }</td>
                     </tr>
-                </tbody>
-                }
+                </tbody>}
                 <tbody>
                     { info.bios_vendor &&
                     <>
@@ -104,8 +104,7 @@ class SystemInfo extends React.Component {
                             <th>{ _("BIOS date") }</th>
                             <td>{ moment(info.bios_date).isValid() ? moment(info.bios_date).format('L') : info.bios_date }</td>
                         </tr>
-                    </>
-                    }
+                    </>}
                     { info.nproc !== undefined &&
                     <>
                         <tr>
@@ -116,10 +115,8 @@ class SystemInfo extends React.Component {
                         <tr>
                             <th>{ _("CPU Security") }</th>
                             <td>{ mitigations }</td>
-                        </tr>
-                        }
-                    </>
-                    }
+                        </tr>}
+                    </>}
                 </tbody>
             </table>
         );

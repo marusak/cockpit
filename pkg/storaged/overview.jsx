@@ -75,8 +75,7 @@ id={this.props.id}
                             { show_all_button }
                         </tbody>
                     </table>
-                    : <div className="empty-panel-text">{this.props.empty_text}</div>
-                }
+                    : <div className="empty-panel-text">{this.props.empty_text}</div>}
             </OptionalPanel>
         );
     }
@@ -107,8 +106,7 @@ data-testkey={this.props.testkey}
                 <td className="storage-icon">
                     { this.props.kind !== false
                         ? <img src={"images/storage-" + (this.props.kind || "disk") + ".png"} />
-                        : null
-                    }
+                        : null}
                 </td>
                 <td className="row storage-disk-info">
                     <h3 className="storage-disk-name">{this.props.name}</h3>
@@ -120,8 +118,7 @@ data-testkey={this.props.testkey}
                             { "\n" }
                             <div className="storage-disk-rate-write"><abbr title="write">W</abbr>: {fmt_rate(this.props.stats[1])}</div>
                         </div>
-                        : null
-                    }
+                        : null}
                 </td>
                 <td className="storage-icon storage-disk-extended">
                     { this.props.actions || job_spinner || warning_triangle }

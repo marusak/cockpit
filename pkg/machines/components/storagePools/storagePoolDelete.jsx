@@ -187,7 +187,8 @@ overlay={
         {_("Pool's volumes are used by VMs ")}
         <b> {vmsUsage + "."} </b>
         {_("Detach the disks using this pool from any VMs before attempting deletion.")}
-    </Tooltip> } placement='top'>
+    </Tooltip>
+} placement='top'>
                         <span>
                             <Button
 id={`delete-${id}`}

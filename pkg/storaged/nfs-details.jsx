@@ -306,16 +306,14 @@ export class NFSDetails extends React.Component {
                     <span className="pull-right">
                         { entry.mounted
                             ? <StorageButton onClick={unmount}>{_("Unmount")}</StorageButton>
-                            : <StorageButton onClick={mount}>{_("Mount")}</StorageButton>
-                        }
+                            : <StorageButton onClick={mount}>{_("Mount")}</StorageButton>}
                         { "\n" }
                         { entry.fstab
                             ? [
                                 <StorageButton key="1" onClick={edit}>{_("Edit")}</StorageButton>,
                                 "\n",
                                 <StorageButton key="2" onClick={remove} kind="danger">{_("Remove")}</StorageButton>
-                            ] : null
-                        }
+                            ] : null}
                     </span>
                 </div>
                 <div className="panel-body">
@@ -330,14 +328,12 @@ export class NFSDetails extends React.Component {
                         <div className="ct-form-split">
                             { entry.mounted
                                 ? <StorageUsageBar stats={fsys_size} critical={0.95} />
-                                : _("--")
-                            }
+                                : _("--")}
                         </div>
                         <div className="ct-form-split">
                             { entry.mounted && fsys_size
                                 ? format_fsys_usage(fsys_size[0], fsys_size[1])
-                                : null
-                            }
+                                : null}
                         </div>
                     </div>
                 </div>

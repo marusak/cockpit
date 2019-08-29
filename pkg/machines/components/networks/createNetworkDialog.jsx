@@ -157,8 +157,7 @@ id='create-network-forward-mode'
                             {rephraseUI('networkForward', mode)}
                         </Select.SelectEntry>
                     );
-                })
-                }
+                })}
             </Select.Select>
         </>
     );

@@ -96,8 +96,7 @@ export class OptionalPanel extends React.Component {
                 <>
                     { this.state.just_installed
                         ? <span className={this.state.just_installed}>{_("Support is installed.")}</span>
-                        : null
-                    }
+                        : null}
                     { actions }
                 </>
             );
@@ -113,8 +112,7 @@ export class OptionalPanel extends React.Component {
                 </div>
                 { feature_enabled
                     ? this.props.children
-                    : <div className="empty-panel-text">{not_installed_text}</div>
-                }
+                    : <div className="empty-panel-text">{not_installed_text}</div>}
             </div>
         );
     }

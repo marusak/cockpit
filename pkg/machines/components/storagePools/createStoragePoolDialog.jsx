@@ -96,8 +96,7 @@ id='storage-pool-dialog-type'
                                     {pool.detail}
                                 </Select.SelectEntry>
                             );
-                        })
-                }
+                        })}
             </Select.Select>
         </>
     );
@@ -268,8 +267,7 @@ id='storage-pool-dialog-source-format'
                                         {format}
                                     </Select.SelectEntry>
                                 );
-                            })
-                    }
+                            })}
                 </Select.Select>
                 <hr />
             </>

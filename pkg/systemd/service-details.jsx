@@ -109,8 +109,7 @@ class ServiceConfirmDialog extends React.Component {
                     { this.props.confirmText && this.props.confirmAction &&
                         <Button bsStyle='danger' onClick={this.props.confirmAction}>
                             {this.props.confirmText}
-                        </Button>
-                    }
+                        </Button>}
                 </Modal.Footer>
             </Modal>
         );
@@ -205,8 +204,7 @@ title={ _("Mask Service") }
                                               this.props.fileActionCallback("MaskUnitFiles", false);
                                               this.props.actionCallback("ResetFailedUnit", []);
                                               this.setState({ dialogMaskedOpened: false });
-                                          }} />
-                }
+                                          }} />}
                 <DropdownKebab id="service-actions" title={ _("Additional actions") } className={this.props.disabled ? "disabled" : "" }>
                     {actions}
                 </DropdownKebab>
@@ -376,8 +374,7 @@ export class ServiceDetails extends React.Component {
                             <ul className="comma-list">
                                 {this.props.unit.WantedBy.map(unit => <li className="font-xs" key={unit}><a href={"#/" + unit}>{unit}</a></li>)}
                             </ul>
-                        </>
-                    }
+                        </>}
                 </div>
             );
         }
@@ -452,8 +449,7 @@ export class ServiceDetails extends React.Component {
 title={ this.state.error ? _("Error") : _("Note") }
                                           message={ this.state.error || this.state.note }
                                           close={ () => this.setState(this.state.error ? { error:"" } : { note:"" }) }
-                    />
-                }
+                    />}
                 { hasLoadError
                     ? <div className="alert alert-danger">
                         <span className="pficon pficon-error-circle-o" />
@@ -470,11 +466,9 @@ title={ this.state.error ? _("Error") : _("Note") }
                                             <span>
                                                 <OnOffSwitch state={enabled} disabled={this.state.waitsAction || this.state.waitsFileAction} onChange={this.onOnOffSwitch} />
                                             </span>
-                                        </OverlayTrigger>
-                                    }
+                                        </OverlayTrigger>}
                                     <ServiceActions { ...{ active, failed, enabled, masked } } canReload={this.props.unit.CanReload} actionCallback={this.unitAction} fileActionCallback={this.unitFileAction} disabled={this.state.waitsAction || this.state.waitsFileAction} />
-                                </>
-                            }
+                                </>}
                         </div>
                         <form className="ct-form">
                             <label className="control-label" htmlFor="statuses">{ _("Status") }</label>
@@ -489,16 +483,14 @@ title={ this.state.error ? _("Error") : _("Note") }
                                 <>
                                     <label className="control-label" />
                                     <span>{_("Instance of template: ")}<a href={"#/" + this.props.originTemplate}>{this.props.originTemplate}</a></span>
-                                </>
-                            }
+                                </>}
                             { notMetConditions.length > 0 &&
                                 <>
                                     <label className="control-label failed" htmlFor="condition">{ _("Condition failed") }</label>
                                     <div id="condition" className="ct-validation-wrapper">
                                         {notMetConditions.map(cond => <div key={cond.split(' ').join('')}>{cond}</div>)}
                                     </div>
-                                </>
-                            }
+                                </>}
                             <hr />
                             {relationships.map(rel =>
                                 rel.Units && rel.Units.length > 0 &&
@@ -510,8 +502,7 @@ title={ this.state.error ? _("Error") : _("Note") }
                                     </React.Fragment>
                             )}
                         </form>
-                    </>
-                }
+                    </>}
             </>
         );
     }

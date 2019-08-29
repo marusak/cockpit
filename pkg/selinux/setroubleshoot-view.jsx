@@ -307,8 +307,7 @@ class SELinuxStatus extends React.Component {
                     <label className="note">
                         <i className="pficon pficon-info" />
                         { note }
-                    </label>
-                }
+                    </label>}
                 {errorMessage}
             </div>
         );

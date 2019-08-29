@@ -525,8 +525,7 @@ className="input-group-addon"
                                 { choices.map(c => <li key={c}><a tabIndex="0" onClick={ev => set_from_menu(ev, c)}>{c}</a></li>) }
                             </ul>
                         </>
-                        : null
-                    }
+                        : null}
                 </div>
             </div>
         );
@@ -585,8 +584,7 @@ export const SelectOneRadio = (tag, title, options) => {
                             <input
 type="radio" checked={val == c.value} data-data={c.value}
                                      onChange={event => change(c.value)} />{c.title}
-                        </label>))
-                    }
+                        </label>))}
                 </span>
             );
         }
@@ -616,8 +614,7 @@ key={row.value}
                                     {row.columns.map(c => <td key={c}>{c}</td>)}
                                 </tr>
                             );
-                        })
-                        }
+                        })}
                     </tbody>
                 </table>
             );
@@ -659,8 +656,7 @@ className="list-group dialog-list-ct"
                                 </label>
                             </li>
                         );
-                    })
-                    }
+                    })}
                 </ul>
             );
         }
@@ -697,8 +693,7 @@ className="list-group dialog-list-ct"
                                 </label>
                             </li>
                         );
-                    })
-                    }
+                    })}
                 </ul>
             );
         }
@@ -719,8 +714,7 @@ type="checkbox" data-field={tag} data-field-type="checkbox"
                 <a tabIndex="0" className="dialog-item-tooltip">
                     <span className="fa fa-lg fa-info-circle" />
                 </a>
-            </OverlayTrigger>
-            }
+            </OverlayTrigger>}
         </div>
     );
 };
@@ -1051,8 +1045,7 @@ export const TeardownMessage = (usage) => {
                                 <td>{elt[c1]}</td>
                                 <td className="cmd">{elt[c2]}</td>
                                 <td>{elt[c3]}</td>
-                            </tr>)
-                        }
+                            </tr>)}
                     </tbody>
                 </table>);
         }
