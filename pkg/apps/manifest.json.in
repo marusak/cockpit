@@ -6,7 +6,12 @@
 
     "tools": {
         "index": {
-            "label": "Applications"
+            "label": "Applications",
+            "keywords": {
+                "general": {
+                    "matches": ["plugin", "apps", "addon", "add-on"]
+                }
+            }
         }
     },
 
