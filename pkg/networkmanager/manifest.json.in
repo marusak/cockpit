@@ -8,7 +8,16 @@
     "menu": {
         "index": {
             "label": "Networking",
-            "order": 40
+            "order": 40,
+            "keywords": {
+                "general": {
+                    "matches": ["network", "inteface", "bridge", "vlan", "bond", "team", "port", "mac", "ipv4", "ipv6"]
+                },
+                "firewall": {
+                    "matches": ["firewall", "zone", "tcp", "udp"],
+                    "goto": "/network/firewall"
+                }
+            }
         }
     },
 

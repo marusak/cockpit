@@ -935,8 +935,23 @@ function CompiledComponents() {
                     label: cockpit.gettext(info.label) || prop,
                     order: info.order === undefined ? 1000 : info.order,
                     icon: info.icon,
-                    wants: info.wants
+                    wants: info.wants,
+                    keywords: info.keywords || { },
+                    keyword: { score: -1 }
                 };
+
+                // Always first keyword should be page name
+                const general = item.keywords.general || { matches: [] };
+                general.matches.unshift(item.label.toLowerCase());
+                item.keywords.general = general;
+
+                // Also we want keywords to be translated and have higher priority
+                // then content of pages
+                Object.values(item.keywords).map(i => {
+                    i.coef = 3;
+                    i.native = true;
+                });
+
                 if (info.path)
                     item.path = info.path.replace(/\.html$/, "");
                 else

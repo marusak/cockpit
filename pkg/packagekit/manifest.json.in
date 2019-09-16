@@ -9,8 +9,15 @@
     "tools": {
         "updates": {
             "label": "Software Updates",
-            "path": "index.html"
+            "path": "index.html",
+            "keywords": {
+                "general": {
+                    "matches": ["package", "packagekit", "dnf", "yum", "apt-get"]
+                }
+            }
         }
     },
+
+
   "content-security-policy": "default-src 'self'; img-src 'self' data:; font-src 'self' data:;"
 }

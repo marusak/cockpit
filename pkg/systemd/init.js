@@ -540,7 +540,6 @@ $(function() {
                             return;
                         for (var i = 0; i < result.length; i++)
                             record_unit_state(result[i]);
-
                         process_failed_units();
                         systemd_manager.ListUnitFiles()
                                 .fail(fail)

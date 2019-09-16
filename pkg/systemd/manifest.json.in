@@ -9,21 +9,45 @@
     "menu": {
         "index": {
             "label": "System",
-            "order": 10
+            "order": 10,
+            "keywords": {
+                "general": {
+                    "matches": ["time", "date", "restart", "shut"]
+                },
+                "hw": {
+                    "matches": ["hardware", "mitigation", "pci", "memory", "cpu"],
+                    "goto": "/system/hwinfo"
+                }
+            }
         },
         "services": {
             "label": "Services",
-            "order": 100
+            "order": 100,
+            "keywords": {
+                "general": {
+                    "matches": ["service", "systemd", "target", "socket", "timer", "path", "unit", "systemctl"]
+                }
+            }
         },
         "logs": {
             "label": "Logs",
-            "order": 20
+            "order": 20,
+            "keywords": {
+                "general": {
+                    "matches": ["journal"]
+                }
+            }
         }
     },
 
     "tools": {
         "terminal": {
-            "label": "Terminal"
+            "label": "Terminal",
+            "keywords": {
+                "general": {
+                    "matches": ["console", "command", "bash", "shell"]
+                }
+            }
         }
     },
 
