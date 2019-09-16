@@ -935,8 +935,11 @@ function CompiledComponents() {
                     label: cockpit.gettext(info.label) || prop,
                     order: info.order === undefined ? 1000 : info.order,
                     icon: info.icon,
-                    wants: info.wants
+                    wants: info.wants,
+                    keywords: info.keywords || [],
+                    keyword: { score: -1 }
                 };
+                item.keywords.unshift(item.label.toLowerCase());
                 if (info.path)
                     item.path = info.path.replace(/\.html$/, "");
                 else

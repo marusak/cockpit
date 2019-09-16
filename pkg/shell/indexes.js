@@ -114,6 +114,7 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
 
     /* Navigation */
     var ready = false;
+    var filter_timer = null;
     function on_ready() {
         ready = true;
         index.ready();
@@ -123,6 +124,61 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
         for (const m of machines.list)
             index.preload_frames(m, m.manifests);
     }
+
+    function selectActiveItem() {
+        const cur = document.activeElement;
+        if (cur.nodeName === "INPUT")
+            document.querySelector("#host-apps li:first-of-type > a").click();
+        else
+            cur.click();
+    }
+
+    function moveItem(nth_of_type, sibling) {
+        const cur = document.activeElement;
+        if (cur.nodeName === "INPUT") {
+            const item = document.querySelector("#host-apps li:" + nth_of_type + " > a");
+            if (item)
+                item.focus();
+        } else {
+            const next = cur.parentNode[sibling];
+            if (next)
+                next.children[0].focus();
+            else
+                document.getElementById("filter-menus").focus();
+        }
+    }
+
+    function navigate_apps(ev) {
+        if (ev.keyCode === 13) // Enter
+            selectActiveItem();
+        else if (ev.keyCode === 40) // Arrow Down
+            moveItem("first-of-type", "nextSibling");
+        else if (ev.keyCode === 38) // Arrow Up
+            moveItem("last-of-type", "previousSibling");
+        else if (ev.keyCode === 27) { // Escape - clean selection
+            document.getElementById("filter-menus").value = "";
+            update_sidebar();
+            document.getElementById("filter-menus").focus();
+        } else {
+            return false;
+        }
+        return true;
+    }
+
+    function manage_search(ev) {
+        if (!navigate_apps(ev)) {
+            if (filter_timer)
+                window.clearTimeout(filter_timer);
+
+            filter_timer = window.setTimeout(function () {
+                update_sidebar();
+                filter_timer = null;
+            }, 250);
+        }
+    }
+
+    document.getElementById("host-apps").addEventListener("keyup", navigate_apps);
+    document.getElementById("filter-menus").addEventListener("keyup", manage_search);
 
     /* When the machine list is ready we start processing navigation */
     $(machines)
@@ -290,6 +346,18 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
     }
 
     function update_sidebar(machine, state, compiled) {
+        if (!state)
+            state = index.retrieve_state();
+
+        if (!machine)
+            machine = machines.lookup(state.host);
+
+        if (!compiled)
+            compiled = compile(machine);
+
+        var term = document.getElementById("filter-menus").value
+                .toLowerCase();
+
         function links(component) {
             var active = state.component === component.path;
             var listItem;
@@ -298,6 +366,10 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
 
             if (page_status[machine.key])
                 status = page_status[machine.key][component.path];
+
+            // TODO remove me - hack to see some warning icons
+            if (component.label === "Services" || component.label === "Služby")
+                status = { title:"failed sth", type: "warning" };
 
             function icon_class_for_type(type) {
                 if (type == "error")
@@ -308,6 +380,30 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
                     return 'fa fa-info-circle';
             }
 
+            let label_text = document.createElement("span");
+            label_text.append(component.label);
+            // When this label was matched, we want to show why
+            if (component.keyword.keyword) {
+                const k = component.keyword.keyword;
+                if (k === component.label.toLowerCase()) {
+                    const kl = component.label;
+                    const b = k.indexOf(term);
+                    const e = b + term.length;
+                    label_text.innerHTML = kl.substring(0, b) + "<mark>" + kl.substring(b, e) + "</mark>" + kl.substring(e, kl.length);
+                } else {
+                    const container = document.createElement("span");
+                    container.append(label_text);
+                    const contains = document.createElement("div");
+                    contains.className = "hint";
+                    const b = k.indexOf(term);
+                    const e = b + term.length;
+                    contains.innerHTML = _("Contains") + ": " + k.substring(0, b) + "<mark>" + k.substring(b, e) + "</mark>" + k.substring(e, k.length);
+
+                    container.append(contains);
+                    label_text = container;
+                }
+            }
+
             if (status && status.type) {
                 label = $("<span>",
                           {
@@ -316,9 +412,9 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
                           }).append(
                     $("<div class='pull-right'>").append(
                         $('<span>', { class: icon_class_for_type(status.type) })),
-                    component.label);
+                    label_text);
             } else
-                label = $("<span>").text(component.label);
+                label = label_text;
 
             listItem = $("<li class='list-group-item'>")
                     .toggleClass("active", active)
@@ -332,13 +428,60 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
             return listItem;
         }
 
-        var menu = compiled.ordered("menu").map(links);
+        function keyword_relevance(current_best, item) {
+            let score = -1;
+            const _item = _(item);
+            // Best score when starts in native language
+            if (_item.indexOf(term) == 0)
+                score = 7;
+            // Second best score when starts in English
+            else if (item.indexOf(term) == 0)
+                score = 6;
+            // Substring consider only when at least 3 letters were used
+            else if (term.length >= 3) {
+                if (_item.indexOf(term) >= 0)
+                    score = 5;
+                else if (item.indexOf(term) >= 0)
+                    score = 4;
+            }
+            if (score > current_best.score)
+                current_best = { keyword: item, score: score };
+            return current_best;
+        }
+
+        function keyword_filter(item) {
+            if (!term)
+                return true;
+            const best_keyword = item.keywords.reduce(keyword_relevance, { score:-1 });
+            if (best_keyword.score > -1) {
+                item.keyword = best_keyword;
+                return true;
+            }
+            return false;
+        }
+
+        var menu = compiled.ordered("menu")
+                .filter(keyword_filter)
+                .sort((a, b) => { return a.keyword.score - b.keyword.score })
+                .map(links);
         $("#sidebar-menu").empty()
                 .append(menu);
 
-        var tools = compiled.ordered("tools").map(links);
+        var tools = compiled.ordered("tools")
+                .filter(keyword_filter)
+                .sort((a, b) => { return a.keyword.score - b.keyword.score })
+                .map(links);
         $("#sidebar-tools").empty()
                 .append(tools);
+
+        if (!menu.length && !tools.length) {
+            const group = document.createElement("li");
+            group.className = "list-group-item disabled";
+            const text = document.createElement("span");
+            text.append(document.createTextNode(_("No results found")));
+            group.append(text);
+            document.getElementById("sidebar-menu").innerHTML = group.outerHTML;
+        }
 
         $("#machine-avatar").attr("src", machine && machine.avatar ? encodeURI(machine.avatar)
             : "../shell/images/server-small.png");

@@ -93,6 +93,17 @@ function process_manifest(manifest) {
         process_menu(manifest.menu);
     if (manifest.tools)
         process_menu(manifest.tools);
+    if (manifest.keywords)
+        process_keywords(manifest.keywords);
+}
+
+function process_keywords(keywords) {
+    keywords.forEach(keyword =>
+        push({
+            msgid: keyword,
+            locations: [ filename ]
+        })
+    );
 }
 
 function process_menu(menu) {

@@ -6,7 +6,8 @@
 
     "tools": {
         "index": {
-            "label": "Applications"
+            "label": "Applications",
+            "keywords": ["applications", "plugin", "apps"]
         }
     },
 
