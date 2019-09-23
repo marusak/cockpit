@@ -27,12 +27,65 @@ overview page will also mention it in its "Operating System" section.
 
 The details are all still experimental and subject to change.
 
-As a first step, there are only simple "page status" notifications.
-When we address "event" style notifications, page status notifications
-might become a special case of them.  Or not.
+There is general Notification interface, which can be used to derive use-case
+specific notifications.
 
-A page status is either null, or a JSON value with the following
-fields:
+*/
+
+import cockpit from "cockpit";
+import deep_equal from "deep-equal";
+
+class Notification {
+    constructor(type) {
+        cockpit.event_target(this);
+        window.addEventListener("storage", event => {
+            if (event.key == "cockpit:" + type) {
+                this.dispatchEvent("changed");
+            }
+        });
+
+        this.type = type;
+        this.cur_own = null;
+
+        this.valid = false;
+        cockpit.transport.wait(() => {
+            this.valid = true;
+            this.dispatchEvent("changed");
+        });
+    }
+
+    get(page, host) {
+        let res;
+
+        if (!this.valid)
+            return undefined;
+
+        if (host === undefined)
+            host = cockpit.transport.host;
+
+        try {
+            res = JSON.parse(sessionStorage.getItem("cockpit:" + this.type));
+        } catch {
+            return null;
+        }
+
+        if (res && res[host])
+            return res[host][page] || null;
+        return null;
+    }
+
+    set_own(status) {
+        if (!deep_equal(status, this.cur_own)) {
+            this.cur_own = status;
+            cockpit.transport.control("notify", { [this.type]: status });
+        }
+    }
+}
+
+/* PAGE STATUS
+
+A specific implementation is a simple "page status" notification, which is
+either null, or a JSON value with the following fields:
 
  - type (string, optional)
 
@@ -109,52 +162,9 @@ Usage:
 
 */
 
-import cockpit from "cockpit";
-import deep_equal from "deep-equal";
-
-class PageStatus {
+class PageStatus extends Notification {
     constructor() {
-        cockpit.event_target(this);
-        window.addEventListener("storage", event => {
-            if (event.key == "cockpit:page_status") {
-                this.dispatchEvent("changed");
-            }
-        });
-
-        this.cur_own = null;
-
-        this.valid = false;
-        cockpit.transport.wait(() => {
-            this.valid = true;
-            this.dispatchEvent("changed");
-        });
-    }
-
-    get(page, host) {
-        let page_status;
-
-        if (!this.valid)
-            return undefined;
-
-        if (host === undefined)
-            host = cockpit.transport.host;
-
-        try {
-            page_status = JSON.parse(sessionStorage.getItem("cockpit:page_status"));
-        } catch {
-            return null;
-        }
-
-        if (page_status && page_status[host])
-            return page_status[host][page] || null;
-        return null;
-    }
-
-    set_own(status) {
-        if (!deep_equal(status, this.cur_own)) {
-            this.cur_own = status;
-            cockpit.transport.control("notify", { page_status: status });
-        }
+        super("page_status");
     }
 }
 

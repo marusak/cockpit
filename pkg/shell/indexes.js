@@ -30,18 +30,27 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
     if (!index_options)
         index_options = {};
 
-    var page_status = { };
-    sessionStorage.removeItem("cockpit:page_status");
-
     index_options.navigate = function (state, sidebar) {
         return navigate(state, sidebar);
     };
+
+    // FIXME: This should be done by automatic discovery, not like this:
+    const notifications = ["page_status"];
+    notifications.forEach(n => {
+        sessionStorage.removeItem("cockpit:" + n);
+    });
+
+    var page_status = { };
     index_options.handle_notifications = function (host, page, data) {
-        if (data.page_status !== undefined) {
-            if (!page_status[host])
-                page_status[host] = { };
-            page_status[host][page] = data.page_status;
-            sessionStorage.setItem("cockpit:page_status", JSON.stringify(page_status));
+        var new_load = { };
+        const n = Object.keys(data)[0];
+        if (data[n] !== undefined) {
+            if (!new_load[host])
+                new_load[host] = { };
+            new_load[host][page] = data[n];
+            sessionStorage.setItem("cockpit:" + n, JSON.stringify(new_load));
+            if (n == "page_status")
+                page_status = new_load;
             // Just for triggering an "updated" event
             machines.overlay(host, { });
         }
@@ -296,7 +305,7 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
             var status = null;
             var label;
 
-            if (page_status[machine.key])
+            if (page_status && page_status[machine.key])
                 status = page_status[machine.key][component.path];
 
             function icon_class_for_type(type) {
