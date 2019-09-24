@@ -168,4 +168,11 @@ class PageStatus extends Notification {
     }
 }
 
+class PageContains extends Notification {
+    constructor() {
+        super("page_contains");
+    }
+}
+
 export const page_status = new PageStatus();
+export const page_contains = new PageContains();

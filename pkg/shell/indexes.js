@@ -35,12 +35,14 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
     };
 
     // FIXME: This should be done by automatic discovery, not like this:
-    const notifications = ["page_status"];
+    const notifications = ["page_status", "page_contains"];
     notifications.forEach(n => {
         sessionStorage.removeItem("cockpit:" + n);
     });
 
+    // TODO: Can we just here get it from page_status.get(machine, page)?
     var page_status = { };
+    var page_contains = { };
     index_options.handle_notifications = function (host, page, data) {
         var new_load = { };
         const n = Object.keys(data)[0];
@@ -51,6 +53,8 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
             sessionStorage.setItem("cockpit:" + n, JSON.stringify(new_load));
             if (n == "page_status")
                 page_status = new_load;
+            else
+                page_contains = new_load;
             // Just for triggering an "updated" event
             machines.overlay(host, { });
         }
