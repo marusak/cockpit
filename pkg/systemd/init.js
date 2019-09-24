@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom';
 import { ServiceTabs } from "./services.jsx";
 import { ServiceDetails, ServiceTemplate } from "./service-details.jsx";
 import { journal } from "journal";
-import { page_status } from "notifications";
+import { page_status, page_contains } from "notifications";
 import "patterns";
 import "bootstrap-datepicker/dist/js/bootstrap-datepicker";
 
@@ -271,6 +271,15 @@ $(function() {
                 unit.NextRunTime = _("unknown");
         }
 
+        function set_contains(units) {
+            const res = { };
+            Object.values(units).forEach(u => {
+                res[u.Id] = { matches: [u.Id.toLowerCase(), u.Description.toLowerCase()], goto: u.Id };
+            });
+
+            page_contains.set_own(res);
+        }
+
         var units_template = $("#services-units-tmpl").html();
         mustache.parse(units_template);
 
@@ -278,6 +287,7 @@ $(function() {
         mustache.parse(empty_template);
 
         function render_now() {
+            set_contains(units_by_path);
             $("#loading-fallback").hide();
             var current_text_filter = $('#services-text-filter').val()
                     .toLowerCase();
@@ -530,6 +540,7 @@ $(function() {
                             return;
                         for (var i = 0; i < result.length; i++)
                             record_unit_state(result[i]);
+
                         process_failed_units();
                         systemd_manager.ListUnitFiles()
                                 .fail(fail)
