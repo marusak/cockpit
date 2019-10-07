@@ -137,10 +137,9 @@
         }
     }
 
-    /* Fade start and end of the host menu to indicate more content is available */
+    /* Fade end of the host menu to indicate more content is available */
 
-    &:before,
-    &:after {
+    &::after {
         content: '';
         display: block;
         position: absolute;
@@ -151,14 +150,6 @@
         z-index: 2;
         /* Accomodate scrollbars with margin (IE11 needs 18px; rest are less) */
         margin-right: 18px;
-    }
-
-    &:before {
-        background: var(--color-ct-nav-cover-up);
-        top: 7.25rem; // Move down by the same size as the dropdown + search
-    }
-
-    &:after {
         background: var(--color-ct-nav-cover-down);
         bottom: 0;
         height: 4rem;
