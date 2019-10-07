@@ -16,30 +16,6 @@
     margin: 18px 20px 10px 20px;
 }
 
-.search {
-    height: 2.25rem;
-
-    > input {
-        border: none;
-    }
-
-    > span {
-        color: var(--color-subtle-copy);
-        margin: 0.5rem;
-    }
-
-    &:after {
-        content: "";
-        position: absolute;
-        margin: 0 0.5rem;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        height: 1px;
-        background: var(--color-border);
-    }
-}
-
 .area-ct-subnav {
     background: var(--color-ct-nav-sub);
     border-right: 1px solid var(--color-ct-nav-border);
@@ -57,6 +33,30 @@
         padding-left: 0;
         padding-right: 0;
         font-weight: bold;
+    }
+
+    > .search {
+        margin: 0.5rem 1rem;
+
+        > input {
+            border: none;
+        }
+
+        > span {
+            color: var(--color-subtle-copy);
+            margin: 0.5rem;
+        }
+
+        &:after {
+            content: "";
+            position: absolute;
+            margin: 0 0.5rem;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 1px;
+            background: var(--color-border);
+        }
     }
 
     .hint {
