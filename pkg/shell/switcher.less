@@ -16,30 +16,6 @@
     margin: 18px 20px 10px 20px;
 }
 
-.search {
-    height: 2rem;
-
-    > input {
-        border: none;
-    }
-
-    > span {
-        color: var(--color-subtle-copy);
-        margin: 0.5rem;
-    }
-
-    &:after {
-        content: "";
-        position: absolute;
-        margin: 0 10px; // Just add 5 pixels (15 - 5) on the sides
-        left: 0;
-        right: 0;
-        bottom: 0;
-        height: 1px;
-        background: var(--color-border);
-    }
-}
-
 .area-ct-subnav {
     background: var(--color-ct-nav-sub);
     border-right: 1px solid var(--color-ct-nav-border);
@@ -57,6 +33,30 @@
         padding-left: 0;
         padding-right: 0;
         font-weight: bold;
+    }
+
+    > .search {
+        margin: 0.5rem 1rem;
+
+        > input {
+            border: none;
+        }
+
+        > span {
+            color: var(--color-subtle-copy);
+            margin: 0.5rem;
+        }
+
+        &:after {
+            content: "";
+            position: absolute;
+            margin: 0 0.5rem;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 1px;
+            background: var(--color-border);
+        }
     }
 
     .hint {
@@ -137,10 +137,9 @@
         }
     }
 
-    /* Fade start and end of the host menu to indicate more content is available */
+    /* Fade end of the host menu to indicate more content is available */
 
-    &:before,
-    &:after {
+    &::after {
         content: '';
         display: block;
         position: absolute;
@@ -151,14 +150,6 @@
         z-index: 2;
         /* Accomodate scrollbars with margin (IE11 needs 18px; rest are less) */
         margin-right: 18px;
-    }
-
-    &:before {
-        background: var(--color-ct-nav-cover-up);
-        top: 6rem; // Move down by the same size as the dropdown + search
-    }
-
-    &:after {
         background: var(--color-ct-nav-cover-down);
         bottom: 0;
         height: 4rem;
