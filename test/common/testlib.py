@@ -275,13 +275,14 @@ class Browser:
             self.cdp.invoke("Input.dispatchKeyEvent", **args)
 
     def key_press_firefox(self, keys, modifiers=0, use_ord=False):
+        # https://github.com/GoogleChrome/puppeteer/blob/master/lib/USKeyboardLayout.js
         keyMap = {
-            8: "Backspace", # Backspace key
-            9: "Tab",       # Tab key
-            13: "Enter",    # Enter key
-            27: "Escape",   # Escape key
-            40: "Down",     # Arrow key down
-            45: "Insert",   # Insert key
+            8: "Backspace",  # Backspace key
+            9: "Tab",        # Tab key
+            13: "Enter",     # Enter key
+            27: "Escape",    # Escape key
+            40: "ArrowDown", # Arrow key down
+            45: "Insert",    # Insert key
         }
         for key in keys:
             args = {"type": "keyDown", "modifiers": modifiers}
