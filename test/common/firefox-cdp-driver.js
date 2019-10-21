@@ -291,7 +291,7 @@ function addScriptToEvaluateOnNewDocument(script) {
 //  but it is not implemented in Firefox. We can do this manually.
 function evaluate(cmd) {
     return new Promise((resolve, reject) => {
-        const match_exp = cmd.expression.match(/ph_wait_cond.*=>\s*(.*),\s*(\d*)/);
+        const match_exp = cmd.expression.match(/ph_wait_cond[^=]*=>\s*([\s\S]*),\s*(\d*)/);
         let stepTimer = null;
         let tm = setTimeout( () => {
                 if (stepTimer)
