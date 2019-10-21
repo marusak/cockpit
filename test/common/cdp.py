@@ -181,9 +181,13 @@ class CDP:
                 if item.endswith("blank"):
                     profile = os.path.join(profile, item, "prefs.js")
                     break
+            # Enable remote debugging
             subprocess.Popen("echo 'user_pref(\"remote.enabled\", true);' >> {0}".format(profile), shell=True, env=env).communicate()
+            # On first run Firefox shows some pages asking if we want to report... Disable that
             subprocess.Popen("echo 'user_pref(\"datareporting.policy.dataSubmissionEnabled\", false);' >> {0}".format(profile), shell=True, env=env).communicate()
             subprocess.Popen("echo 'user_pref(\"toolkit.telemetry.reportingpolicy.firstRun\", false);' >> {0}".format(profile), shell=True, env=env).communicate()
+            # Terminal shows popup asking if we really want to leave the page - disable that
+            subprocess.Popen("echo 'user_pref(\"dom.disable_beforeunload\", true);' >> {0}".format(profile), shell=True, env=env).communicate()
             # TODO add `--headless` OR
             # !! Introduce option like TEST_WITH_UI which would not pass the `--headless` and you
             # don't need to start browser manually for visual testing !!
