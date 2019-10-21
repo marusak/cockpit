@@ -187,7 +187,7 @@ class CDP:
             # TODO add `--headless` OR
             # !! Introduce option like TEST_WITH_UI which would not pass the `--headless` and you
             # don't need to start browser manually for visual testing !!
-            return [exe, "-P", "blank", "--window-size=1920,1200", "--remote-debugging-port=%i" % cdp_port, "--no-remote", "localhost"]
+            return [exe, "-P", "blank", "--headless", "--window-size=1920,1200", "--remote-debugging-port=%i" % cdp_port, "--no-remote", "localhost"]
 
     def start(self):
         environ = os.environ.copy()
