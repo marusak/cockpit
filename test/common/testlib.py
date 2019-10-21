@@ -249,7 +249,14 @@ class Browser:
         self.wait_visible(selector + ':not([disabled])')
         self.call_js_func('ph_blur', selector)
 
+    # TODO: Unify them so we can have only one
     def key_press(self, keys, modifiers=0, use_ord=False):
+        if self.cdp.browser == "chromium":
+            self.key_press_chromium(keys, modifiers, use_ord)
+        else:
+            self.key_press_firefox(keys, modifiers, use_ord)
+
+    def key_press_chromium(self, keys, modifiers=0, use_ord=False):
         for key in keys:
             args = {"type": "keyDown", "modifiers": modifiers}
 
@@ -262,6 +269,26 @@ class Browser:
                 args["windowsVirtualKeyCode"] = ord(key.upper())
             else:
                 args["key"] = key
+
+            self.cdp.invoke("Input.dispatchKeyEvent", **args)
+            args["type"] = "keyUp"
+            self.cdp.invoke("Input.dispatchKeyEvent", **args)
+
+    def key_press_firefox(self, keys, modifiers=0, use_ord=False):
+        keyMap = {
+            8: "Backspace", # Backspace key
+            9: "Tab",       # Tab key
+            13: "Enter",    # Enter key
+            27: "Escape",   # Escape key
+            40: "Down",     # Arrow key down
+            45: "Insert",   # Insert key
+        }
+        for key in keys:
+            args = {"type": "keyDown", "modifiers": modifiers}
+
+            args["key"] = key
+            if ord(key) < 32 or use_ord:
+                args["key"] = keyMap[ord(key)]
 
             self.cdp.invoke("Input.dispatchKeyEvent", **args)
             args["type"] = "keyUp"
@@ -572,14 +599,21 @@ class Browser:
             self.cdp.command("clearExceptions()")
 
             filename = "{0}-{1}.png".format(label or self.label, title)
-            ret = self.cdp.invoke("Page.captureScreenshot", no_trace=True)
-            if "data" in ret:
-                with open(filename, 'wb') as f:
-                    f.write(base64.standard_b64decode(ret["data"]))
-                attach(filename)
-                print("Wrote screenshot to " + filename)
-            else:
-                print("Screenshot not available")
+            if (self.cdp.browser == "chromium"):
+                ret = self.cdp.invoke("Page.captureScreenshot", no_trace=True)
+                ret = ""
+                if "data" in ret:
+                    with open(filename, 'wb') as f:
+                        f.write(base64.standard_b64decode(ret["data"]))
+                    attach(filename)
+                    print("Wrote screenshot to " + filename)
+                else:
+                    print("Screenshot not available")
+            elif (self.cdp.browser == "firefox"):
+                # TODO: implement me
+                # Something like:
+                # Runtime.execute(':screenshot --file <path>)
+                pass
 
             filename = "{0}-{1}.html".format(label or self.label, title)
             html = self.cdp.invoke("Runtime.evaluate", expression="document.documentElement.outerHTML",
