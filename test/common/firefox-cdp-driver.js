@@ -32,6 +32,7 @@ const CDP = require('chrome-remote-interface');
 
 var enable_debug = false;
 var the_client = null;
+var last_frame_name = "";
 
 function debug(msg) {
     if (enable_debug)
@@ -212,11 +213,10 @@ function setupFrameTracking(client) {
 function getFrameExecId(frame) {
     if (frame === null)
         frame = "cockpit1";
-    var execId = frameNameToContextId[frame];
-    if (!execId) {
-        throw Error(`Frame ${frame} has no executionContextId`);
-    }
-    return execId;
+    // HACK: Remember the frame name that was last resolved in case it was unusable
+    // In that case we should try to resolve it a bit later - but we don't have the name anymore
+    last_frame_name = frame;
+    return frameNameToContextId[frame];
 }
 
 function expectLoad(timeout) {
@@ -299,12 +299,22 @@ function evaluate(cmd) {
                 reject("Timeout waiting for '" + match_exp[1] + "'");
             }, parseInt(match_exp[2]));
         function step() {
-            the_client.Runtime.evaluate({expression: match_exp[1], contextId: cmd.contextId}).then(r => {
+            let context = cmd.contextId;
+            if (cmd.contextId === undefined)
+                context = getFrameExecId(last_frame_name);
+            the_client.Runtime.evaluate({expression: match_exp[1], contextId: context}).then(r => {
                 if (r && r.result && r.result.value === true) {
                     clearTimeout(tm);
                     resolve(r);
                 } else {
                     stepTimer = setTimeout(step, 100);
+                }
+            })
+            .catch(e => {
+                if (e.response.message.indexOf("Unable to find execution context with id")) {
+                    stepTimer = setTimeout(step, 100);
+                } else {
+                    reject("Failed to call '" + match_exp[1] +"'. Failed with: " + JSON.stringify(e.response.message));
                 }
             });
         }
