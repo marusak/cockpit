@@ -173,7 +173,7 @@ class CDP:
                     "--disable-sandbox-denial-logging", "--disable-pushstate-throttle",
                     "--window-size=1920x1200", "--remote-debugging-port=%i" % cdp_port, "about:blank"]
         elif self.browser == "firefox":
-            subprocess.Popen(["firefox", "-CreateProfile", "blank"], env=env).communicate()
+            subprocess.Popen(["firefox", "--headless", "--no-remote", "-CreateProfile", "blank"], env=env).communicate()
             p = subprocess.Popen("ls ~/.mozilla/firefox", shell=True, stdout=subprocess.PIPE, env=env)
             in_profile = p.communicate()[0].decode("utf-8").split("\n")
             profile = "~/.mozilla/firefox/"
@@ -188,7 +188,6 @@ class CDP:
             subprocess.Popen("echo 'user_pref(\"toolkit.telemetry.reportingpolicy.firstRun\", false);' >> {0}".format(profile), shell=True, env=env).communicate()
             # Terminal shows popup asking if we really want to leave the page - disable that
             subprocess.Popen("echo 'user_pref(\"dom.disable_beforeunload\", true);' >> {0}".format(profile), shell=True, env=env).communicate()
-            # TODO add `--headless` OR
             # !! Introduce option like TEST_WITH_UI which would not pass the `--headless` and you
             # don't need to start browser manually for visual testing !!
             return [exe, "-P", "blank", "--headless", "--window-size=1920,1200", "--remote-debugging-port=%i" % cdp_port, "--no-remote", "localhost"]
