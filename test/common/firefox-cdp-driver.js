@@ -197,16 +197,6 @@ function setupFrameTracking(client) {
             }
         });
     });
-
-    client.Runtime.executionContextDestroyed(info => {
-        debug("executionContextDestroyed " + info.executionContextId);
-        for (let frameName in frameNameToContextId) {
-            if (frameNameToContextId[frameName] == info.executionContextId) {
-                delete frameNameToContextId[frameName];
-                break;
-            }
-        }
-    });
 }
 
 // helper functions for testlib.py which are too unwieldy to be poked in from Python
