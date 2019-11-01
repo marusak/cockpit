@@ -66,7 +66,6 @@ You can set these environment variables to configure the test suite:
                   "centos-7"
                   "debian-stable"
                   "debian-testing"
-                  "fedora-29"
                   "fedora-30"
                   "fedora-i386"
                   "fedora-atomic"
