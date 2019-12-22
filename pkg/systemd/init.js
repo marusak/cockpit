@@ -277,12 +277,15 @@ $(function() {
                 unit.NextRunTime = _("unknown");
         }
 
+        // TOOD
         var units_template = $("#services-units-tmpl").html();
         mustache.parse(units_template);
 
+        // TOOD
         var empty_template = $("#service-empty-tmpl").html();
         mustache.parse(empty_template);
 
+        // TODO
         function render_now() {
             $("#loading-fallback").hide();
             var current_text_filter = $('#services-text-filter').val()
@@ -336,6 +339,7 @@ $(function() {
 
             var text = "";
             if (units.length > 0)
+                // TODO here
                 text = mustache.render(units_template, {
                     table_head: header,
                     units: units
