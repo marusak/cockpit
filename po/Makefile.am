@@ -5,7 +5,7 @@ GETTEXT_PACKAGE = cockpit
 LINGUAS = $(shell cat $(srcdir)/po/LINGUAS)
 
 WEBLATE_REPO=tmp/weblate-repo
-WEBLATE_REPO_URL=https://github.com/cockpit-project/cockpit-weblate.git
+WEBLATE_REPO_URL=https://github.com/marusak/cockpit-weblate.git
 WEBLATE_REPO_BRANCH=master
 
 # The full list of various input and output file types
