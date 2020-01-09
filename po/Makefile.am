@@ -122,7 +122,7 @@ $(WEBLATE_REPO):
 	git clone --depth=1 -b $(WEBLATE_REPO_BRANCH) $(WEBLATE_REPO_URL) $(WEBLATE_REPO)
 
 upload-pot: po/cockpit.pot $(WEBLATE_REPO)
-	cp ./po/cockpit.pot $(WEBLATE_REPO)
+	cp $(builddir)/po/cockpit.pot $(WEBLATE_REPO)
 	git -C $(WEBLATE_REPO) commit -m "Update source file" -- cockpit.pot
 	git -C $(WEBLATE_REPO) push
 
@@ -130,7 +130,7 @@ clean-po:
 	rm $(srcdir)/po/*.po
 
 download-po: $(WEBLATE_REPO)
-	cp $(WEBLATE_REPO)/*.po ./po/
+	cp $(WEBLATE_REPO)/*.po $(srcdir)/po/
 
 CLEANFILES += \
 	$(MO_FILES) \
