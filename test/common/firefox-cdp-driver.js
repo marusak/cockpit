@@ -123,7 +123,7 @@ function setupLogging(client) {
             let msg = entry["entry"];
             messages.push([ "cdp", msg ]);
             /* Ignore authentication failure log lines that don't denote failures */
-            if (!(msg.url || "").endsWith("/login") || (msg.text || "").indexOf("401") === -1)
+            if (!(msg.url || "").endsWith("/login") || (msg.text || "").indexOf("401") === -1 || (msg.text || "").indexOf("settings blocked the loading of a resource at inline") !== -1)
                 process.stderr.write("CDP: " + JSON.stringify(msg) + "\n");
             resolveLogPromise();
         }
