@@ -660,46 +660,6 @@ function Index() {
         return state;
     }
 
-    function build_navbar() {
-        var navbar = $("#main-navbar");
-        navbar.on("click", function () {
-            navbar.parent().toggleClass("clicked", true);
-        });
-
-        navbar.on("mouseout", function () {
-            navbar.parent().toggleClass("clicked", false);
-        });
-
-        function links(component) {
-            var sm = $("<span class='fa'>")
-                    .attr("data-toggle", "tooltip")
-                    .attr("role", "presentation")
-                    .attr("title", "")
-                    .attr("data-original-title", component.label);
-
-            if (component.icon)
-                sm.addClass(component.icon);
-            else
-                sm.addClass("first-letter").text(component.label);
-
-            var value = $("<span class='list-group-item-value'>")
-                    .text(component.label);
-
-            var a = $("<a>")
-                    .attr("href", self.href({ host: "localhost", component: component.path }))
-                    .append(sm)
-                    .append(value);
-
-            return $("<li class='dashboard-link list-group-item'>")
-                    .attr("data-component", component.path)
-                    .append(a);
-        }
-
-        var local_compiled = new CompiledComponents();
-        local_compiled.load(cockpit.manifests, "dashboard");
-        navbar.append(local_compiled.ordered("dashboard").map(links));
-    }
-
     self.retrieve_state = function() {
         var state = window.history.state;
         if (!state || state.version !== "v1") {
@@ -820,7 +780,6 @@ function Index() {
             self.navigate(ev.state, true);
         });
 
-        build_navbar();
         self.navigate();
         cockpit.translate();
         $("body").prop("hidden", false);

@@ -19,6 +19,10 @@
 
 import $ from "jquery";
 import cockpit from "cockpit";
+import React from "react";
+import ReactDOM from "react-dom";
+
+import { cNav, cNavItem } from "./nav.jsx";
 
 import * as base_index from "./base_index";
 
@@ -46,6 +50,7 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
             machines.overlay(host, { });
         }
     };
+
     var index = base_index.new_index_from_proto(index_options);
 
     /* Restarts */
@@ -139,18 +144,20 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
 
     // Move focus to next item in menu (when using arrows to navigate through menu)
     // With arguments it is possible to change direction
-    function focusNextItem(nth_of_type, sibling) {
+    function focusNextItem(begin, step) {
         const cur = document.activeElement;
-        if (cur.nodeName === "INPUT") {
-            const item = document.querySelector("#host-apps li:" + nth_of_type + " > a");
-            if (item)
-                item.focus();
+        const all = Array.from(document.querySelectorAll("#host-apps li a"));
+        if (cur.nodeName === "INPUT" && all) {
+            if (begin < 0)
+                begin = all.length - 1;
+            all[begin].focus();
         } else {
-            const next = cur.parentNode[sibling];
-            if (next)
-                next.children[0].focus();
-            else
+            let i = all.findIndex(item => item === cur);
+            i += step;
+            if (i < 0 || i >= all.length)
                 document.getElementById("filter-menus").focus();
+            else
+                all[i].focus();
         }
     }
 
@@ -158,9 +165,9 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
         if (ev.keyCode === 13) // Enter
             clickActiveItem();
         else if (ev.keyCode === 40) // Arrow Down
-            focusNextItem("first-of-type", "nextSibling");
+            focusNextItem(0, 1);
         else if (ev.keyCode === 38) // Arrow Up
-            focusNextItem("last-of-type", "previousSibling");
+            focusNextItem(-1, -1);
         else if (ev.keyCode === 27) { // Escape - clean selection
             document.getElementById("filter-menus").value = "";
             update_sidebar();
@@ -367,81 +374,6 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
         var term = document.getElementById("filter-menus").value
                 .toLowerCase();
 
-        function links(component) {
-            var active = state.component === component.path;
-            var listItem;
-            var status = null;
-            var label;
-
-            if (page_status[machine.key])
-                status = page_status[machine.key][component.path];
-
-            function icon_class_for_type(type) {
-                if (type == "error")
-                    return 'fa fa-exclamation-circle';
-                else if (type == "warning")
-                    return 'fa fa-exclamation-triangle';
-                else
-                    return 'fa fa-info-circle';
-            }
-
-            function mark_text(text, term) {
-                const b = text.toLowerCase().indexOf(term);
-                const e = b + term.length;
-                return (text.substring(0, b) + "<mark>" + text.substring(b, e) + "</mark>" + text.substring(e, text.length));
-            }
-
-            let label_text = document.createElement("span");
-            label_text.append(component.label);
-            // When this label was matched, we want to show why
-            if (component.keyword.keyword) {
-                const k = component.keyword.keyword;
-                if (k === component.label.toLowerCase()) {
-                    label_text.innerHTML = mark_text(component.label, term);
-                } else {
-                    const container = document.createElement("span");
-                    container.append(label_text);
-                    const contains = document.createElement("div");
-                    contains.className = "hint";
-                    contains.innerHTML = _("Contains") + ": " + mark_text(k, term);
-                    container.append(contains);
-                    label_text = container;
-                }
-            }
-
-            if (status && status.type) {
-                label = $("<span>",
-                          {
-                              'data-toggle': 'tooltip',
-                              title: status.title
-                          }).append(
-                    $("<div class='pull-right'>").append(
-                        $('<span>', { class: icon_class_for_type(status.type) })),
-                    label_text);
-            } else
-                label = label_text;
-
-            let path = component.path;
-            let hash = component.hash;
-            if (component.keyword.goto) {
-                if (component.keyword.goto[0] === "/")
-                    path = component.keyword.goto.substr(1);
-                else
-                    hash = component.keyword.goto;
-            }
-
-            listItem = $("<li class='list-group-item'>")
-                    .toggleClass("active", active)
-                    .append($("<a>")
-                            .attr("href", index.href({ host: machine.address, component: path, hash: hash }))
-                            .append(label));
-
-            if (active)
-                listItem.find('a').attr("aria-current", "page");
-
-            return listItem;
-        }
-
         function keyword_relevance(current_best, item) {
             const translate = item.translate || false;
             const weight = item.weight || 0;
@@ -487,45 +419,71 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
             return false;
         }
 
-        var menu = compiled.ordered("menu")
+        function clearSearch() {
+            document.getElementById("filter-menus").value = "";
+            update_sidebar(machine, state, compiled);
+        }
+
+        function nav_item(component) {
+            const active = state.component === component.path;
+
+            // Parse path
+            let path = component.path;
+            let hash = component.hash;
+            if (component.keyword.goto) {
+                if (component.keyword.goto[0] === "/")
+                    path = component.keyword.goto.substr(1);
+                else
+                    hash = component.keyword.goto;
+            }
+
+            // Parse page status
+            let status = null;
+            if (page_status[machine.key])
+                status = page_status[machine.key][component.path];
+
+            return React.createElement(cNavItem, {
+                name: component.label,
+                active: active,
+                status: status,
+                keyword: component.keyword.keyword,
+                term: term,
+                to: index.href({ host: machine.address, component: path, hash: hash }),
+            });
+        }
+
+        const groups = [];
+
+        const apps = compiled.ordered("dashboard")
                 .filter(keyword_filter)
                 .sort((a, b) => b.keyword.score - a.keyword.score)
-                .map(links);
-        $("#sidebar-menu").empty()
-                .append(menu);
+                .map(nav_item);
+        if (apps.length > 0)
+            groups.push({ name: _("Apps"), items: apps });
 
-        var tools = compiled.ordered("tools")
+        const menu = compiled.ordered("menu")
+                .filter(keyword_filter)
+                .sort((a, b) => b.keyword.score - a.keyword.score)
+                .map(nav_item);
+        if (menu.length > 0)
+            groups.push({ name: _("System"), items: menu });
+
+        const tools = compiled.ordered("tools")
                 .filter(keyword_filter)
                 .sort((a, b) => { return b.keyword.score - a.keyword.score })
-                .map(links);
-        $("#sidebar-tools").empty();
+                .map(nav_item);
 
-        if (term !== "") {
-            $("#sidebar-menu").append(tools);
-            const clear_button = document.createElement("button");
-            clear_button.textContent = _("Clear Search");
-            clear_button.className = "link-button hint";
-            clear_button.onclick = function() {
-                document.getElementById("filter-menus").value = "";
-                update_sidebar(machine, state, compiled);
-            };
-            const container = document.createElement("div");
-            container.className = "non-menu-item";
-            container.append(clear_button);
-            $("#sidebar-tools").append(container);
-        } else {
-            $("#sidebar-tools").append(tools);
-        }
+        if (tools.length > 0)
+            groups.push({ name: _("Tools"), items: tools });
 
-        if (!menu.length && !tools.length) {
-            const group = document.createElement("li");
-            group.className = "list-group-item disabled";
-            const text = document.createElement("span");
-            text.className = "non-menu-item";
-            text.append(document.createTextNode(_("No results found")));
-            group.append(text);
-            document.getElementById("sidebar-menu").innerHTML = group.outerHTML;
-        }
+        ReactDOM.render(
+            React.createElement(cNav, {
+                empty_message: _("No results found"),
+                clear_search_msg: _("Clear Search"),
+                groups: groups,
+                clear_search: term !== "" ? clearSearch : null,
+            }),
+            document.getElementById("host-apps"));
 
         $("#machine-avatar").attr("src", machine && machine.avatar ? encodeURI(machine.avatar)
             : "../shell/images/server-small.png");
@@ -644,7 +602,6 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
         if (machine)
             update_sidebar(machine, state, compiled);
 
-        $("#host-nav").toggleClass("hidden", !machine);
         update_machine_links(machine, !!machine, state);
         $('.area-ct-body').toggleClass("single-nav", $(".dashboard-link").length < 2);
     }

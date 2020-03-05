@@ -778,44 +778,39 @@ It is less bad than using !important, at least.
     }
 }
 
-// Add color to nav icons
-#host-apps .list-group-item {
-    .fa-info-circle {
-        color: var(--pf-global--info-color--100);
-    }
+// Make sure the icons in the menu are aligned to the right
+#host-apps .nav-item a {
+    flex-wrap: wrap;
+}
 
-    .fa-exclamation-triangle {
-        color: var(--pf-global--warning-color--100);
-    }
+#host-apps .nav-item a svg {
+    margin-left: auto;
+}
 
-    .fa-exclamation-circle {
-        color: #f54f42;
-    }
+// Add a background to shine through the icon's gaps
+// (for better contrast, even when hovering / selected)
+// TODO this does not seem to actually work
+#host-apps .nav-item svg {
+    // Set position for the icon sandwiching
+    position: relative;
+    // Add a shadow around the icon
+    text-shadow: 1px 0 1px var(--color-ct-nav), 0 1px 1px var(--color-ct-nav), -1px 0 1px var(--color-ct-nav), 0 -1px 1px var(--color-ct-nav);
 
-    // Add a background to shine through the icon's gaps
-    // (for better contrast, even when hovering / selected)
-    .fa {
-        // Set position for the icon sandwiching
+    // Move the icon up the stack
+    &::before {
+        z-index: 1;
         position: relative;
-        // Add a shadow around the icon
-        text-shadow: 1px 0 1px var(--color-ct-nav), 0 1px 1px var(--color-ct-nav), -1px 0 1px var(--color-ct-nav), 0 -1px 1px var(--color-ct-nav);
+    }
 
-        // Move the icon up the stack
-        &::before {
-            z-index: 1;
-            position: relative;
-        }
-
-        // Fill the interior gaps
-        &::after {
-            position: absolute;
-            content: '';
-            background-color: var(--color-ct-nav);
-            border-radius: 3px;
-            top: 3px;
-            right: 5px;
-            bottom: 3px;
-            left: 5px;
-        }
+    // Fill the interior gaps
+    &::after {
+        position: absolute;
+        content: '';
+        background-color: var(--color-ct-nav);
+        border-radius: 3px;
+        top: 3px;
+        right: 5px;
+        bottom: 3px;
+        left: 5px;
     }
 }

@@ -74,7 +74,10 @@ $mobile-button-size: 56px;
     }
 
     .hint {
+        width: 100%;
         font-size: var(--pf-global--FontSize--sm);
+        font-weight: var(--pf-global--FontWeight--normal);
+        color: var(--pf-c-nav--m-dark__list-link--Color);
     }
 
     .list-group-item .hint {
@@ -110,6 +113,7 @@ $mobile-button-size: 56px;
     }
 
     .non-menu-item {
+        color: var(--pf-c-nav__list-link--Color);
         display: flex;
         justify-content: center;
     }
