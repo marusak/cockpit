@@ -170,7 +170,7 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
             focusNextItem(-1, -1);
         else if (ev.keyCode === 27) { // Escape - clean selection
             document.getElementById("filter-menus").value = "";
-            update_sidebar();
+            update_navbar();
             document.getElementById("filter-menus").focus();
         } else {
             return false;
@@ -185,7 +185,7 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
 
             filter_timer = window.setTimeout(function () {
                 if (document.getElementById("filter-menus") === document.activeElement)
-                    update_sidebar();
+                    update_navbar();
                 filter_timer = null;
             }, 250);
         }
@@ -302,23 +302,9 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
 
     function choose_component(state, compiled) {
         var item, menu_items;
-        var single_host = machines.list.length <= 1;
-        var dashboards = compiled.ordered("dashboard");
 
         if (shell_embedded)
             state.sidebar = true;
-
-        /* See if we should show a dashboard */
-        if (!state.sidebar && dashboards.length > 0) {
-            item = dashboards[0];
-            /* Don't chose a dashboard as a single host unless
-             * it specifically supports that.
-             */
-            if (item && (!single_host || item.wants !== "multiple-machines"))
-                return item.path;
-            else
-                item = null;
-        }
 
         /* See if we can find something with currently selected label */
         var label = $("#sidebar li.active a").text();
@@ -330,38 +316,13 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
 
         /* Go for the first item */
         menu_items = compiled.ordered("menu");
-        if (menu_items.length > 0 && menu_items[0]) {
+        if (menu_items.length > 0 && menu_items[0])
             return menu_items[0].path;
-
-        /* If there is no menu items use a dashboard */
-        } else if (dashboards.length > 0) {
-            item = dashboards[0];
-            if (item) {
-                state.sidebar = false;
-                return item.path;
-            }
-        }
 
         return "system";
     }
 
-    function default_machine() {
-        /* Default to localhost if it has anything.
-         * Otherwise find the first non local machine.
-         */
-        var i;
-        var machine = machines.lookup("localhost");
-        var compiled = compile(machine);
-        if (compiled.ordered("menu").length || compiled.ordered("tools").length)
-            return machine;
-
-        for (i = 0; i < machines.list.length; i++) {
-            if (machines.list[i].address != "localhost")
-                return machines.list[i];
-        }
-    }
-
-    function update_sidebar(machine, state, compiled) {
+    function update_navbar(machine, state, compiled) {
         if (!state)
             state = index.retrieve_state();
 
@@ -421,7 +382,7 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
 
         function clearSearch() {
             document.getElementById("filter-menus").value = "";
-            update_sidebar(machine, state, compiled);
+            update_navbar(machine, state, compiled);
         }
 
         function nav_item(component) {
@@ -500,48 +461,6 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
         }
     }
 
-    function update_active_machine (address) {
-        var active_sel;
-        $("#machine-dropdown ul li").toggleClass("active", false)
-                .find("a")
-                .removeAttr("aria-current");
-        if (address) {
-            active_sel = "#machine-dropdown ul li[data-address='" + address + "']";
-            $(active_sel).toggleClass("active", true)
-                    .find("a")
-                    .attr("aria-current", "page");
-        }
-    }
-
-    function update_machine_links(machine, showing_sidebar, state) {
-        var data = $("#host-nav-link").attr("data-machine");
-
-        // If we are already setup we will bail early
-        if (data && (!machine || machine.address === data)) {
-            // If showing the sidebar, save our place
-            if (showing_sidebar) {
-                $("#host-nav-link").attr("href", index.href(state));
-                update_active_machine(data);
-            }
-            return;
-        }
-
-        if (!machine && data)
-            machine = machines.lookup(data);
-        if (!machine)
-            machine = default_machine();
-
-        $("#host-nav-link span.list-group-item-value").text(_("Host"));
-        $("#host-nav-link")
-                .attr("data-machine", machine ? machine.address : "")
-                .attr("href", index.href({ host: machine ? machine.address : undefined }, true));
-
-        // Only show the hosts icon in the main nav if we have a machine
-        $("#host-nav-item").toggleClass("dashboard-link", !!machine);
-
-        update_active_machine(machine ? machine.address : null);
-    }
-
     function update_docs(machine, state, compiled) {
         const item = compiled.items[state.component];
         const docs_items = document.getElementById("navbar-docs-items");
@@ -572,38 +491,6 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
 
         if (item && item.docs && item.docs.length > 0)
             item.docs.forEach(e => create_item(_(e.label), e.url));
-    }
-
-    function update_navbar(machine, state, compiled) {
-        /* When a dashboard no machine or sidebar */
-        var item = compiled.items[state.component];
-        if (item && item.section == "dashboard") {
-            delete state.sidebar;
-            machine = null;
-        }
-
-        $(".dashboard-link").each(function() {
-            var el = $(this);
-            var data = el.attr("data-component");
-            // Mark active component and save our place
-            if (data && data === state.component) {
-                el.attr("href", index.href(state))
-                        .toggleClass("active", true)
-                        .find("a")
-                        .attr("aria-current", "page");
-            } else {
-                el.toggleClass("active", false)
-                        .find("a")
-                        .removeAttr("aria-current");
-            }
-        });
-
-        $("#host-nav-item").toggleClass("active", !!machine);
-        if (machine)
-            update_sidebar(machine, state, compiled);
-
-        update_machine_links(machine, !!machine, state);
-        $('.area-ct-body').toggleClass("single-nav", $(".dashboard-link").length < 2);
     }
 
     function update_title(label, machine) {
