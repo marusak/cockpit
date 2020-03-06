@@ -191,9 +191,8 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
         }
     }
 
-    document.getElementById("host-apps").addEventListener("keyup", navigate_apps);
-    document.getElementById("filter-menus").addEventListener("keyup", on_filter_menus_changed);
-    document.getElementById("filter-menus").addEventListener("change", on_filter_menus_changed);
+    document.getElementById("host-apps").addEventListener("keyup", on_filter_menus_changed);
+    document.getElementById("host-apps").addEventListener("change", on_filter_menus_changed);
 
     /* When the machine list is ready we start processing navigation */
     $(machines)
@@ -332,8 +331,10 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
         if (!compiled)
             compiled = compile(machine);
 
-        var term = document.getElementById("filter-menus").value
-                .toLowerCase();
+        const filter = document.getElementById("filter-menus");
+        var term = "";
+        if (filter)
+            term = filter.value.toLowerCase();
 
         function keyword_relevance(current_best, item) {
             const translate = item.translate || false;

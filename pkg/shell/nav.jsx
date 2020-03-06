@@ -17,15 +17,21 @@ const _ = cockpit.gettext;
 export class cNav extends React.Component {
     render() {
         return (
-            <Nav onSelect={this.onSelect} theme="dark">
-                { this.props.groups.map(g =>
-                    <NavGroup key={g.name} title={g.name}>
-                        {g.items}
-                    </NavGroup>
-                )}
-                { this.props.groups.length < 1 && <span className="non-menu-item">{this.props.empty_message}</span> }
-                { this.props.clear_search && <span className="non-menu-item"><button onClick={this.props.clear_search} className="link-button hint">{this.props.clear_search_msg}</button></span> }
-            </Nav>
+            <>
+                <div className="has-feedback search" id="menu-search">
+                    <input id="filter-menus" className="form-control" type="search" placeholder={_("Search")} aria-label={_("Search")} />
+                    <span className="fa fa-search form-control-feedback" />
+                </div>
+                <Nav onSelect={this.onSelect} theme="dark">
+                    { this.props.groups.map(g =>
+                        <NavGroup key={g.name} title={g.name}>
+                            {g.items}
+                        </NavGroup>
+                    )}
+                    { this.props.groups.length < 1 && <span className="non-menu-item">{this.props.empty_message}</span> }
+                    { this.props.clear_search && <span className="non-menu-item"><button onClick={this.props.clear_search} className="link-button hint">{this.props.clear_search_msg}</button></span> }
+                </Nav>
+            </>
         );
     }
 }
