@@ -486,7 +486,7 @@ function Router(index) {
  * As a convenience, common menu items can be setup by adding the
  * selector to be used to hook them up. The accepted selectors
  * are.
- * oops_sel, logout_sel, language_sel, brand_sel, about_sel,
+ * oops_sel, logout_sel, language_sel, about_sel,
  * user_sel, account_sel
  *
  * Emits "disconnect" and "expect_restart" signals, that should be
@@ -803,6 +803,7 @@ function Index() {
         });
     }
 
+    /*
     function css_content(elt) {
         var styles, i;
         var style, content;
@@ -836,8 +837,10 @@ function Index() {
 
         return content || el_content;
     }
+    */
 
     /* Branding */
+    /*
     function setup_brand(id, default_title) {
         var elt = $(id)[0];
         var os_release = {};
@@ -860,6 +863,7 @@ function Index() {
             elt.removeAttribute("class");
         }
     }
+    */
 
     /* Logout link */
     function setup_logout(id) {
@@ -942,12 +946,15 @@ function Index() {
     if (self.language_sel)
         setup_language(self.language_sel);
 
-    var cal_title;
+    // var cal_title;
+
+    /*
     if (self.brand_sel) {
         cal_title = setup_brand(self.brand_sel, self.default_title);
         if (cal_title && !self.skip_brand_title)
             self.default_title = cal_title;
     }
+    */
 
     if (self.about_sel)
         setup_about(self.about_sel);

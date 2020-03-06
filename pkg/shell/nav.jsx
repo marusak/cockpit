@@ -14,7 +14,7 @@ import { ExclamationCircleIcon, ExclamationTriangleIcon, InfoCircleIcon } from '
 
 const _ = cockpit.gettext;
 
-export class cNav extends React.Component {
+export class CockpitNav extends React.Component {
     render() {
         return (
             <>
@@ -36,7 +36,7 @@ export class cNav extends React.Component {
     }
 }
 
-cNav.propTypes = {
+CockpitNav.propTypes = {
     groups: PropTypes.array,
     empty_message: PropTypes.string,
     clear_search_msg: PropTypes.string,
@@ -67,7 +67,7 @@ function FormatedText(props) {
     );
 }
 
-export class cNavItem extends React.Component {
+export class CockpitNavItem extends React.Component {
     render() {
         const s = this.props.status;
         const name_matches = this.props.keyword === this.props.name.toLowerCase();
@@ -81,7 +81,7 @@ export class cNavItem extends React.Component {
     }
 }
 
-cNavItem.propTypes = {
+CockpitNavItem.propTypes = {
     name: PropTypes.string,
     to: PropTypes.string,
     status: PropTypes.object,

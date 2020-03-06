@@ -42,7 +42,6 @@ document.addEventListener("click", function(ev) {
 }, true);
 
 var options = {
-    brand_sel: "#index-brand",
     logout_sel: "#go-logout",
     oops_sel: "#navbar-oops",
     language_sel: "#display-language",

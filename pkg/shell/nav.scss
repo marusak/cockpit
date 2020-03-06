@@ -1,0 +1,742 @@
+// TODO keep only what applies and put it into the other file
+
+.ct-switcher {
+    grid-area: switcher;
+    border: 1px solid #999;
+    border-width: 0 1px 0 0;
+
+    > .pf-c-select {
+        display: flex;
+        height: 100%;
+
+        > button {
+            padding-left: 1.5rem;
+        }
+    }
+
+    .pf-c-select__toggle-text {
+        text-align: left;
+    }
+}
+
+.ct-switcher,
+.view-hosts {
+    line-height: var(--pf-global--LineHeight--sm);
+
+    .username,
+    .at {
+        display: inline-block;
+        font-size: var(--pf-global--FontSize--sm);
+    }
+    .at {
+        opacity: 0.8;
+    }
+    .hostname {
+        display: block;
+        font-weight: 600;
+    }
+}
+
+.pf-m-dark {
+    scrollbar-color: var(--pf-global--Color--400) var(--pf-global--BackgroundColor--dark-400);
+    text-shadow: 0 0;
+
+    .pf-c-select__toggle {
+        color: var(--pf-global--Color--light-100);
+        background-color: var(--pf-global--BackgroundColor--dark-300);
+    }
+
+    .pf-c-select__toggle-text, .fa, .fas {
+        color: var(--pf-global--Color--light-100);
+    }
+
+    input {
+        color: var(--pf-global--Color--light-100);
+        background-color: var(--pf-global--BackgroundColor--dark-100);
+        border-color: transparent;
+
+        &:focus {
+            border-bottom-color: white;
+        }
+
+        &, &[class*=icon] {
+            transition: var(--pf-global--Transition);
+        }
+    }
+}
+
+$phone: 0;
+$desktop: $phone + 1px;
+
+.test {
+    width: 20rem;
+}
+
+html, body, .page {
+    margin: 0;
+    padding: 0;
+}
+
+.page {
+    display: grid;
+    height: 100vh;
+    width: 100vw;
+    scrollbar-color: var(--pf-global--BorderColor--200) var(--pf-global--BorderColor--100);
+
+    @media (max-width: $phone) {
+        grid: "main main" "sidebar header";
+        grid-template-rows: 1fr 4rem;
+        grid-template-columns: auto 4rem;
+        overflow: hidden;
+    }
+
+    @media (min-width: $desktop) {
+        grid: "switcher header" "sidebar main";
+        grid-template-rows: max-content 1fr;
+        grid-template-columns: minmax(min-content, 15rem) 1fr;
+    }
+
+    &.ct-page-fullscreen {
+        @media (max-width: $phone) {
+            grid: "main main" "header header";
+        }
+
+        @media (min-width: $desktop) {
+            grid-template-areas: "switcher header" "main main";
+        }
+
+        .ct-header-item {
+            display: none;
+        }
+    }
+}
+
+.header,
+.sidebar,
+main {
+    overflow: auto;
+}
+
+.ct-switcher,
+.header {
+    border-top: 3px solid var(--pf-global--primary-color--light-100);
+}
+
+.header {
+    grid-area: header;
+    background: #1b1b1b;
+    color: white;
+    display: grid;
+    align-items: center;
+    grid-template-columns: auto;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+
+    h1 {
+        padding: 1rem 1.5rem;
+        font-size: 1.25rem;
+        font-family: var(--pf-global--FontFamily--heading--sans-serif);
+        text-transform: uppercase;
+    }
+
+    @media (max-width: $phone) {
+        h1 {
+            display: none;
+        }
+    }
+
+    .status {
+        color: var(--pf-global--Color--light-300);
+    }
+
+    .fa {
+        font-size: 22px;
+        margin-right: 0.5rem;
+        vertical-align: middle;
+        margin-top: calc((22px - 1rem) / -2);
+    }
+
+    .ct-header-item {
+        display: flex;
+        height: 100%;
+        align-items: center;
+        padding: 0.5rem 1rem;
+    }
+
+    .pf-c-select__toggle-text {
+        overflow: visible;
+    }
+
+    .pf-c-select,
+    .pf-c-select__toggle {
+        display: flex;
+        height: 100%;
+    }
+}
+
+.sidebar {
+    grid-area: sidebar;
+    border-right: 1px solid var(--pf-global--BorderColor--100);
+    display: flex;
+    flex-direction: column;
+    background: var(--pf-global--BackgroundColor--dark-300);
+    width: var(--pf-c-nav--Width);
+
+    > .pf-c-select {
+        border-bottom: 1px solid var(--pf-global--BorderColor--100);
+
+        > .pf-c-select__toggle {
+            padding: 0.75rem 1.5rem;
+        }
+    }
+
+    &.pf-m-dark > .pf-c-select {
+        border-bottom: 1px solid var(--pf-global--BorderColor--200);
+    }
+
+    .pf-c-nav {
+        overflow-y: auto;
+        width: auto;
+    }
+    > .pf-c-nav {
+        flex: 1 1 0;
+    }
+
+    .pf-c-nav__link {
+        display: flex;
+        align-items: center;
+
+        > :first-child {
+            &.fa {
+                margin-right: 0.5rem;
+            }
+            &:not(.fa) {
+                flex: auto;
+            }
+        }
+
+        /* Add a bit of style to make it look like upcoming PF4 nav (1/2) */
+        &.pf-m-current,
+        &:hover {
+            position: relative;
+
+            &::after {
+                content: '';
+                display: block;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                position: absolute;
+                border-left: 3px solid var(--pf-global--active-color--300);
+            }
+        }
+
+        /* Style to fake upcoming PF4 (2/2) */
+        &:not(.pf-m-current):hover {
+            background: var(--pf-global--Color--300);
+
+            &::after {
+                border-left: 2px solid var(--pf-global--Color--400);
+            }
+        }
+    }
+
+    hr.pf-c-divider {
+        border: none;
+        border-top: 1px solid var(--pf-global--BorderColor--100);
+        margin: 2rem 1rem;
+    }
+
+    @media (max-width: $phone) {
+        flex-direction: row;
+        align-items: start;
+
+        > .pf-c-select,
+        .pf-c-nav > section {
+            max-width: 10rem;
+            margin: 0;
+        }
+
+        > .pf-c-select,
+        .pf-c-nav {
+            padding: 0;
+        }
+
+        > .pf-c-select {
+            width: 8rem;
+        }
+
+        .pf-c-nav {
+            display: flex;
+            overflow: auto;
+            max-width: calc(100vw - 30vw - 4rem);
+        }
+
+        .pf-c-nav > section {
+            &:focus,
+            &:focus-within,
+            &:hover {
+                //align-self: end;
+            }
+        }
+    }
+}
+
+main {
+    grid-area: main;
+}
+
+.pf-c-page__main {
+    background: #fafafa;
+    //display: flex;
+
+    > section {
+        padding: 2rem;
+        background: var(--pf-global--BackgroundColor--light-300);
+
+        &.pf-m-light {
+            background-color: white;
+        }
+    }
+}
+
+.ct-search {
+    margin: 1rem 1.5rem;
+
+    .search-icon {
+        position: absolute;
+        display: inline-block;
+        text-align: center;
+        margin-left: 0.5em;
+        opacity: 0.5;
+        width: 16px;
+        transition: var(--pf-global--Transition);
+
+        &::before {
+            margin-top: 6px;
+            font-family: Font Awesome\ 5 Free;
+            content: "\F002";
+            font-weight: 900;
+            display: inline-block;
+            font-style: normal;
+            font-variant: normal;
+            text-rendering: auto;
+            -webkit-font-smooth: antialiased;
+        }
+    }
+
+    > input {
+        padding-left: calc(16px + 1em);
+
+        &:focus {
+
+            ~ .search-icon {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+.fa-angle-up::before,
+.fa-angle-right::before,
+.fa-angle-down::before,
+.fa-angle-left::before {
+    color: var(--pf-global--Color--light-300);
+}
+
+.fa-exclamation-triangle::before {
+    color: var(--pf-global--warning-color--100);
+}
+
+.fa-question-circle::before {
+    color: var(--pf-global--info-color--100);
+}
+
+.ct-form > .pf-c-input-group {
+    width: auto !important;
+}
+
+.ct-system-info {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(max-content, 20rem));
+    grid-gap: 3rem 2rem;
+}
+.ct-system-info > section {
+}
+
+.ct-system-info .ct-form > label {
+    font-size: var(--pf-global--FontSize--sm);
+    text-align: left;
+}
+
+.ct-health-details {
+    &, li {
+        margin: 0 !important;
+        padding: 0 !important;
+        list-style-type: none;
+    }
+}
+
+.pf-c-page__main-section.pf-m-light {
+    --pf-c-page__main-section--BackgroundColor: var(--pf-c-page__main-section--m-light--BackgroundColor);
+}
+.pf-c-page__main-section {
+    padding: var(--pf-c-page__main-section--PaddingTop) var(--pf-c-page__main-section--PaddingRight) var(--pf-c-page__main-section--PaddingBottom) var(--pf-c-page__main-section--PaddingLeft);
+    background-color: var(--pf-c-page__main-section--BackgroundColor);
+}
+
+.ct-heading-group {
+    display: flex;
+    align-items: center;
+    flex-flow: row wrap;
+
+    h1, h2, h3, h4,
+    .pf-c-title {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        margin-right: 2rem;
+    }
+
+    > * {
+        margin: 0 2rem 0 0;
+    }
+
+    > :last-child {
+        margin-right: 0;
+    }
+
+    > .ct-heading-group-actions {
+        flex: auto;
+        text-align: right;
+    }
+}
+
+.pf-c-breadcrumb + .pf-c-content {
+    margin-top: 0.5rem;
+}
+
+.pf-c-card > .ct-heading-group {
+    padding: 1rem;
+}
+.pf-c-card > .ct-heading-group + .pf-c-table {
+    border-top: 1px solid var(--pf-global--BorderColor--100);
+}
+
+.ct-overview-health {
+    li {
+        display: block;
+
+        > a {
+            display: flex;
+            align-items: center;
+            padding: 0.25rem 0;
+        }
+
+        &:not(:last-child) {
+            margin-bottom: 0.25rem;
+        }
+    }
+    .icon {
+        width: auto;
+        height: 1.25rem;
+        flex-basis: 22px;
+        margin-right: 0.5rem;
+        justify-self: center;
+    }
+
+    .insights-icon {
+        /* JavaScript-set numbers; default to 0 */
+        --critical: 0;
+        --important: 0;
+        --moderate: 0;
+        --low: 0;
+        /*  Add the numbers together, making calculations easier later on */
+        --total: calc(var(--critical) + var(--important) + var(--moderate) + var(--low));
+        border-radius: 3px;
+        border: 1px solid var(--pf-global--BorderColor--200);
+        /*  Use flex here (with auto below) so everything always adds up properly */
+        display: flex;
+        flex-direction: column;
+        width: 22px;
+        height: 22px;
+        /*  Inner gap between colors and border */
+        padding: 1px;
+        /* The top border offset is provided by the border of the first block */
+        padding-top: 0;
+
+        > * {
+            /*  If there's a value, set to 1px. Otherwise, divide by 0 and it becomes invalid */
+            --pixel-onoff: calc(var(--severity) / var(--severity) * 1px);
+            /*  Hit severity is mapped to the --servity variable in blocks below. */
+            height: calc(var(--severity) / var(--total) * 100%);
+            /*  Make it stretchy so the math always works out. ("Fudge factor") */
+            flex: auto;
+            /*  Anti-alias the edges ever-so-slightly */
+            border-radius: 1px;
+            /* If there's a value, then there's a gap at top */
+            margin-top: var(--pixel-onoff);
+            /* If there's a value, always round height up to 1px minimum */
+            min-height: var(--pixel-onoff);
+        }
+
+        &-critical {
+            --severity: var(--critical);
+            background: #c9190b;
+        }
+
+        &-important {
+            --severity: var(--important);
+            background: #ec7a08;
+        }
+
+        &-moderate {
+            --severity: var(--moderate);
+            background: #f0ab00;
+        }
+
+        &-low {
+            --severity: var(--low);
+            background: #d2d2d2;
+        }
+    }
+}
+
+
+.pf-c-table tr > * {
+    vertical-align: top;
+}
+
+.pf-c-switch__label {
+    font-size: var(--pf-global--FontSize--sm);
+}
+
+.ct-inline-list {
+    .pf-c-list.pf-m-inline {
+        display: inline-flex;
+        margin-left: 1rem;
+    }
+}
+
+.ct-system-overview {
+    --pf-l-gallery--GridTemplateColumns: repeat(auto-fill, minmax(24rem, 1fr));
+
+    .pf-c-progress {
+        grid-gap: 0;
+        width: 100%;
+        min-width: 3rem;
+    }
+
+    th {
+        font-size: var(--pf-global--FontSize--sm);
+    }
+
+    td {
+        vertical-align: middle;
+    }
+
+    .pf-c-card__header {
+        font-size: var(--pf-global--FontSize--2xl);
+        font-weight: var(--pf-global--FontWeight--normal)
+    }
+
+    .pf-m-compact {
+        th, td {
+            &:first-child {
+                padding-left: 0;
+            }
+            &:last-child {
+                padding-right: 0;
+            }
+        }
+    }
+
+    p + p {
+        margin-top: calc(var(--pf-global--LineHeight--md) * 1rem);
+    }
+
+    /* Drop the border on the last row when there are no card actions */
+    .pf-c-card__body:last-child {
+        .pf-c-table:last-child {
+            tr:last-child {
+                border-bottom: none;
+            }
+        }
+    }
+}
+
+.view-hosts {
+    #host-switcher i {
+        transform: scaleY(-100%) translateY(-3px)
+    }
+    .sidebar {
+        position: relative;
+    }
+    .sidebar-hosts {
+        --sidebar-animation-speed: 600ms;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: var(--pf-global--BackgroundColor--dark-200);
+        animation: slideDown var(--sidebar-animation-speed);
+        display: flex;
+        flex-direction: column;
+
+        > * {
+            animation: noScroll var(--sidebar-animation-speed), fadeInThird var(--sidebar-animation-speed);
+        }
+
+        &.slide-up {
+            animation: slideDown 900ms;
+            animation-direction: reverse;
+        }
+
+        &:not(.edit-mode) {
+            .remove-host {
+                display: none;
+            }
+            .is-editing {
+                display: none;
+            }
+        }
+
+        &.edit-mode {
+            .remove-host {
+            }
+            .not-editing {
+                display: none;
+            }
+        }
+
+        > button {
+            display: flex;
+            margin: 0.75rem 1.5rem;
+            justify-content: center;
+
+            &:first-of-type {
+                margin-top: 1.5rem;
+            }
+
+            + button {
+                margin-top: 0;
+            }
+        }
+
+        .pf-c-button {
+            /* Shrink down button padding a little */
+            --pf-c-button--PaddingTop: calc(var(--pf-global--spacer--form-element)*.5);
+            --pf-c-button--PaddingRight: calc(var(--pf-global--spacer--md)*.75);
+            --pf-c-button--PaddingBottom: calc(var(--pf-global--spacer--form-element)*.5);
+            --pf-c-button--PaddingLeft: calc(var(--pf-global--spacer--md)*.75);
+        }
+    }
+}
+
+#host-switcher {
+    &:hover,
+    &:focus {
+        background: var(--pf-global--BackgroundColor--dark-400);
+    }
+}
+
+.host-dialog {
+    &.pf-c-backdrop {
+        position: relative;
+        grid-column: 2 / -1;
+        grid-row: 2 / -1;
+    }
+
+    .pf-l-bullseye {
+        align-items: start;
+    }
+    .pf-c-modal-box {
+        margin-top: 2rem;
+    }
+
+}
+
+#host-color {
+    align-self: center;
+}
+
+// Copy header CSS from Cockpit
+.ct-overview-header {
+  align-items: center;
+  display: flex;
+  flex: none;
+
+  &,
+  &-hostname {
+    flex-wrap: wrap;
+  }
+
+  &-actions,
+  &-hostname {
+    box-sizing: border-box;
+    display: flex;
+  }
+
+  &-hostname {
+    align-items: baseline;
+    flex: auto;
+    /* Collapse down to 15rem, to help preserve button on the right */
+    flex-basis: 15rem;
+
+    > h1 {
+      font-size: var(--pf-global--FontSize--2xl);
+    }
+  }
+
+  &-hostname > h1,
+  &-subheading {
+    padding-right: 1rem;
+  }
+
+  &-actions {
+    align-items: center;
+  }
+
+  &-subheading {
+    font-size: var(--pf-global--FontSize--md);
+  }
+}
+
+@media (min-width: 780px) {
+    /* Embiggen subheading & card headings when there's space */
+    .ct-system-overview .pf-c-card__header {
+        font-size: var(--pf-global--FontSize--2xl);
+    }
+
+    .ct-overview-header-subheading {
+        font-size: var(--pf-global--FontSize--lg);
+    }
+}
+
+
+@keyframes slideDown {
+    0% {
+        height: 0;
+        overflow: hidden;
+    }
+    100% {
+        height: 100%;
+        overflow: hidden;
+    }
+}
+
+@keyframes noScroll {
+    0%, 100% {
+        overflow: hidden;
+    }
+}
+
+@keyframes fadeInThird {
+    0%, 33% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

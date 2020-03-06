@@ -91,6 +91,7 @@ var info = {
         "shell/index": [
             "shell/index.js",
             "shell/shell.scss",
+            "shell/nav.scss",
         ],
 
         "sosreport/sosreport": [

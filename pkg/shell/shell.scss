@@ -34,6 +34,7 @@ html, body {
 
 html.index-page body {
     overflow: hidden;
+    display: grid;
 }
 
 .hide-before:before {

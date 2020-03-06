@@ -22,7 +22,8 @@ import cockpit from "cockpit";
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { cNav, cNavItem } from "./nav.jsx";
+import { CockpitNav, CockpitNavItem } from "./nav.jsx";
+import { cHosts } from "./hosts.jsx";
 
 import * as base_index from "./base_index";
 
@@ -67,13 +68,16 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
 
     /* Is troubleshooting dialog open */
     var troubleshooting = false;
-    var machines_timer = null;
 
+    // HERE TODO
+    /*
     $("#machine-dropdown").on("hide.bs.dropdown", function () {
         $("#find-machine").val("");
         $("#machine-dropdown ul li").toggleClass("hidden", false);
     });
 
+    var machines_timer = null;
+    // HERE TODO
     $("#find-machine").on("keyup", function (ev) {
         if (machines_timer)
             window.clearTimeout(machines_timer);
@@ -83,6 +87,7 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
             machines_timer = null;
         }, 250);
     });
+    */
 
     $("#host-nav-item").on("click", function (ev) {
         if ($(this).hasClass("active")) {
@@ -216,7 +221,8 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
     if (machines.ready)
         on_ready();
 
-    /* When only one machine this operates as a link */
+    /* TODO
+    // When only one machine this operates as a link
     $("#machine-link").on("click", function(ev) {
         if (machines.list.length == 1) {
             index.jump({ host: machines.list[0].address, sidebar: true, component: "" });
@@ -224,6 +230,7 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
             return false;
         }
     });
+    */
 
     function show_disconnected() {
         if (!ready) {
@@ -404,7 +411,7 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
             if (page_status[machine.key])
                 status = page_status[machine.key][component.path];
 
-            return React.createElement(cNavItem, {
+            return React.createElement(CockpitNavItem, {
                 name: component.label,
                 active: active,
                 status: status,
@@ -439,14 +446,54 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
             groups.push({ name: _("Tools"), items: tools });
 
         ReactDOM.render(
-            React.createElement(cNav, {
+            React.createElement(CockpitNav, {
                 empty_message: _("No results found"),
                 clear_search_msg: _("Clear Search"),
                 groups: groups,
                 clear_search: term !== "" ? clearSearch : null,
             }),
             document.getElementById("host-apps"));
+    }
 
+    function update_machines() {
+        // machines.list - all
+        // machine.label
+        const state = index.retrieve_state();
+        const machine = machines.lookup(state.host);
+        console.log(machine);
+        ReactDOM.render(
+            React.createElement(cHosts, {
+                machine: machine,
+                machines: machines.list
+            }),
+            document.getElementById("hosts-sel"));
+        /*
+        $("#machine-dropdown .fa-caret-down")
+                .toggle(machines.list.length > 1);
+
+        var machine_link = $("#machine-link");
+        if (machines.list.length > 1)
+            machine_link.attr("data-toggle", "dropdown");
+        else
+            machine_link.removeAttr("data-toggle");
+
+        var list = $("#machine-dropdown ul");
+        var links = machines.list.map(function(machine) {
+            var text = $("<span>")
+                    .text(machine.label)
+                    .prepend($("<i>")
+                            .attr("class", "fa-li fa fa-circle")
+                            .css("color", machine.color || ""));
+            return $("<li role='presentation'>")
+                    .attr("data-address", machine.address)
+                    .append($("<a>")
+                            .attr("role", "menuitem")
+                            .attr("tabindex", "-1")
+                            .attr("data-address", machine.address)
+                            .attr("href", index.href({ host: machine.address }, true))
+                            .append(text));
+        });
+        list.empty().append(links);
         $("#machine-avatar").attr("src", machine && machine.avatar ? encodeURI(machine.avatar)
             : "../shell/images/server-small.png");
 
@@ -460,6 +507,7 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
             $("#machine-link span").text(_("Machines"));
             $("#machine-link").attr("title", "");
         }
+        */
     }
 
     function update_docs(machine, state, compiled) {
@@ -602,35 +650,8 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
         }
     }
 
-    function update_machines() {
-        $("#machine-dropdown .fa-caret-down")
-                .toggle(machines.list.length > 1);
-
-        var machine_link = $("#machine-link");
-        if (machines.list.length > 1)
-            machine_link.attr("data-toggle", "dropdown");
-        else
-            machine_link.removeAttr("data-toggle");
-
-        var list = $("#machine-dropdown ul");
-        var links = machines.list.map(function(machine) {
-            var text = $("<span>")
-                    .text(machine.label)
-                    .prepend($("<i>")
-                            .attr("class", "fa-li fa fa-circle")
-                            .css("color", machine.color || ""));
-            return $("<li role='presentation'>")
-                    .attr("data-address", machine.address)
-                    .append($("<a>")
-                            .attr("role", "menuitem")
-                            .attr("tabindex", "-1")
-                            .attr("data-address", machine.address)
-                            .attr("href", index.href({ host: machine.address }, true))
-                            .append(text));
-        });
-        list.empty().append(links);
-    }
-
+    // HERE TODO
+    /*
     function filter_machines () {
         var val = $("#find-machine").val()
                 .toLowerCase();
@@ -643,6 +664,7 @@ function MachinesIndex(index_options, machines, loader, mdialogs) {
             el.toggleClass("hidden", hide);
         });
     }
+    */
 
     function compatibility(machine) {
         if (!machine.manifests || machine.address === "localhost")
