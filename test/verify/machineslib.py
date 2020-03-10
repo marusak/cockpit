@@ -36,7 +36,7 @@ def readFile(name):
 
 
 # Preparations for iscsi storage pool
-def prepareStorageDeviceOnISCSI(m, target_iqn, orig_iqn=None):
+def prepareStorageDeviceOnISCSI(m, target_iqn, orig_iqn=None, cleanup=None):
     if orig_iqn is None:
         orig_iqn = m.execute("sed </etc/iscsi/initiatorname.iscsi -e 's/^.*=//'").rstrip()
 
@@ -50,6 +50,10 @@ def prepareStorageDeviceOnISCSI(m, target_iqn, orig_iqn=None):
               targetcli /iscsi/%(tgt)s/tpg1/luns create /backstores/ramdisk/test
               targetcli /iscsi/%(tgt)s/tpg1/acls create %(ini)s
               """ % {"tgt": target_iqn, "ini": orig_iqn})
+    cleanup(m.execute, """
+              targetcli /backstores/ramdisk delete test
+              targetcli /iscsi delete %(tgt)s
+              """ % {"tgt": target_iqn})
 
 
 SPICE_XML = """
@@ -798,7 +802,7 @@ class TestMachines(NetworkCase, StorageHelpers):
             # Preparations for testing ISCSI pools
 
             target_iqn = "iqn.2019-09.cockpit.lan"
-            prepareStorageDeviceOnISCSI(m, target_iqn)
+            prepareStorageDeviceOnISCSI(m, target_iqn, cleanup=self.addCleanup)
 
             m.execute("virsh pool-define-as iscsi-pool --type iscsi --target /dev/disk/by-path --source-host 127.0.0.1 --source-dev {0} && virsh pool-start iscsi-pool".format(target_iqn))
             wait(lambda: "unit:0:0:0" in self.machine.execute("virsh pool-refresh iscsi-pool && virsh vol-list iscsi-pool"), delay=3)
@@ -1706,7 +1710,7 @@ class TestMachines(NetworkCase, StorageHelpers):
         if "debian" not in self.machine.image and "ubuntu" not in self.machine.image:
             # Test create VM with disk of type "network"
             target_iqn = "iqn.2019-09.cockpit.lan"
-            prepareStorageDeviceOnISCSI(self.machine, target_iqn)
+            prepareStorageDeviceOnISCSI(self.machine, target_iqn, cleanup=self.addCleanup)
 
             cmds = [
                 "virsh pool-define-as --name poolIscsi --type iscsi --source-host 127.0.0.1 --source-dev {0} --target /dev/disk/by-path/".format(target_iqn),
