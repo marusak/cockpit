@@ -97,6 +97,7 @@ var initStore = function(rootElement) {
                         result: output,
                         success: true,
                     };
+                    selinuxClient.getModifications(selinuxStatusChanged);
                     dataStore.render();
                 })
                 .fail(function(error) {
