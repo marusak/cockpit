@@ -56,9 +56,45 @@ mv -f ~/.ssh/authorized_keys.test-avc ~/.ssh/authorized_keys
 
 class TestSelinux(MachineCase):
     provision = {
-        "0": {},
-        "ansible_machine": {"image": TEST_OS_DEFAULT}
+        "0": {"forward": {"80": 8080} },
+        "ansible_machine": {"image": TEST_OS_DEFAULT, "forward": {"80": 8080} }
     }
+
+    def testDemo(self):
+        m = self.machine
+
+        # fix audit events first
+        m.execute(script=FIX_AUDITD)
+        # set up httpd
+        m.execute("""set -e
+# enable userdir
+sed -i '/UserDir disabled/d; /UserDir public_html/ s/#//' /etc/httpd/conf.d/userdir.conf
+su - -c 'chmod o+x ~ && mkdir public_html && echo world > public_html/hello.txt' admin
+systemctl enable --now httpd cockpit.socket
+firewall-cmd --add-service http
+""")
+
+        print("""
+
+Setup complete
+-----------------------
+Open cockpit:
+firefox --private-window http://{0}:{1}
+Login as admin:foobar
+
+Introduction:
+- enabled UserDir in httpd
+- enabled in firewall
+- created ~admin/public_html/hello.txt (show in Terminal)
+
+httpd scenario
+-----------------------
+- Try to open http://127.0.0.2:8081/~admin/ → permission denied
+- Look at SELinux page, see failure there
+- Cannot be applied automatically, but pick the first boolean, put it into terminal (sudo!), and retry http
+""".format(m.web_address, m.web_port))
+
+        sit()
 
     @skipImage("No setroubleshoot", "debian-stable", "debian-testing", "fedora-coreos", "ubuntu-1804", "ubuntu-2004", "ubuntu-stable")
     @skipBrowser("Firefox needs http to access clipboard", "firefox")
