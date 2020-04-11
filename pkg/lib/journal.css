@@ -21,6 +21,10 @@
     border: none;
 }
 
+.cockpit-log-panel {
+    overflow-x: unset;
+}
+
 .cockpit-log-panel .panel-body {
     padding: 0;
 }

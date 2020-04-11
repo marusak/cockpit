@@ -61,16 +61,31 @@
 
 #journal select {
     margin-right: 20px;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 #journal-box .panel-heading {
     position: sticky;
-    top: 58px;
+    top: 57px;
+}
+
+.filter {
+    display: inline-block;
 }
 
 .content-header-extra + #journal-box {
     margin: 0;
     padding: 1.5rem;
+}
+
+.content-header-extra.toggle-filters-closed .filter:not(:first-child) {
+    display: none;
+}
+
+.filters-toggle button{
+    float: right;
+    padding-top: 8px;
 }
 
 #accordion-markup {
