@@ -44,8 +44,8 @@ along with Cockpit; If not, see <http://www.gnu.org/licenses/>.
       </div>
       <span class="filters-toggle" hidden>
         <button class="link-button" translate>Show all filters</button>
-        <div></div>
       </span>
+      <div class="filters-toggle full-row" hidden></div>
       <div class="filter">
           <label for="journal-prio-menu" translate>Severity</label>
           <select id="journal-prio-menu" class="ct-select">
@@ -68,6 +68,10 @@ along with Cockpit; If not, see <http://www.gnu.org/licenses/>.
       </div>
       <div class="filter">
           <button id="journal-follow" class="pf-c-button pf-m-secondary" type="button"></button>
+      </div>
+      <div class="filter text-search">
+          <label for="journal-grep" hidden translate>Text filter</label>
+          <input id="journal-grep" class="form-control" type="text" translate="placeholder" placeholder="Type to filter">
       </div>
     </div>
 
