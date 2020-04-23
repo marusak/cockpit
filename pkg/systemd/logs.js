@@ -371,7 +371,9 @@ $(function() {
         const prio_options = [...document.getElementById('journal-prio-menu').children];
         prio_options.forEach(p => {
             if (p.getAttribute('value') === prio_level)
-                p.setAttribute('selected', true);
+                p.selected = true;
+            else
+                p.selected = false;
         });
 
         const time_options = [...document.getElementById('journal-current-day-menu').children];
