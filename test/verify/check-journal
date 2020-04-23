@@ -43,7 +43,7 @@ class TestJournal(MachineCase):
             "Debug and above": "debug",
         }
 
-        if self.machine.image == "rhel-8-2": # Changed in #TODO
+        if self.machine.image == "rhel-8-2": # Changed in #13905
             self.select_from_dropdown(self.browser, "#journal-prio-menu", value)
         else:
             self.browser.set_val("#journal-prio-menu", prio_map[value])
