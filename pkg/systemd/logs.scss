@@ -94,6 +94,10 @@
     flex-grow: 1;
 }
 
+#journal-service-menu {
+    width: 10em; // Static width as it likes to resize a lot while loading
+}
+
 .filters-toggle button {
     float: right;
 }
