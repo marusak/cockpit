@@ -245,7 +245,7 @@ ExecStart=/bin/sh -c 'for s in $(seq 10); do echo SLOW; sleep 0.1; done; sleep 1
         wait_journal_empty()
 
         def wait_slow10():
-            if m.image == "rhel-8-2-distropkg": # Changed in TODO
+            if m.image == "rhel-8-2-distropkg": # Changed in #13905
                 wait_log_lines([expected_date, ["sh", "SLOW", "10"]])
             else:
                 wait_log_lines([expected_date, ["systemd", "slow10.service: Succeeded.", ""], ["sh", "SLOW", "10"],
