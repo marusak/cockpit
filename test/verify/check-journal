@@ -319,7 +319,7 @@ ExecStart=/bin/sh -c 'for s in $(seq 10); do echo SLOW; sleep 0.1; done; sleep 1
         wait_log_present("AFTER BOOT")
         m.execute("logger -p 5 --tag just-a-service WORK PLEASE")
         wait_log_present("WORK PLEASE")
-        if m.image == "rhel-8-2-distropkg": # Changed in #TODO
+        if m.image == "rhel-8-2-distropkg": # Changed in #13905
             self.select_from_dropdown(b, "#journal-service-menu", "check-journal", click=False)
             self.select_from_dropdown(b, "#journal-service-menu", "just-a-service", click=True)
         else:
@@ -327,7 +327,7 @@ ExecStart=/bin/sh -c 'for s in $(seq 10); do echo SLOW; sleep 0.1; done; sleep 1
             b.set_val("#journal-service-menu", "just-a-service")
         wait_log_not_present("AFTER BOOT")
         wait_log_present("WORK PLEASE")
-        if m.image == "rhel-8-2-distropkg": # Changed in #TODO
+        if m.image == "rhel-8-2-distropkg": # Changed in #13905
             self.select_from_dropdown(b, "#journal-service-menu", "All", click=True)
         else:
             b.set_val("#journal-service-menu", "*")
@@ -336,7 +336,7 @@ ExecStart=/bin/sh -c 'for s in $(seq 10); do echo SLOW; sleep 0.1; done; sleep 1
 
         self.select_priority("Error and above")
         wait_log_not_present("WORK PLEASE")
-        if m.image == "rhel-8-2-distropkg": # Changed in #TODO
+        if m.image == "rhel-8-2-distropkg": # Changed in #13905
             self.select_from_dropdown(b, "#journal-service-menu", "check-journal", click=False)
             b.click("#journal-service-menu button")
             b.wait_not_present("#journal-services-list ul li a:contains('just-a-service')")
