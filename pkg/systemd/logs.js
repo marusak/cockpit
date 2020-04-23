@@ -379,7 +379,9 @@ $(function() {
         const time_options = [...document.getElementById('journal-current-day-menu').children];
         time_options.forEach(p => {
             if (p.getAttribute('value') === query_start)
-                p.setAttribute('selected', true);
+                p.selected = true;
+            else
+                p.selected = false;
         });
 
         let follow = !(options.follow && options.follow === "false");
