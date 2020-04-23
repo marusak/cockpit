@@ -407,22 +407,6 @@ ExecStart=/bin/sh -c 'for s in $(seq 10); do echo SLOW; sleep 0.1; done; sleep 1
         b.go("#/?tag=logger&start=last-24h&prio=crit&grep=foo")
         b.wait_val("#journal-grep", "start:last-24h priority:crit identifier:logger foo")
 
-        b.set_checked("#journal-follow", False)
-        b.wait_val("#journal-grep", "follow:false start:last-24h priority:crit identifier:logger foo")
-        b.wait_js_cond('window.location.hash === "#/?tag=logger&start=last-24h&prio=crit&grep=foo"')
-        b.set_checked("#journal-follow", True)
-        b.wait_val("#journal-grep", "start:last-24h priority:crit identifier:logger foo")
-        b.wait_js_cond('window.location.hash === "#/?tag=logger&start=last-24h&prio=crit&grep=foo"')
-
-        b.set_checked("#journal-follow", False)
-        b.wait_val("#journal-grep", "follow:false start:last-24h priority:crit identifier:logger foo")
-        b.focus("#journal-grep")
-        b.key_press("\b\b\b\b\b x")
-        b.wait_val("#journal-grep", "follow:false start:last-24h priority:crit identifier:logge x")
-        b.wait_js_cond('window.location.hash === "#/?tag=logger&start=last-24h&prio=crit&grep=foo"')
-        self.select_priority("Alert and above")
-        b.wait_val("#journal-grep", "follow:false start:last-24h priority:alert identifier:logge x")
-        b.wait_js_cond('window.location.hash === "#/?follow=false&start=last-24h&prio=alert&tag=logge&grep=x"')
 
     def testBinary(self):
         b = self.browser
