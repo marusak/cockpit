@@ -21,7 +21,7 @@ The command is then responsible to:
  * setup an appropriate session and environment based on those credentials
  * launch a bridge that speaks the cockpit protocol on stdin and stdout.
 
-The default command is `cockpit-session` it is able to handle basic, gssapi,
+The default command is `cockpit-session` it is able to handle basic, gssapi (negotiate),
 and TLS client certificate (tls-cert) authentication.
 
 Authentication commands are called with a single argument which is the host that the user

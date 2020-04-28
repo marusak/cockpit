@@ -95,4 +95,34 @@
 
     </section>
   </section>
+
+  <section id="cockpit-action-schemas">
+    <title>Actions for authetification schemas</title>
+
+      <para>Setting an action can modify the behavior for an auth scheme.
+        Currently two actions are supported:
+        <itemizedlist>
+          <listitem><para><code>remote-login-ssh</code>: Use the SSH-Login section instead.</para></listitem>
+          <listitem><para><code>none</code>: Disable this auth scheme.</para></listitem>
+        </itemizedlist>
+      </para>
+      <para>Cockpit supported schemas:
+        <itemizedlist>
+          <listitem><para><code>basic</code>: Use name and password .</para></listitem>
+          <listitem><para><code>negotiate</code>: Use negotiate protocol such as with Kerberos.</para></listitem>
+          <listitem><para><code>tls-cert</code>: Use Cockpit TLS proxy.</para></listitem>
+        </itemizedlist>
+      </para>
+
+
+      <para>For example disabling gssapi:</para>
+          <informalexample>
+<programlisting language="js">
+[Negotiate]
+action=none
+</programlisting>
+          </informalexample>
+
+  </section>
+
 </chapter>

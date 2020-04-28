@@ -91,7 +91,7 @@ If cockpit-ws sees that cockpit-tls exports a certificate for its connection
 (by checking its cgroup instance name, which is the certificate fingerprint,
 and checking /run/cockpit/tls for it), then it will request the `tls-cert`
 authentication schema from cockpit-session, instead of the usual `basic` or
-`gssapi`. cockpit-session then does *not* set a PAM user name, and
+`negotiate`. cockpit-session then does *not* set a PAM user name, and
 [pam_cockpit_cert](../ws/pam_cockpit_cert.c) will check for an exported
 certificate and ask sssd to map it to a user. See the [manpage](../../doc/man/pam_cockpit_cert.xml)
 for details.
