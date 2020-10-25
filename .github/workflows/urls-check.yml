@@ -18,5 +18,5 @@ jobs:
 
       - name: Run urls-check action
         run: |
-          make bots
+          tools/make-bots
           tools/urls-check
