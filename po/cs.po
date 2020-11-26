@@ -34,7 +34,7 @@ msgstr[2] "$0 procesorů"
 
 #: pkg/metrics/metrics.jsx:389 pkg/metrics/metrics.jsx:446
 msgid "$0 GiB available"
-msgstr "$0 GiB k dispozici"
+msgstr "$0 GiB k dispoziciiiii"
 
 #: pkg/metrics/metrics.jsx:380 pkg/metrics/metrics.jsx:436
 msgid "$0 GiB total"
