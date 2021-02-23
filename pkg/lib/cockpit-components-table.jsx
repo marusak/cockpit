@@ -270,6 +270,9 @@ export class ListingTable extends React.Component {
                 tableProps.rows = [{ cells: emptyStateCell }];
         }
 
+        if (this.props.style)
+            tableProps.style = this.props.style;
+
         if (!isTableBasic) {
             return (
                 <Table {...tableProps}>
