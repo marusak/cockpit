@@ -21,6 +21,8 @@ import cockpit from 'cockpit';
 import React from 'react';
 import moment from "moment";
 import { EmptyStatePanel } from "../lib/cockpit-components-empty-state.jsx";
+import { ListingTable } from "cockpit-components-table.jsx";
+import { LogsPanel } from "cockpit-components-logs-panel.jsx";
 import {
     Alert,
     Breadcrumb, BreadcrumbItem,
@@ -575,6 +577,21 @@ const SvgGraph = ({ data, resource, have_sat }) => {
 };
 
 class MetricsMinute extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            expanded: false,
+        };
+
+        this.expand = this.expand.bind(this);
+    }
+
+    expand(isExpanded) {
+        // TODO not like this
+        this.setState({ expanded: !this.state.expanded });
+    }
+
     render() {
         const first = this.props.data.find(i => i !== null);
 
@@ -612,11 +629,42 @@ class MetricsMinute extends React.Component {
 
         let events = null;
         if (this.props.events) {
+            const cur_unit_id = "cockpit.service";
+            const match = [
+                "_SYSTEMD_UNIT=" + cur_unit_id, "+",
+                "COREDUMP_UNIT=" + cur_unit_id, "+",
+                "UNIT=" + cur_unit_id,
+            ];
+            const url = "/system/logs/#/?prio=debug&service=" + cur_unit_id;
+
             const timestamp = this.props.startTime + (this.props.minute * 60000);
-            events = <dl className="metrics-events" style={{ "--metrics-minute": this.props.minute }}>
-                <dt><time>{ moment(timestamp).format('LT') }</time></dt>
-                { this.props.events.map(t => <dd key={ t }>{ RESOURCES[t].event_description }</dd>) }
-            </dl>;
+            const desc = <div className="description">
+                { this.props.events.map(t => <span className="type" key={ t }>{ RESOURCES[t].event_description }</span>) }
+                <time className="time">{ moment(timestamp).format('LT') }</time>
+            </div>;
+
+            let body = " "; // Cannot be false-y, otherwise table does not show '>'
+            if (this.state.expanded)
+                body = <LogsPanel title={_("Service logs")} match={match} emptyMessage={_("No log entries")} max={10} goto_url={url} search_options={{ prio: "debug", service: cur_unit_id }} />;
+
+            const entry = [{
+                props: { key: timestamp, 'data-row-id': timestamp },
+                columns: [{ title: desc }],
+                hasPadding: false,
+                initiallyExpanded: this.props.expanded,
+                expandedContent: body,
+            }];
+
+            events = <ListingTable aria-label={ _("Event logs") }
+                                   className="metrics-events"
+                                   style={{ "--metrics-minute": this.props.minute, "--pf-c-table--BorderColor": "#fff" }}
+                                   showHeader={false}
+                                   variant="compact"
+                                   onRowClick={this.expand}
+                                   columns={[
+                                       { title: _("Event") },
+                                   ]}
+                                   rows={entry} />;
         }
 
         return (
