@@ -17,9 +17,14 @@
  * along with Cockpit; If not, see <http://www.gnu.org/licenses/>.
  */
 
+// Needs pf3
+
 import cockpit from 'cockpit';
 import React from 'react';
 import moment from "moment";
+
+import '../lib/patternfly/patternfly-cockpit.scss'; // PF3 for logs panel
+
 import { EmptyStatePanel } from "../lib/cockpit-components-empty-state.jsx";
 import { ListingTable } from "cockpit-components-table.jsx";
 import { LogsPanel } from "cockpit-components-logs-panel.jsx";
@@ -41,6 +46,8 @@ import { ExclamationCircleIcon } from '@patternfly/react-icons';
 import * as machine_info from "../lib/machine-info.js";
 import * as packagekit from "packagekit.js";
 import { install_dialog } from "cockpit-components-install-dialog.jsx";
+
+import "journal.css";
 
 const MSEC_PER_H = 3600000;
 const INTERVAL = 5000;
@@ -587,14 +594,14 @@ class MetricsMinute extends React.Component {
         this.expand = this.expand.bind(this);
     }
 
-    expand(isExpanded) {
-        // TODO not like this
-        this.setState({ expanded: !this.state.expanded });
+    expand(isOpenCurrent) {
+        this.setState({ expanded: isOpenCurrent });
     }
 
     render() {
         const first = this.props.data.find(i => i !== null);
 
+        // TODO Don't update this ofter first draw
         const graphs = ['cpu', 'memory', 'disks', 'network'].map(resource => {
             // not all resources have a saturation metric
             let have_sat = !!RESOURCES["sat_" + resource];
@@ -630,12 +637,8 @@ class MetricsMinute extends React.Component {
         let events = null;
         if (this.props.events) {
             const cur_unit_id = "cockpit.service";
-            const match = [
-                "_SYSTEMD_UNIT=" + cur_unit_id, "+",
-                "COREDUMP_UNIT=" + cur_unit_id, "+",
-                "UNIT=" + cur_unit_id,
-            ];
             const url = "/system/logs/#/?prio=debug&service=" + cur_unit_id;
+            console.log(url);
 
             const timestamp = this.props.startTime + (this.props.minute * 60000);
             const desc = <div className="description">
@@ -644,14 +647,19 @@ class MetricsMinute extends React.Component {
             </div>;
 
             let body = " "; // Cannot be false-y, otherwise table does not show '>'
-            if (this.state.expanded)
-                body = <LogsPanel title={_("Service logs")} match={match} emptyMessage={_("No log entries")} max={10} goto_url={url} search_options={{ prio: "debug", service: cur_unit_id }} />;
+            if (this.state.expanded) {
+                const since = moment(timestamp).format("YYYY-MM-DD HH:mm");
+                const until = moment(timestamp + 60000).format("YYYY-MM-DD HH:mm");
+                const match = { prio: "notice", since: since, until: until, follow: false };
+                body = <div className="cockpit-log-panel">
+                    <LogsPanel rawLogs match={match} emptyMessage={_("No log entries")} max={10} search_options={match} />
+                </div>;
+            }
 
             const entry = [{
                 props: { key: timestamp, 'data-row-id': timestamp },
                 columns: [{ title: desc }],
                 hasPadding: false,
-                initiallyExpanded: this.props.expanded,
                 expandedContent: body,
             }];
 
@@ -660,7 +668,7 @@ class MetricsMinute extends React.Component {
                                    style={{ "--metrics-minute": this.props.minute, "--pf-c-table--BorderColor": "#fff" }}
                                    showHeader={false}
                                    variant="compact"
-                                   onRowClick={this.expand}
+                                   afterToggle={this.expand}
                                    columns={[
                                        { title: _("Event") },
                                    ]}

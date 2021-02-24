@@ -312,6 +312,16 @@
                 grid-column: info;
             }
         }
+
+        .cockpit-log-panel {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+
+            .cockpit-logline {
+                flex: 0 0 100%;
+            }
+        }
     }
 
     &-info {
