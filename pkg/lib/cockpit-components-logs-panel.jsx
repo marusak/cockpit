@@ -33,10 +33,11 @@ const _ = cockpit.gettext;
  */
 
 export class JournalOutput {
-    constructor(search_options) {
+    constructor(search_options, raw) {
         this.logs = [];
         this.reboot_key = 0;
         this.search_options = search_options || {};
+        this.raw = raw;
     }
 
     onEvent(ev, cursor) {
@@ -91,7 +92,8 @@ export class JournalOutput {
     }
 
     render_day_header(day) {
-        return <div className="panel-heading" key={day}>{day}</div>;
+        if (!this.raw)
+            return <div className="panel-heading" key={day}>{day}</div>;
     }
 
     render_reboot_separator() {
@@ -134,7 +136,7 @@ export class LogsPanel extends React.Component {
     componentDidMount() {
         this.journalctl = journal.journalctl(this.props.match, { count: this.props.max });
 
-        var out = new JournalOutput(this.props.search_options);
+        var out = new JournalOutput(this.props.search_options, this.props.rawLogs);
         var render = journal.renderer(out);
 
         this.journalctl.stream((entries) => {
@@ -164,6 +166,9 @@ export class LogsPanel extends React.Component {
             content = _("Loading...");
         else
             content = this.state.logs.length ? this.state.logs : this.props.emptyMessage;
+
+        if (this.props.rawLogs)
+            return content;
 
         return (
             <Card className="cockpit-log-panel">
