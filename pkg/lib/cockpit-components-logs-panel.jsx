@@ -128,7 +128,7 @@ export class JournalOutput {
 export class LogsPanel extends React.Component {
     constructor() {
         super();
-        this.state = { logs: [] };
+        this.state = { logs: null };
     }
 
     componentDidMount() {
@@ -145,7 +145,13 @@ export class LogsPanel extends React.Component {
             // want to show "max" entries below it.
             out.limit(this.props.max + 1);
             this.setState({ logs: out.logs });
-        });
+        })
+                .done(() => {
+                    // When no logs found just change it to empty array
+                    if (out.logs.length === 0) {
+                        this.setState({ logs: [] });
+                    }
+                });
     }
 
     componentWillUnmount() {
@@ -153,6 +159,12 @@ export class LogsPanel extends React.Component {
     }
 
     render() {
+        let content;
+        if (this.state.logs === null)
+            content = _("Loading...");
+        else
+            content = this.state.logs.length ? this.state.logs : this.props.emptyMessage;
+
         return (
             <Card className="cockpit-log-panel">
                 <CardHeader>
@@ -160,7 +172,7 @@ export class LogsPanel extends React.Component {
                     { this.props.goto_url && <CardActions><button className="link-button" role="link" onClick={e => cockpit.jump(this.props.goto_url)}>{_("All logs")}</button></CardActions>}
                 </CardHeader>
                 <CardBody className={(!this.state.logs.length && this.props.emptyMessage.length) ? "empty-message" : "contains-list"}>
-                    { this.state.logs.length ? this.state.logs : this.props.emptyMessage }
+                    { content }
                 </CardBody>
             </Card>
         );
