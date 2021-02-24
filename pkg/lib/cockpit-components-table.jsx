@@ -99,6 +99,9 @@ export class ListingTable extends React.Component {
 
         isOpen[rowData.props.key] = isOpenCurrent;
         this.setState({ isOpen });
+
+        if (this.props.afterToggle)
+            this.props.afterToggle(isOpenCurrent);
     }
 
     sortRows(rows) {
