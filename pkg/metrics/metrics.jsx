@@ -592,10 +592,29 @@ class MetricsMinute extends React.Component {
         };
 
         this.expand = this.expand.bind(this);
+        this.onHover = this.onHover.bind(this);
     }
 
     expand(isOpenCurrent) {
         this.setState({ expanded: isOpenCurrent });
+    }
+
+    onHover(ev) {
+        // FIXME - throttle debounce this
+        const bounds = ev.target.getBoundingClientRect();
+        const offsetY = (ev.clientY - bounds.y) / bounds.height;
+        const indexOffset = Math.floor((1 - offsetY) * SAMPLES_PER_MIN);
+        const sample = this.props.rawData[indexOffset];
+        if (!sample)
+            return;
+
+        const time = moment(this.props.startTime + this.props.minute * 60000 + indexOffset * INTERVAL).format("LTS");
+        let tooltip = time + "\n\n";
+        Object.entries(sample).forEach(([t, v]) => {
+            if (v !== null && v !== undefined)
+                tooltip += `${RESOURCES[t].name}: ${RESOURCES[t].format(v)}\n`;
+        });
+        ev.target.setAttribute("title", tooltip);
     }
 
     render() {
@@ -628,6 +647,7 @@ class MetricsMinute extends React.Component {
                     className={ ("metrics-data metrics-data-" + resource) + (first ? " valid-data" : " empty-data") + (have_sat ? " have-saturation" : "") }
                     style={{ "--metrics-minute": this.props.minute }}
                     aria-hidden="true"
+                    onMouseMove={this.onHover}
                 >
                     {graph}
                 </div>
@@ -764,58 +784,16 @@ class MetricsHour extends React.Component {
         for (let minute = minutes - 1; minute >= 0; --minute) {
             const dataOffset = minute * SAMPLES_PER_MIN;
             const dataSlice = normData.slice(dataOffset, dataOffset + SAMPLES_PER_MIN);
-            minuteGraphs.push(<MetricsMinute key={minute} minute={minute} data={dataSlice} events={minute_events[minute]} startTime={this.props.startTime} />);
+            const rawSlice = this.props.data.slice(dataOffset, dataOffset + SAMPLES_PER_MIN);
+            minuteGraphs.push(<MetricsMinute key={minute} minute={minute} data={dataSlice} rawData={rawSlice} events={minute_events[minute]} startTime={this.props.startTime} />);
         }
 
         this.setState({ minuteGraphs: minuteGraphs, minutes: minutes, dataItems: this.props.data.length });
     }
 
     render() {
-        // FIXME: throttle-debounce this
-        const updateTooltip = ev => {
-            // event usually happens on an <svg> or its child, so also consider the parent elements
-            let el = ev.target;
-            let dataElement = null;
-            for (let i = 0; i < 3; ++i) {
-                if (el.classList.contains("metrics-data")) {
-                    dataElement = el;
-                    break;
-                } else {
-                    if (el.parentElement)
-                        el = el.parentElement;
-                    else
-                        break;
-                }
-            }
-
-            const hourElement = document.getElementById("metrics-hour-" + this.props.startTime.toString());
-
-            if (dataElement) {
-                const minute = parseInt(el.style.getPropertyValue("--metrics-minute"));
-                const bounds = dataElement.getBoundingClientRect();
-                const offsetY = (ev.clientY - bounds.y) / bounds.height;
-                const indexOffset = Math.floor((1 - offsetY) * SAMPLES_PER_MIN);
-                const sample = this.props.data[minute * SAMPLES_PER_MIN + indexOffset];
-                if (sample === null) {
-                    hourElement.removeAttribute("title");
-                    return;
-                }
-
-                const time = moment(this.props.startTime + minute * 60000 + indexOffset * INTERVAL).format("LTS");
-                let tooltip = time + "\n\n";
-                for (const t in sample) {
-                    const v = sample[t];
-                    if (v !== null && v !== undefined)
-                        tooltip += `${RESOURCES[t].name}: ${RESOURCES[t].format(v)}\n`;
-                }
-                hourElement.setAttribute("title", tooltip);
-            } else {
-                hourElement.removeAttribute("title");
-            }
-        };
-
         return (
-            <div id={ "metrics-hour-" + this.props.startTime.toString() } style={{ "--metrics-minutes": this.state.minutes, "--has-swap": swapTotal === undefined ? "var(--half-column-size)" : "var(--column-size)" }} className="metrics-hour" onMouseMove={updateTooltip}>
+            <div id={ "metrics-hour-" + this.props.startTime.toString() } style={{ "--metrics-minutes": this.state.minutes, "--has-swap": swapTotal === undefined ? "var(--half-column-size)" : "var(--column-size)" }} className="metrics-hour">
                 { this.state.minuteGraphs }
                 <h3 className="metrics-time"><time>{ moment(this.props.startTime).format("LT ddd YYYY-MM-DD") }</time></h3>
             </div>
