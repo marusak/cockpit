@@ -620,7 +620,6 @@ class MetricsMinute extends React.Component {
     render() {
         const first = this.props.data.find(i => i !== null);
 
-        // TODO Don't update this ofter first draw
         const graphs = ['cpu', 'memory', 'disks', 'network'].map(resource => {
             // not all resources have a saturation metric
             let have_sat = !!RESOURCES["sat_" + resource];
@@ -723,7 +722,6 @@ class MetricsHour extends React.Component {
 
     shouldComponentUpdate(nextProps, nextState) {
         if (this.state.dataItems !== nextProps.data.length || this.props.startTime !== nextProps.startTime) {
-            // TODO possibly just append new ones
             this.updateGraphs(nextProps.data, nextProps.startTime);
             return false;
         }
